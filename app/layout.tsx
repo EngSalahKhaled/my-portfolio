@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Outfit, JetBrains_Mono } from 'next/font/google'
 import { LanguageProvider } from '@/lib/i18n/LanguageContext'
+import SecurityWrapper from '@/components/SecurityWrapper'
 import './globals.css'
 
 /* ─── Google Fonts ─────────────────────────────────────────────────────────── */
@@ -60,6 +61,7 @@ export default function RootLayout({
       >
         {/* LanguageProvider wraps all; provides lang + toggleLang everywhere */}
         <LanguageProvider>
+          <SecurityWrapper />
           {children}
         </LanguageProvider>
       </body>
