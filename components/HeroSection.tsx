@@ -1,80 +1,85 @@
-'use client'
+"use client";
 
-import { useState, useEffect, useRef, useMemo } from 'react'
-import { useLanguage } from '@/lib/i18n/LanguageContext'
-import { translations as tr } from '@/lib/i18n/translations'
+import { useState, useEffect, useRef, useMemo } from "react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { translations as tr } from "@/lib/i18n/translations";
+import profileImg from "@/images/profile.jpg";
 
 /* ─── Typewriter hook ────────────────────────────────────────────────────────*/
 function useTypewriter(phrases: readonly string[], speed = 80, pause = 2000) {
-  const [displayed, setDisplayed] = useState('')
-  const [phraseIndex, setPhraseIndex] = useState(0)
-  const [charIndex, setCharIndex] = useState(0)
-  const [deleting, setDeleting] = useState(false)
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [displayed, setDisplayed] = useState("");
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    const current = phrases[phraseIndex] ?? ''
+    const current = phrases[phraseIndex] ?? "";
 
     const tick = () => {
       if (!deleting) {
-        setDisplayed(current.slice(0, charIndex + 1))
+        setDisplayed(current.slice(0, charIndex + 1));
         if (charIndex + 1 === current.length) {
-          timeoutRef.current = setTimeout(() => setDeleting(true), pause)
-          return
+          timeoutRef.current = setTimeout(() => setDeleting(true), pause);
+          return;
         }
-        setCharIndex((c) => c + 1)
+        setCharIndex((c) => c + 1);
       } else {
-        setDisplayed(current.slice(0, charIndex - 1))
+        setDisplayed(current.slice(0, charIndex - 1));
         if (charIndex - 1 === 0) {
-          setDeleting(false)
-          setPhraseIndex((i) => (i + 1) % phrases.length)
-          setCharIndex(0)
-          return
+          setDeleting(false);
+          setPhraseIndex((i) => (i + 1) % phrases.length);
+          setCharIndex(0);
+          return;
         }
-        setCharIndex((c) => c - 1)
+        setCharIndex((c) => c - 1);
       }
-    }
+    };
 
-    timeoutRef.current = setTimeout(tick, deleting ? speed / 2 : speed)
-    return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current) }
-  }, [charIndex, deleting, phraseIndex, phrases, speed, pause])
+    timeoutRef.current = setTimeout(tick, deleting ? speed / 2 : speed);
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [charIndex, deleting, phraseIndex, phrases, speed, pause]);
 
-  return displayed
+  return displayed;
 }
 
 /* ─── Scroll-reveal hook ─────────────────────────────────────────────────────*/
 function useScrollReveal(threshold = 0.15) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
   useEffect(() => {
-    const el = ref.current
-    if (!el) return
+    const el = ref.current;
+    if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true) },
-      { threshold }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [threshold])
-  return { ref, visible }
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [threshold]);
+  return { ref, visible };
 }
 
 /* ─── Hero Section ───────────────────────────────────────────────────────────*/
 export default function HeroSection() {
-  const { lang, isAr } = useLanguage()
+  const { lang, isAr } = useLanguage();
   // ✅ Memoize so the array reference stays stable between renders.
   // Without this, a new array is created every render → useTypewriter effect
   // fires every render → infinite loop.
-  const phrases = useMemo(() => tr.hero.typewriterPhrases[lang], [lang])
-  const typed = useTypewriter(phrases)
-  const { ref: statsRef, visible: statsVisible } = useScrollReveal()
+  const phrases = useMemo(() => tr.hero.typewriterPhrases[lang], [lang]);
+  const typed = useTypewriter(phrases);
+  const { ref: statsRef, visible: statsVisible } = useScrollReveal();
 
   const stats = [
-    { value: 3,  suffix: '+', label: tr.hero.stats.yearsExp[lang] },
-    { value: 20, suffix: '+', label: tr.hero.stats.projects[lang] },
-    { value: 2,  suffix: '',  label: tr.hero.stats.businesses[lang] },
-    { value: 1,  suffix: '',  label: tr.hero.stats.certs[lang] },
-  ]
+    { value: 3, suffix: "+", label: tr.hero.stats.yearsExp[lang] },
+    { value: 20, suffix: "+", label: tr.hero.stats.projects[lang] },
+    { value: 2, suffix: "", label: tr.hero.stats.businesses[lang] },
+    { value: 1, suffix: "", label: tr.hero.stats.certs[lang] },
+  ];
 
   return (
     <section
@@ -260,7 +265,7 @@ export default function HeroSection() {
                       fill="currentColor"
                       className="w-5 h-5"
                     >
-                      <path d="M12.031 2.25c-5.385 0-9.756 4.37-9.756 9.754 0 1.716.446 3.385 1.295 4.862L2.25 21.75l4.981-1.305a9.71 9.71 0 004.8.125c5.385 0 9.754-4.37 9.754-9.754S17.416 2.25 12.031 2.25zm.006 17.5A8.204 8.204 0 017.9 18.577l-.3-.178-3.037.796.812-2.96-.195-.31a8.214 8.214 0 01-1.256-4.417c0-4.542 3.696-8.243 8.243-8.243s8.243 3.7 8.243 8.243-3.696 8.243-8.243 8.243zm4.52-6.173c-.247-.124-1.464-.723-1.691-.806-.228-.083-.394-.124-.56.124-.166.248-.64 .806-.784.97-.145.166-.29.186-.537.062-.247-.124-1.046-.385-1.992-1.23-.736-.657-1.232-1.468-1.377-1.716-.145-.248-.016-.382.108-.505.112-.11.247-.29.37-.435.124-.145.166-.248.248-.415.083-.166.042-.31-.02-.435-.062-.124-.56-1.346-.767-1.842-.201-.482-.405-.417-.56-.425-.145-.008-.311-.008-.477-.008-.166 0-.435.062-.662.31-.228.248-.87.848-.87 2.066s.891 2.396 1.015 2.562c.124.166 1.748 2.668 4.234 3.74.59.255 1.05.408 1.41.522.593.188 1.133.161 1.558.098.474-.07 1.464-.598 1.67-1.176.207-.578.207-1.074.145-1.176-.062-.102-.228-.164-.475-.288z"/>
+                      <path d="M12.031 2.25c-5.385 0-9.756 4.37-9.756 9.754 0 1.716.446 3.385 1.295 4.862L2.25 21.75l4.981-1.305a9.71 9.71 0 004.8.125c5.385 0 9.754-4.37 9.754-9.754S17.416 2.25 12.031 2.25zm.006 17.5A8.204 8.204 0 017.9 18.577l-.3-.178-3.037.796.812-2.96-.195-.31a8.214 8.214 0 01-1.256-4.417c0-4.542 3.696-8.243 8.243-8.243s8.243 3.7 8.243 8.243-3.696 8.243-8.243 8.243zm4.52-6.173c-.247-.124-1.464-.723-1.691-.806-.228-.083-.394-.124-.56.124-.166.248-.64 .806-.784.97-.145.166-.29.186-.537.062-.247-.124-1.046-.385-1.992-1.23-.736-.657-1.232-1.468-1.377-1.716-.145-.248-.016-.382.108-.505.112-.11.247-.29.37-.435.124-.145.166-.248.248-.415.083-.166.042-.31-.02-.435-.062-.124-.56-1.346-.767-1.842-.201-.482-.405-.417-.56-.425-.145-.008-.311-.008-.477-.008-.166 0-.435.062-.662.31-.228.248-.87.848-.87 2.066s.891 2.396 1.015 2.562c.124.166 1.748 2.668 4.234 3.74.59.255 1.05.408 1.41.522.593.188 1.133.161 1.558.098.474-.07 1.464-.598 1.67-1.176.207-.578.207-1.074.145-1.176-.062-.102-.228-.164-.475-.288z" />
                     </svg>
                   ),
                 },
@@ -273,7 +278,7 @@ export default function HeroSection() {
                       fill="currentColor"
                       className="w-5 h-5"
                     >
-                      <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
+                      <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
                     </svg>
                   ),
                 },
@@ -305,32 +310,34 @@ export default function HeroSection() {
               />
               <div className="relative w-72 h-72 sm:w-80 sm:h-80 rounded-3xl overflow-hidden gold-border-animated">
                 <div
-                  className="w-full h-full flex flex-col items-center justify-center gap-4"
+                  className="w-full h-full flex flex-col items-center justify-center gap-3 pt-2"
                   style={{
                     background:
                       "linear-gradient(145deg,#1A1A1A 0%,#0D0D0D 100%)",
                   }}
                 >
                   <div
-                    className="w-28 h-28 rounded-full flex items-center justify-center text-5xl font-bold"
+                    className="w-36 h-36 sm:w-40 sm:h-40 rounded-full p-1 shadow-[0_0_25px_rgba(245,197,24,0.4)] transition-transform duration-500 hover:scale-105"
                     style={{
-                      background:
-                        "linear-gradient(135deg,#FFD700 0%,#F5C518 50%,#C09B00 100%)",
-                      color: "#0D0D0D",
+                      background: "linear-gradient(135deg,#FFD700 0%,#F5C518 50%,#C09B00 100%)",
                     }}
-                    aria-hidden="true"
                   >
-                    S
+                    <img
+                      src={profileImg.src}
+                      alt="Salah Khaled"
+                      className="w-full h-full object-cover rounded-full border-[3px]"
+                      style={{ borderColor: "#0D0D0D" }}
+                    />
                   </div>
-                  <div className="text-center">
-                    <p className="text-white font-bold text-xl tracking-wide">
+                  <div className="text-center mt-2">
+                    <p className="text-white font-bold text-2xl tracking-wide">
                       Salah
                     </p>
                     <p
-                      className="text-sm font-medium"
+                      className="text-xs sm:text-sm font-bold tracking-widest uppercase mt-1"
                       style={{ color: "#F5C518" }}
                     >
-                      {tr.hero.typewriterPhrases[lang][0]}
+                      Front End Developer
                     </p>
                   </div>
                 </div>
