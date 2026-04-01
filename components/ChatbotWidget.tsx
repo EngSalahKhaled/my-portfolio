@@ -212,7 +212,7 @@ export default function ChatbotWidget() {
   if (!mounted) {
     return (
       <div
-        className="fixed bottom-4 right-4 sm:right-6 z-50 w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg"
+        className="fixed bottom-4 right-4 sm:right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center shadow-lg"
         style={{ background: 'linear-gradient(135deg,#FFD700 0%,#F5C518 50%,#C09B00 100%)' }}
         aria-hidden="true"
       >
@@ -229,12 +229,11 @@ export default function ChatbotWidget() {
     <>
       {/* ── Chat window ── */}
       <div
-        className={`fixed bottom-24 right-4 sm:right-6 z-50 transition-all duration-300 ease-out ${
+        className={`fixed bottom-20 right-4 sm:bottom-24 sm:right-6 z-50 transition-all duration-300 ease-out w-[calc(100vw-32px)] sm:w-[340px] origin-bottom-right ${
           isOpen
             ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
             : 'opacity-0 translate-y-4 scale-95 pointer-events-none'
         }`}
-        style={{ width: '340px' }}
         role="dialog"
         aria-modal="true"
         aria-label={cb.title[lang]}
@@ -242,8 +241,8 @@ export default function ChatbotWidget() {
         id="chatbot-window"
       >
         <div
-          className="flex flex-col rounded-2xl overflow-hidden shadow-2xl border"
-          style={{ height: '480px', borderColor: '#2A2A2A' }}
+          className="flex flex-col rounded-2xl overflow-hidden shadow-2xl border h-[55vh] max-h-[400px] min-h-[350px] sm:h-[480px]"
+          style={{ borderColor: '#2A2A2A' }}
         >
           {/* Header */}
           <div
@@ -371,7 +370,7 @@ export default function ChatbotWidget() {
       {/* ── Floating Action Button ── */}
       <button
         onClick={() => setIsOpen((p) => !p)}
-        className="fixed bottom-4 right-4 sm:right-6 z-50 w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 animate-pulse-gold"
+        className="fixed bottom-4 right-4 sm:right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 animate-pulse-gold"
         style={{ background: 'linear-gradient(135deg,#FFD700 0%,#F5C518 50%,#C09B00 100%)' }}
         aria-label={isOpen ? cb.close[lang] : cb.open[lang]}
         id="chatbot-toggle-btn"

@@ -6,7 +6,7 @@ export default function SecurityWrapper() {
   useEffect(() => {
     // إيقاف الكليك يمين (Right Click)
     const handleContextMenu = (e: MouseEvent) => {
-      e.preventDefault()
+      // e.preventDefault()
     }
 
     // إيقاف اختصارات لوحة المفاتيح لفتح الـ Console أو الـ Source Code

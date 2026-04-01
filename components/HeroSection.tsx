@@ -343,7 +343,7 @@ export default function HeroSection() {
                 </div>
               </div>
               <div
-                className="absolute -top-4 -right-4 glass-card px-3 py-2 animate-bounce-subtle shadow-xl"
+                className="absolute -top-6 -right-2 sm:-top-4 sm:-right-4 glass-card px-3 py-2 animate-bounce-subtle shadow-xl"
                 aria-hidden="true"
               >
                 <p className="text-xs text-gray-400">
@@ -354,7 +354,7 @@ export default function HeroSection() {
                 </p>
               </div>
               <div
-                className="absolute -bottom-4 -left-4 glass-card px-3 py-2 shadow-xl"
+                className="absolute -bottom-8 -left-2 sm:-bottom-4 sm:-left-4 glass-card px-3 py-2 shadow-xl"
                 aria-hidden="true"
               >
                 <p className="text-xs text-gray-400">{tr.hero.basedIn[lang]}</p>
