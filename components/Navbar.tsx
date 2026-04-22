@@ -1,26 +1,33 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { translations as tr } from "@/lib/i18n/translations";
 import ThemeSwitcher from "./ThemeSwitcher";
 
-const SECTION_IDS = ["hero", "projects", "business", "skills", "certifications", "contact"];
+const SECTION_IDS = [
+  "hero",
+  "about",
+  "projects",
+  "business",
+  "skills",
+  "certifications",
+  "contact",
+];
 
 export default function Navbar() {
   const { lang, toggleLang, isAr } = useLanguage();
-  const [scrolled, setScrolled]     = useState(false);
-  const [menuOpen, setMenuOpen]     = useState(false);
-  const [activeSection, setActive]  = useState("hero");
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActive] = useState("hero");
 
-  // ── Scroll → glass nav ─────────────────────────────────────────────────
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // ── Active section tracking via IntersectionObserver ───────────────────
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
 
@@ -28,7 +35,9 @@ export default function Navbar() {
       const el = document.getElementById(id);
       if (!el) return;
       const obs = new IntersectionObserver(
-        ([entry]) => { if (entry.isIntersecting) setActive(id); },
+        ([entry]) => {
+          if (entry.isIntersecting) setActive(id);
+        },
         { threshold: 0.35 }
       );
       obs.observe(el);
@@ -41,127 +50,150 @@ export default function Navbar() {
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   const navLinks = [
-    { label: tr.nav.about[lang],    href: "#about",    id: "hero" },
+    { label: tr.nav.home[lang], href: "#hero", id: "hero" },
+    { label: tr.nav.about[lang], href: "#about", id: "about" },
     { label: tr.nav.projects[lang], href: "#projects", id: "projects" },
     { label: tr.nav.business[lang], href: "#business", id: "business" },
-    { label: tr.nav.skills[lang],   href: "#skills",   id: "skills" },
-    { label: tr.nav.contact[lang],  href: "#contact",  id: "contact" },
+    { label: tr.nav.skills[lang], href: "#skills", id: "skills" },
+    { label: tr.nav.contact[lang], href: "#contact", id: "contact" },
   ];
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,box-shadow] duration-300 ${
-        scrolled
-          ? "bg-dark-card/85 backdrop-blur-lg border-b border-dark-border shadow-md shadow-black/15 scrolled-nav"
-          : "bg-transparent"
-      }`}
-      id="navbar"
-      aria-label="Main navigation"
-    >
-      <div className="section-wrapper flex items-center justify-between h-16">
-        {/* ── Logo ── */}
-        <a href="#hero" className="flex items-center gap-2 group" aria-label="Salah Portfolio - Home">
-          <span
-            className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm transition-transform duration-300 group-hover:rotate-12"
-            style={{ background: "linear-gradient(135deg,#F5C518,#C09B00)", color: "#0D0D0D" }}
-          >S</span>
-          <span className="font-bold text-lg tracking-tight" style={{ color: "var(--text-main)" }}>
-            Salah<span style={{ color: "#F5C518" }}>.</span>dev
-          </span>
-        </a>
-
-        {/* ── Desktop Links ── */}
-        <ul className="hidden md:flex items-center gap-6" role="list">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className={`nav-link py-1 ${activeSection === link.id ? "active" : ""}`}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        {/* ── Desktop Controls ── */}
-        <div className="hidden md:flex items-center gap-3">
-          <ThemeSwitcher />
-          <button
-            onClick={toggleLang}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold transition-[border-color,background-color] duration-200 hover:-translate-y-0.5"
-            style={{ borderColor: "rgba(245,197,24,0.3)", color: "#F5C518", background: "rgba(245,197,24,0.05)" }}
-            aria-label={isAr ? "Switch to English" : "التبديل إلى العربية"}
-            id="lang-toggle-desktop"
-          >
-            <span aria-hidden="true">{isAr ? "🇬🇧" : "🇸🇦"}</span>
-            {isAr ? "EN" : "ع"}
-          </button>
-          <a href="#contact" className="btn-primary text-sm px-5 py-2" id="nav-hire-btn">
-            {tr.nav.hireMe[lang]}
-          </a>
-        </div>
-
-        {/* ── Mobile Hamburger ── */}
-        <button
-          className="md:hidden flex flex-col gap-1.5 p-2 rounded-lg hover:bg-dark-surface transition-colors"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-          aria-controls="mobile-menu"
-        >
-          <span className={`w-5 h-0.5 bg-text-main transition-transform duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
-          <span className={`w-5 h-0.5 bg-text-main transition-opacity duration-300 ${menuOpen ? "opacity-0" : ""}`} />
-          <span className={`w-5 h-0.5 bg-text-main transition-transform duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
-        </button>
-      </div>
-
-      {/* ── Mobile Menu ── */}
-      <div
-        id="mobile-menu"
-        className={`md:hidden overflow-hidden border-b border-dark-border transition-[max-height,opacity] duration-300 ${
-          menuOpen ? "max-h-96 opacity-100 bg-dark-card/95 backdrop-blur-xl" : "max-h-0 opacity-0"
+    <div className="fixed top-0 left-0 right-0 z-50 flex justify-center md:p-6 pointer-events-none">
+      <motion.nav
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className={`pointer-events-auto w-full md:max-w-5xl transition-colors duration-300 relative ${
+          scrolled || menuOpen
+            ? "bg-dark-card/90 backdrop-blur-md shadow-lg border-b border-dark-border md:border md:rounded-full"
+            : "bg-transparent md:bg-dark-surface/50 md:backdrop-blur-md border-b border-transparent md:border-dark-border/50 md:rounded-full"
         }`}
+        id="navbar"
+        aria-label="Main navigation"
       >
-        <ul className="section-wrapper py-4 flex flex-col gap-2" role="list">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className={`block py-2 px-3 rounded-lg font-medium transition-colors duration-200 ${
-                  activeSection === link.id
-                    ? "text-gold bg-yellow-400/8"
-                    : "text-text-muted hover:text-gold hover:bg-yellow-400/5"
-                }`}
-                onClick={closeMenu}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-          <li className="pt-3 flex justify-center border-t border-dark-border mt-2">
+        {/* ── Nav Header ── */}
+        <div className="flex items-center justify-between h-14 md:h-16 px-4 md:px-6">
+          {/* Logo */}
+          <a href="#hero" onClick={closeMenu} className="flex items-center gap-2.5 group relative z-10" aria-label="Salah Portfolio - Home">
+            <div
+              className="w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center shadow-inner transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12"
+              style={{ background: "linear-gradient(135deg,#F5C518,#C09B00)" }}
+            >
+              <span className="font-bold text-xs md:text-sm text-[#0D0D0D]">S</span>
+            </div>
+            <span className="font-bold text-base md:text-lg tracking-tight" style={{ color: "var(--text-main)" }}>
+              Salah<span style={{ color: "#F5C518" }}>.</span>dev
+            </span>
+          </a>
+
+          {/* Desktop Links */}
+          <ul className="hidden lg:flex items-center justify-center gap-2 absolute left-1/2 -translate-x-1/2 w-full" role="list">
+            {navLinks.map((link) => (
+              <li key={link.href} className="relative">
+                <a
+                  href={link.href}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300 relative z-10 block ${
+                    activeSection === link.id
+                      ? "text-text-main"
+                      : "text-text-muted hover:text-text-main"
+                  }`}
+                >
+                  {link.label}
+                  {activeSection === link.id && (
+                    <motion.div
+                      layoutId="active-nav-pill"
+                      className="absolute inset-0 bg-dark-border rounded-full -z-10"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          {/* Desktop Controls */}
+          <div className="hidden lg:flex items-center gap-3 relative z-10">
             <ThemeSwitcher />
-          </li>
-          <li className="pt-2 flex gap-2">
             <button
-              onClick={() => { toggleLang(); closeMenu(); }}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border text-sm font-semibold"
-              style={{ borderColor: "rgba(245,197,24,0.3)", color: "#F5C518" }}
-              id="lang-toggle-mobile"
+              onClick={toggleLang}
+              className="flex items-center justify-center w-9 h-9 rounded-full border transition-transform duration-300 hover:scale-105"
+              style={{ borderColor: "rgba(245,197,24,0.3)", color: "#F5C518", background: "rgba(245,197,24,0.05)" }}
+              aria-label={isAr ? "Switch to English" : "التبديل إلى العربية"}
             >
-              {isAr ? "🇬🇧 English" : "🇸🇦 عربي"}
+              <span className="text-xs font-bold">{isAr ? "EN" : "ع"}</span>
             </button>
-            <a
-              href="#contact"
-              className="btn-primary flex-1 justify-center"
-              onClick={closeMenu}
-              id="nav-hire-btn-mobile"
-            >
+            <a href="#contact" className="btn-primary text-sm px-5 py-2 rounded-full">
               {tr.nav.hireMe[lang]}
             </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+          </div>
+
+          {/* Mobile Hamburger & Theme */}
+          <div className="flex items-center gap-2 lg:hidden relative z-10">
+            <ThemeSwitcher />
+            <button
+              className="flex flex-col items-center justify-center w-10 h-10 gap-1.5 rounded-full"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+            >
+              <span className={`w-5 h-0.5 bg-text-main transition-transform duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
+              <span className={`w-5 h-0.5 bg-text-main transition-opacity duration-300 ${menuOpen ? "opacity-0" : ""}`} />
+              <span className={`w-5 h-0.5 bg-text-main transition-transform duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+            </button>
+          </div>
+        </div>
+
+        {/* ── Mobile Edge-to-Edge Menu ── */}
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "100vh", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="absolute top-full left-0 w-full bg-dark-bg/95 backdrop-blur-3xl lg:hidden overflow-hidden flex flex-col"
+            >
+              <div className="flex-1 overflow-y-auto px-6 py-8 pb-24 flex flex-col gap-8">
+                <ul className="flex flex-col gap-4" role="list">
+                  {navLinks.map((link) => (
+                    <li key={link.href}>
+                      <a
+                        href={link.href}
+                        className={`text-2xl font-bold transition-colors duration-200 block ${
+                          activeSection === link.id
+                            ? "text-gold"
+                            : "text-text-muted hover:text-text-main"
+                        }`}
+                        onClick={closeMenu}
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                
+                <div className="flex flex-col gap-4 mt-auto pt-8 border-t border-dark-border">
+                  <button
+                    onClick={() => { toggleLang(); closeMenu(); }}
+                    className="flex items-center justify-center gap-2 py-4 rounded-xl border font-bold transition-colors hover:bg-dark-surface text-base w-full"
+                    style={{ borderColor: "rgba(245,197,24,0.3)", color: "#F5C518", background: "rgba(245,197,24,0.05)" }}
+                  >
+                    {isAr ? "Switch to English" : "التبديل إلى العربية"}
+                  </button>
+                  <a
+                    href="#contact"
+                    className="btn-primary w-full justify-center py-4 rounded-xl text-base"
+                    onClick={closeMenu}
+                  >
+                    {tr.nav.hireMe[lang]}
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+    </div>
   );
 }

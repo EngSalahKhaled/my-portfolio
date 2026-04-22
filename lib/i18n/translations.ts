@@ -11,6 +11,7 @@ export type Lang = "en" | "ar";
 export const translations = {
   /* ─── Navigation ──────────────────────────────────────────────────────────── */
   nav: {
+    home: { en: "Home", ar: "الرئيسية" },
     about: { en: "About", ar: "عني" },
     projects: { en: "Projects", ar: "مشاريعي" },
     business: { en: "Business", ar: "أعمالي" },

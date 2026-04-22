@@ -8,7 +8,8 @@ export default function CertificationsSection() {
   const certifications = [
     {
       id: "gemini",
-      title: "Gemini API Professional",
+      titleEn: "Gemini AI Professional",
+      titleAr: "محترف ذكاء اصطناعي (Gemini AI)",
       issuer: "Google",
       descAr:
         "معتمد من Google. يثبت الكفاءة في دمج نماذج اللغات المتقدمة واستخدام تقنيات الذكاء الاصطناعي لبناء حلول ويب ذكية.",
@@ -40,7 +41,8 @@ export default function CertificationsSection() {
     },
     {
       id: "google-educator",
-      title: "Google Certified Educator",
+      titleEn: "Google Certified Educator",
+      titleAr: "معلم معتمد من Google",
       issuer: "Google for Education",
       descAr:
         "شهادة معتمدة من Google للمعلمين. تُثبت القدرة على استخدام أدوات Google في التعليم وتوظيف التقنيات الحديثة لتحسين بيئة التعلم.",
@@ -64,8 +66,9 @@ export default function CertificationsSection() {
     },
     {
       id: "google-faculty",
-      title: "Google Faculty Member",
-      issuer: "Google for Startups",
+      titleEn: "Google Faculty Member",
+      titleAr: "عضو هيئة تدريس Google",
+      issuer: "Google for Education",
       descAr:
         "عضو معتمد في هيئة تدريس Google للشركات الناشئة. يتضمن تقديم الإرشاد التقني والمشاركة في برامج تطوير ريادة الأعمال الممولة من Google.",
       descEn:
@@ -133,7 +136,9 @@ export default function CertificationsSection() {
               }}
               id={`cert-${cert.id}`}
               aria-label={
-                cert.isPlaceholder ? `${cert.title} — Exclusive` : cert.title
+                cert.isPlaceholder 
+                  ? `${isAr ? cert.titleAr : cert.titleEn} — Exclusive` 
+                  : (isAr ? cert.titleAr : cert.titleEn)
               }
             >
               {/* Placeholder badge */}
@@ -186,7 +191,7 @@ export default function CertificationsSection() {
                     className="text-lg font-bold mb-2 group-hover:text-gold transition-colors"
                     style={{ color: "var(--text-main)" }}
                   >
-                    {cert.title}
+                    {isAr ? cert.titleAr : cert.titleEn}
                   </h3>
                   <p
                     className="text-sm leading-relaxed mb-4"
