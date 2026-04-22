@@ -404,15 +404,24 @@ export default function HeroSection() {
       </div>
 
       {/* Scroll indicator */}
-      <div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce-subtle"
-        aria-hidden="true"
+      <a
+        href="#projects"
+        className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 sm:gap-3 group z-20"
+        aria-label="Scroll down"
       >
-        <p className="text-gray-600 text-xs tracking-widest uppercase">
+        <p className="text-text-muted text-[10px] sm:text-xs font-semibold tracking-[0.25em] uppercase transition-colors duration-300 group-hover:text-gold opacity-70 group-hover:opacity-100">
           {tr.hero.scroll[lang]}
         </p>
-        <div className="w-px h-8 bg-gradient-to-b from-yellow-400/60 to-transparent" />
-      </div>
+        <div 
+          className="w-5 h-8 sm:w-6 sm:h-10 rounded-full border-2 flex justify-center pt-1.5 sm:pt-2 transition-all duration-300 group-hover:border-yellow-400/50" 
+          style={{ borderColor: 'var(--dark-border)', backgroundColor: 'rgba(0,0,0,0.2)' }}
+        >
+          <div 
+            className="w-1 h-1.5 sm:w-1.5 sm:h-2 rounded-full animate-bounce-subtle" 
+            style={{ backgroundColor: '#F5C518' }} 
+          />
+        </div>
+      </a>
     </section>
   );
 }
