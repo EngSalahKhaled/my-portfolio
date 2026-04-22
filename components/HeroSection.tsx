@@ -254,7 +254,7 @@ export default function HeroSection() {
                   ),
                 },
                 {
-                  href: "https://linkedin.com",
+                  href: "https://www.linkedin.com/in/salahkhaled-dev/",
                   label: "LinkedIn",
                   color: "#0A66C2",
                   icon: (
