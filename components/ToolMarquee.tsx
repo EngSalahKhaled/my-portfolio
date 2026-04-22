@@ -33,47 +33,6 @@ const TOOLS = [
 
 export default function ToolMarquee() {
   const [isHovered, setIsHovered] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [contentWidth, setContentWidth] = useState(0);
-
-  // Motion value to track the x-axis translation
-  const x = useMotionValue(0);
-
-  useEffect(() => {
-    if (containerRef.current) {
-      // The container holds exactly TWO sets of tools.
-      // We divide by 2 to get the exact pixel width of ONE set.
-      setContentWidth(containerRef.current.scrollWidth / 2);
-    }
-    
-    // Update width on resize to maintain perfect loop
-    const handleResize = () => {
-      if (containerRef.current) {
-        setContentWidth(containerRef.current.scrollWidth / 2);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useAnimationFrame((time, delta) => {
-    // 1. Pause on hover
-    // 2. Do nothing if width isn't calculated yet
-    if (isHovered || contentWidth === 0) return;
-
-    // Adjust scroll speed here (higher = faster)
-    const speed = 0.04;
-    const moveBy = speed * delta;
-
-    let newX = x.get() - moveBy;
-
-    // Reset loop seamlessly when the first set of items is fully out of view
-    if (newX <= -contentWidth) {
-      newX += contentWidth;
-    }
-
-    x.set(newX);
-  });
 
   return (
     <section className="relative w-full max-w-7xl mx-auto py-16 overflow-hidden bg-transparent">
@@ -98,11 +57,18 @@ export default function ToolMarquee() {
         className="flex w-max"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onTouchStart={() => setIsHovered(true)}
+        onTouchEnd={() => setIsHovered(false)}
       >
         <motion.div
-          ref={containerRef}
           className="flex gap-4 md:gap-6 pr-4 md:pr-6"
-          style={{ x }}
+          animate={{ x: isHovered ? undefined : ["0%", "-50%"] }}
+          transition={{
+            duration: 20, // Adjust this to make it faster/slower
+            repeat: Infinity,
+            ease: "linear",
+            repeatType: "loop",
+          }}
         >
           {/* Double the tools array to create the seamless loop effect */}
           {[...TOOLS, ...TOOLS].map((tool, index) => {
