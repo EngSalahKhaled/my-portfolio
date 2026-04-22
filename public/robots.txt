@@ -4,4 +4,9 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: facebookexternalhit/1.1
+Allow: /
+
+User-agent: Facebot
+Allow: /
 Sitemap: https://salahkhaled.com/sitemap.xml
