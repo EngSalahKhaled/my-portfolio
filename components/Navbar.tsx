@@ -151,29 +151,60 @@ export default function Navbar() {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "100vh", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+              transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }} /* Custom spring-like easing */
               className="absolute top-full left-0 w-full bg-[var(--dark-bg)] lg:hidden overflow-hidden flex flex-col"
             >
-              <div className="flex-1 overflow-y-auto px-6 py-8 pb-24 flex flex-col gap-8">
-                <ul className="flex flex-col gap-4" role="list">
+              <div className="flex-1 overflow-y-auto px-6 py-10 pb-24 flex flex-col">
+                <motion.ul 
+                  className="flex flex-col gap-6" 
+                  role="list"
+                  initial="hidden"
+                  animate="show"
+                  exit="hidden"
+                  variants={{
+                    hidden: { opacity: 0 },
+                    show: {
+                      opacity: 1,
+                      transition: { staggerChildren: 0.08, delayChildren: 0.1 }
+                    }
+                  }}
+                >
                   {navLinks.map((link) => (
-                    <li key={link.href}>
+                    <motion.li 
+                      key={link.href}
+                      variants={{
+                        hidden: { opacity: 0, x: -20 },
+                        show: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+                      }}
+                    >
                       <a
                         href={link.href}
-                        className={`text-2xl font-bold transition-colors duration-200 block ${
+                        className={`text-3xl font-bold transition-all duration-300 flex items-center gap-4 ${
                           activeSection === link.id
-                            ? "text-gold"
-                            : "text-text-muted hover:text-text-main"
+                            ? "text-gold translate-x-2"
+                            : "text-text-muted hover:text-text-main hover:translate-x-1"
                         }`}
                         onClick={closeMenu}
                       >
+                        {activeSection === link.id && (
+                          <motion.div 
+                            layoutId="mobile-active-dot"
+                            className="w-2 h-2 rounded-full bg-gold"
+                            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                          />
+                        )}
                         {link.label}
                       </a>
-                    </li>
+                    </motion.li>
                   ))}
-                </ul>
+                </motion.ul>
                 
-                <div className="flex flex-col gap-4 mt-auto pt-8 border-t border-dark-border">
+                <motion.div 
+                  className="flex flex-col gap-4 mt-auto pt-10"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.4 }}
+                >
                   <button
                     onClick={() => { toggleLang(); closeMenu(); }}
                     className="flex items-center justify-center gap-2 py-4 rounded-xl border font-bold transition-colors hover:bg-dark-surface text-base w-full"
@@ -188,7 +219,7 @@ export default function Navbar() {
                   >
                     {tr.nav.hireMe[lang]}
                   </a>
-                </div>
+                </motion.div>
               </div>
             </motion.div>
           )}
