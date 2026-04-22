@@ -52,11 +52,20 @@ export const metadata: Metadata = {
     siteName: 'Salah.dev Portfolio',
     type: 'website',
     locale: 'en_US',
+    images: [
+      {
+        url: `${SITE_URL}/og-image.jpg`, // Ensure you use .jpg and absolute URL
+        width: 1200,
+        height: 630,
+        alt: 'Salah Khaled - Full Stack Developer Portfolio',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Salah.dev - Full Stack Developer',
     description: 'Portfolio of Salah Khaled — a Google-certified Full Stack Developer.',
+    images: [`${SITE_URL}/og-image.jpg`], // Use absolute URL for Twitter as well
   },
 }
 
