@@ -52,21 +52,11 @@ export const metadata: Metadata = {
     siteName: 'Salah.dev Portfolio',
     type: 'website',
     locale: 'en_US',
-    images: [
-      {
-        url: `${SITE_URL}/og-image.png`, // Absolute URL for WhatsApp/Messenger
-        width: 1200,
-        height: 630,
-        alt: 'Salah.dev - Portfolio Preview',
-        type: 'image/png', // Helps WhatsApp parse the image faster
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Salah.dev - Full Stack Developer',
     description: 'Portfolio of Salah Khaled — a Google-certified Full Stack Developer.',
-    images: [`${SITE_URL}/og-image.png`],
   },
 }
 
