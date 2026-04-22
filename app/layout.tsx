@@ -26,7 +26,7 @@ const tajawal = Tajawal({
 
 /* ─── Site URL ─────────────────────────────────────────────────────────────── */
 // تأكد من أن هذا الرابط هو الرابط الحقيقي لموقعك بعد الرفع (Absolute URL)
-const SITE_URL = 'https://salahkhaled.dev'
+const SITE_URL = 'https://salahkhaled.com'
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────────── */
 export const metadata: Metadata = {
