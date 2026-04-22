@@ -25,13 +25,21 @@ const nextConfig = {
   // ── Headers for caching static assets ────────────────────────────────────
   async headers() {
     return [
+      // ── OG image & static assets: long-lived cache ──
       {
         source: '/(.*)\\.(png|jpg|jpeg|gif|svg|ico|webp|avif|woff2|woff|ttf)',
         headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+          { key: 'Access-Control-Allow-Origin', value: '*' },
+        ],
+      },
+      // ── Main page: explicit crawler-friendly headers ──
+      {
+        source: '/',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' },
+          { key: 'X-Robots-Tag', value: 'index, follow' },
+          { key: 'Access-Control-Allow-Origin', value: '*' },
         ],
       },
     ]
