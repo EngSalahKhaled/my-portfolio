@@ -4,56 +4,67 @@
 
 /* ─── CSS Custom Properties ──────────────────────────────────────────────────
    Single source of truth for brand tokens used throughout components   */
-:root, [data-mode="dark"] {
-  --theme-primary: #F5C518;
-  --theme-light: #FFD700;
-  --theme-dark: #C09B00;
+:root,
+[data-mode="dark"] {
+  --theme-primary: #f5c518;
+  --theme-light: #ffd700;
+  --theme-dark: #c09b00;
   --theme-rgb: 245, 197, 24;
 
-  --dark-bg: #0D0D0D;
+  --dark-bg: #0d0d0d;
   --dark-card: #141414;
-  --dark-surface: #1A1A1A;
-  --dark-border: #2A2A2A;
-  --dark-muted: #A3A3A3;
-  --text-main: #E5E5E5;
-  --text-muted: #9CA3AF;
-  
+  --dark-surface: #1a1a1a;
+  --dark-border: #2a2a2a;
+  --dark-muted: #a3a3a3;
+  --text-main: #e5e5e5;
+  --text-muted: #9ca3af;
+
   --dark-card-rgba: rgba(20, 20, 20, 0.75);
 
   /* ── Component-specific semantic tokens ── */
-  --input-bg: #1A1A1A;
-  --input-border: #2A2A2A;
+  --input-bg: #1a1a1a;
+  --input-border: #2a2a2a;
   --input-border-focus: rgba(245, 197, 24, 0.5);
-  --social-border: #2A2A2A;
-  --skill-track: #3A3A3A;
-  --hero-card-bg: linear-gradient(145deg, #1A1A1A 0%, #0D0D0D 100%);
-  --business-card-bg: linear-gradient(135deg, #0D0D0D 0%, #1a1400 40%, #2a1f00 100%);
+  --social-border: #2a2a2a;
+  --skill-track: #3a3a3a;
+  --hero-card-bg: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
+  --business-card-bg: linear-gradient(
+    135deg,
+    #0d0d0d 0%,
+    #1a1400 40%,
+    #2a1f00 100%
+  );
   --project-category-bg: rgba(0, 0, 0, 0.5);
   --project-category-border: rgba(255, 255, 255, 0.1);
-  
+
   --radius: 12px;
   --radius-lg: 20px;
 }
 
 [data-mode="light"] {
-  --dark-bg: #FAFAF9;
-  --dark-card: #FFFFFF;
-  --dark-surface: #F5F5F4;
-  --dark-border: #E7E5E4;
-  --dark-muted: #D6D3D1; 
-  --text-main: #1C1917;
-  --text-muted: #57534E;
-  
+  --dark-bg: #fafaf9;
+  --dark-card: #ffffff;
+  --dark-surface: #f5f5f4;
+  --dark-border: #e7e5e4;
+  --dark-muted: #d6d3d1;
+  --text-main: #1c1917;
+  --text-muted: #57534e;
+
   --dark-card-rgba: rgba(255, 255, 255, 0.85);
 
   /* ── Component-specific semantic tokens (light overrides) ── */
-  --input-bg: #FFFFFF;
-  --input-border: #D6D3D1;
+  --input-bg: #ffffff;
+  --input-border: #d6d3d1;
   --input-border-focus: rgba(245, 197, 24, 0.6);
-  --social-border: #D6D3D1;
-  --skill-track: #E7E5E4;
-  --hero-card-bg: linear-gradient(145deg, #FFFBEB 0%, #FEF3C7 100%);
-  --business-card-bg: linear-gradient(135deg, #FFFBEB 0%, #FEF9C3 50%, #FFF7CD 100%);
+  --social-border: #d6d3d1;
+  --skill-track: #e7e5e4;
+  --hero-card-bg: linear-gradient(145deg, #fffbeb 0%, #fef3c7 100%);
+  --business-card-bg: linear-gradient(
+    135deg,
+    #fffbeb 0%,
+    #fef9c3 50%,
+    #fff7cd 100%
+  );
   --project-category-bg: rgba(255, 255, 255, 0.8);
   --project-category-border: rgba(0, 0, 0, 0.08);
 }
@@ -85,19 +96,26 @@ body {
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--dark-card); }
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--dark-card);
+}
 ::-webkit-scrollbar-thumb {
   background: var(--theme-dark);
   border-radius: 3px;
 }
-::-webkit-scrollbar-thumb:hover { background: var(--theme-primary); }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-primary);
+}
 
 /* ─── Utility Layer ─────────────────────────────────────────────────────────── */
 @layer components {
-
   /* Gold accent text */
-  .text-gold { color: var(--theme-primary); }
+  .text-gold {
+    color: var(--theme-primary);
+  }
 
   /* Glassmorphism card
      ⚠️ backdrop-filter is THE most expensive CSS property.
@@ -117,12 +135,21 @@ body {
            transition-[box-shadow,transform] duration-200
            hover:shadow-[0_0_25px_rgba(var(--theme-rgb),0.35)]
            hover:-translate-y-0.5 active:scale-95;
-    background: linear-gradient(135deg, var(--theme-light) 0%, var(--theme-primary) 50%, var(--theme-dark) 100%);
-    color: #0D0D0D;
+    background: linear-gradient(
+      135deg,
+      var(--theme-light) 0%,
+      var(--theme-primary) 50%,
+      var(--theme-dark) 100%
+    );
+    color: #0d0d0d;
   }
 
   .btn-primary:hover {
-    background: linear-gradient(135deg, var(--theme-light) 0%, var(--theme-light) 100%);
+    background: linear-gradient(
+      135deg,
+      var(--theme-light) 0%,
+      var(--theme-light) 100%
+    );
   }
 
   /* Outline / ghost button */
@@ -151,7 +178,12 @@ body {
 
   /* Gold gradient text */
   .gradient-text {
-    background: linear-gradient(135deg, var(--theme-light) 0%, var(--theme-primary) 50%, var(--theme-dark) 100%);
+    background: linear-gradient(
+      135deg,
+      var(--theme-light) 0%,
+      var(--theme-primary) 50%,
+      var(--theme-dark) 100%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -162,10 +194,12 @@ body {
     @apply relative text-text-muted transition-colors duration-200 text-sm font-medium;
   }
 
-  .nav-link:hover { color: var(--theme-primary); }
+  .nav-link:hover {
+    color: var(--theme-primary);
+  }
 
   .nav-link::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -2px;
     left: 0;
@@ -176,8 +210,12 @@ body {
   }
 
   .nav-link:hover::after,
-  .nav-link.active::after { width: 100%; }
-  .nav-link.active { color: var(--theme-primary); }
+  .nav-link.active::after {
+    width: 100%;
+  }
+  .nav-link.active {
+    color: var(--theme-primary);
+  }
 
   /* Project filter pill */
   .filter-pill {
@@ -195,7 +233,7 @@ body {
 
   .filter-pill.active {
     background-color: var(--theme-primary);
-    color: #0D0D0D;
+    color: #0d0d0d;
     border-color: var(--theme-primary);
     box-shadow: 0 0 12px rgba(var(--theme-rgb), 0.3);
     font-weight: 600;
@@ -238,8 +276,16 @@ section:not(#hero) {
 .hero-mesh {
   background-color: var(--dark-bg);
   background-image:
-    radial-gradient(ellipse 80% 60% at 50% -20%, rgba(var(--theme-rgb),0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(var(--theme-rgb),0.03) 0%, transparent 50%);
+    radial-gradient(
+      ellipse 80% 60% at 50% -20%,
+      rgba(var(--theme-rgb), 0.07) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 40% at 80% 60%,
+      rgba(var(--theme-rgb), 0.03) 0%,
+      transparent 50%
+    );
 }
 
 /* ─── Animated gradient border ──────────────────────────────────────────────*/
@@ -250,30 +296,48 @@ section:not(#hero) {
 }
 
 .gold-border-animated::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, var(--theme-primary), transparent 50%, var(--theme-primary));
+  background: linear-gradient(
+    135deg,
+    var(--theme-primary),
+    transparent 50%,
+    var(--theme-primary)
+  );
   background-size: 200% 200%;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   animation: rotateBorder 4s linear infinite;
 }
 
 @keyframes rotateBorder {
-  0%   { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
 }
 
 /* ─── Float animation (FloatingIcons) ───────────────────────────────────────*/
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-12px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
 }
-.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
 
 /* ─── Typewriter cursor blink ───────────────────────────────────────────────*/
 .typewriter-cursor {
@@ -287,19 +351,34 @@ section:not(#hero) {
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 /* ─── FadeSlideUp — for staggered card reveals ──────────────────────────────*/
 @keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ─── Chat widget scroll ─────────────────────────────────────────────────────*/
-.chat-scroll { scroll-behavior: smooth; }
-.chat-scroll::-webkit-scrollbar { width: 4px; }
+.chat-scroll {
+  scroll-behavior: smooth;
+}
+.chat-scroll::-webkit-scrollbar {
+  width: 4px;
+}
 .chat-scroll::-webkit-scrollbar-thumb {
   background: var(--dark-border);
   border-radius: 2px;
@@ -315,13 +394,19 @@ section:not(#hero) {
 }
 
 /* ─── Light mode overrides ───────────────────────────────────────────────────*/
-[data-mode="light"] .text-gray-500 { color: #78716C; }
-[data-mode="light"] .text-gray-600 { color: #57534E; }
-[data-mode="light"] .shadow-lg     { box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+[data-mode="light"] .text-gray-500 {
+  color: #78716c;
+}
+[data-mode="light"] .text-gray-600 {
+  color: #57534e;
+}
+[data-mode="light"] .shadow-lg {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
 
 /* Navbar in light mode when scrolled */
 [data-mode="light"] nav[id="navbar"].scrolled-nav {
   background-color: rgba(255, 255, 255, 0.9) !important;
   backdrop-filter: blur(16px) !important;
-  border-color: rgba(0,0,0,0.08) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
 }

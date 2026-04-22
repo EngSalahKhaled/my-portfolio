@@ -152,7 +152,7 @@ export default function Navbar() {
               animate={{ height: "100vh", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="absolute top-full left-0 w-full bg-dark-bg/95 backdrop-blur-3xl lg:hidden overflow-hidden flex flex-col"
+              className="absolute top-full left-0 w-full bg-[var(--dark-bg)] lg:hidden overflow-hidden flex flex-col"
             >
               <div className="flex-1 overflow-y-auto px-6 py-8 pb-24 flex flex-col gap-8">
                 <ul className="flex flex-col gap-4" role="list">
