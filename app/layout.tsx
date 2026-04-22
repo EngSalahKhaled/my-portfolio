@@ -25,35 +25,47 @@ const tajawal = Tajawal({
 })
 
 /* ─── Site URL ─────────────────────────────────────────────────────────────── */
+// تأكد من أن هذا الرابط هو الرابط الحقيقي لموقعك بعد الرفع (Absolute URL)
 const SITE_URL = 'https://salahkhaled.dev'
 
 /* ─── SEO Metadata ─────────────────────────────────────────────────────────── */
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'Salah Khaled | Front-End Developer & Entrepreneur',
+  title: 'Salah.dev - Full Stack Developer',
   description:
-    'Portfolio of Salah Khaled — a Google-certified Front-End Developer and entrepreneur behind INFINITY BRIGHT. Specialising in React, Next.js, and modern web experiences.',
+    'Portfolio of Salah Khaled — a Google-certified Full Stack Developer crafting premium digital experiences and intelligent web solutions.',
   keywords: [
-    'Front-End Developer', 'React', 'Next.js', 'TypeScript',
+    'Full Stack Developer', 'Front-End Developer', 'React', 'Next.js', 'TypeScript',
     'Portfolio', 'Salah Khaled', 'Saudi Arabia', 'Web Developer Riyadh',
     'UI UX Developer', 'Gemini AI', 'Google Certified',
   ],
   authors: [{ name: 'Salah Khaled', url: SITE_URL }],
   creator: 'Salah Khaled',
   robots: { index: true, follow: true },
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
-    title: 'Salah Khaled | Front-End Developer & Entrepreneur',
-    description: 'Google-certified Front-End Developer crafting premium digital experiences.',
+    title: 'Salah.dev - Full Stack Developer',
+    description: 'Portfolio of Salah Khaled — a Google-certified Full Stack Developer crafting premium digital experiences.',
     url: SITE_URL,
-    siteName: 'Salah Khaled Portfolio',
+    siteName: 'Salah.dev Portfolio',
     type: 'website',
     locale: 'en_US',
-    images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: 'Salah Khaled' }],
+    images: [
+      {
+        url: `${SITE_URL}/og-image.png`, // Absolute URL for WhatsApp/Messenger
+        width: 1200,
+        height: 630,
+        alt: 'Salah.dev - Portfolio Preview',
+        type: 'image/png', // Helps WhatsApp parse the image faster
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Salah Khaled | Front-End Developer & Entrepreneur',
-    description: 'Google-certified developer crafting premium digital experiences.',
+    title: 'Salah.dev - Full Stack Developer',
+    description: 'Portfolio of Salah Khaled — a Google-certified Full Stack Developer.',
     images: [`${SITE_URL}/og-image.png`],
   },
 }
@@ -76,7 +88,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" dir="ltr" className="scroll-smooth overflow-x-hidden">
       <head>
         <link rel="canonical" href={SITE_URL} />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}

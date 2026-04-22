@@ -54,11 +54,31 @@ export default function ContactSection() {
   }
 
   const infoCards = [
-    { icon: '📧', label: c.infoCards.email[lang],      value: 'salahkeldinkhaled80@gmail.com', href: 'mailto:salahkeldinkhaled80@gmail.com' },
-    { icon: '📍', label: c.infoCards.location[lang],   value: c.infoCards.locationVal[lang], href: null },
-    { icon: '💼', label: c.infoCards.avail[lang],      value: c.infoCards.availVal[lang],    href: null },
-    { icon: '🕐', label: c.infoCards.response[lang],   value: c.infoCards.responseVal[lang], href: null },
-  ]
+    {
+      icon: "📧",
+      label: c.infoCards.email[lang],
+      value: "info@salahkhaled.com",
+      href: "mailto:info@salahkhaled.com",
+    },
+    {
+      icon: "📍",
+      label: c.infoCards.location[lang],
+      value: c.infoCards.locationVal[lang],
+      href: null,
+    },
+    {
+      icon: "💼",
+      label: c.infoCards.avail[lang],
+      value: c.infoCards.availVal[lang],
+      href: null,
+    },
+    {
+      icon: "🕐",
+      label: c.infoCards.response[lang],
+      value: c.infoCards.responseVal[lang],
+      href: null,
+    },
+  ];
 
   return (
     <section id="contact" className="py-24 bg-dark-card" aria-label="Contact section" ref={sectionRef}>
