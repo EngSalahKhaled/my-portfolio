@@ -87,7 +87,7 @@ function TypingIndicator() {
         <span
           key={i}
           className="w-2 h-2 rounded-full animate-bounce"
-          style={{ background: 'rgba(245,197,24,0.6)', animationDelay: `${i * 150}ms` }}
+          style={{ background: 'rgba(245, 197, 24,0.6)', animationDelay: `${i * 150}ms` }}
           aria-hidden="true"
         />
       ))}
@@ -180,7 +180,7 @@ export default function ChatbotWidget() {
         {isBot && (
           <div
             className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-auto text-xs font-bold"
-            style={{ background: 'linear-gradient(135deg,#FFD700,#F5C518)', color: '#0D0D0D' }}
+            style={{ background: 'linear-gradient(135deg,#F5C518,#F5C518)', color: '#0D0D0D' }}
             aria-hidden="true"
           >S</div>
         )}
@@ -191,7 +191,7 @@ export default function ChatbotWidget() {
             }`}
             style={isBot
               ? { background: '#1A1A1A', border: '1px solid #2A2A2A', color: '#E5E5E5' }
-              : { background: 'linear-gradient(135deg,#FFD700,#F5C518)', color: '#0D0D0D' }
+              : { background: 'linear-gradient(135deg,#F5C518,#F5C518)', color: '#0D0D0D' }
             }
             /* Render **bold** markdown snippets */
             lang={isBot ? lang : undefined}
@@ -213,7 +213,7 @@ export default function ChatbotWidget() {
     return (
       <div
         className="fixed bottom-4 right-4 sm:right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center shadow-lg"
-        style={{ background: 'linear-gradient(135deg,#FFD700 0%,#F5C518 50%,#C09B00 100%)' }}
+        style={{ background: 'linear-gradient(135deg,#F5C518 0%,#F5C518 50%,#C09B00 100%)' }}
         aria-hidden="true"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-6 h-6" style={{ color: '#0D0D0D' }}>
@@ -253,7 +253,7 @@ export default function ChatbotWidget() {
               <div className="relative">
                 <div
                   className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold"
-                  style={{ background: 'linear-gradient(135deg,#FFD700,#C09B00)', color: '#0D0D0D' }}
+                  style={{ background: 'linear-gradient(135deg,#F5C518,#C09B00)', color: '#0D0D0D' }}
                   aria-hidden="true"
                 >S</div>
                 <span
@@ -263,13 +263,13 @@ export default function ChatbotWidget() {
                 />
               </div>
               <div>
-                <p className="text-white text-sm font-semibold leading-none">{cb.title[lang]}</p>
+                <p className="text-text-main text-sm font-semibold leading-none">{cb.title[lang]}</p>
                 <p className="text-emerald-400 text-xs mt-0.5">{cb.online[lang]}</p>
               </div>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="w-7 h-7 rounded-full flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/5 transition-colors"
+              className="w-7 h-7 rounded-full flex items-center justify-center text-gray-500 hover:text-text-main hover:bg-dark-surface transition-colors"
               aria-label={cb.close[lang]}
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
@@ -291,7 +291,7 @@ export default function ChatbotWidget() {
               <div className="flex gap-2 justify-start animate-fade-in">
                 <div
                   className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-auto text-xs font-bold"
-                  style={{ background: 'linear-gradient(135deg,#FFD700,#F5C518)', color: '#0D0D0D' }}
+                  style={{ background: 'linear-gradient(135deg,#F5C518,#F5C518)', color: '#0D0D0D' }}
                   aria-hidden="true"
                 >S</div>
                 <TypingIndicator />
@@ -314,8 +314,8 @@ export default function ChatbotWidget() {
                   className="text-xs px-3 py-1.5 rounded-full whitespace-nowrap flex-shrink-0 transition-colors hover:opacity-80"
                   style={{
                     color: '#F5C518',
-                    border: '1px solid rgba(245,197,24,0.25)',
-                    background: 'rgba(245,197,24,0.05)',
+                    border: '1px solid rgba(245, 197, 24,0.25)',
+                    background: 'rgba(245, 197, 24,0.05)',
                   }}
                 >
                   {prompt}
@@ -336,9 +336,9 @@ export default function ChatbotWidget() {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder={cb.placeholder[lang]}
-              className="flex-1 rounded-xl px-4 py-2 text-sm text-white placeholder-gray-600 focus:outline-none transition-all"
+              className="flex-1 rounded-xl px-4 py-2 text-sm text-text-main placeholder-gray-600 focus:outline-none transition-all"
               style={{ background: '#1A1A1A', border: '1px solid #2A2A2A' }}
-              onFocus={(e) => (e.target.style.borderColor = 'rgba(245,197,24,0.4)')}
+              onFocus={(e) => (e.target.style.borderColor = 'rgba(245, 197, 24,0.4)')}
               onBlur={(e)  => (e.target.style.borderColor = '#2A2A2A')}
               id="chatbot-input"
               aria-label={cb.placeholder[lang]}
@@ -349,7 +349,7 @@ export default function ChatbotWidget() {
               type="submit"
               disabled={!inputValue.trim()}
               className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed hover:brightness-110"
-              style={{ background: 'linear-gradient(135deg,#FFD700,#C09B00)' }}
+              style={{ background: 'linear-gradient(135deg,#F5C518,#C09B00)' }}
               aria-label={isAr ? 'إرسال' : 'Send'}
               id="chatbot-send-btn"
             >
@@ -371,14 +371,14 @@ export default function ChatbotWidget() {
       <button
         onClick={() => setIsOpen((p) => !p)}
         className="fixed bottom-4 right-4 sm:right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 animate-pulse-gold"
-        style={{ background: 'linear-gradient(135deg,#FFD700 0%,#F5C518 50%,#C09B00 100%)' }}
+        style={{ background: 'linear-gradient(135deg,#F5C518 0%,#F5C518 50%,#C09B00 100%)' }}
         aria-label={isOpen ? cb.close[lang] : cb.open[lang]}
         id="chatbot-toggle-btn"
       >
         {/* Unread badge */}
         {hasUnread && !isOpen && (
           <span
-            className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[10px] text-white font-bold flex items-center justify-center"
+            className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[10px] text-text-main font-bold flex items-center justify-center"
             aria-label={isAr ? 'رسالة جديدة' : 'New message'}
           >1</span>
         )}
@@ -400,3 +400,4 @@ export default function ChatbotWidget() {
     </>
   )
 }
+

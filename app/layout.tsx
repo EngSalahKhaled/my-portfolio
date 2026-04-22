@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import { Outfit, JetBrains_Mono } from 'next/font/google'
+import { Outfit, JetBrains_Mono, Tajawal } from 'next/font/google'
 import { LanguageProvider } from '@/lib/i18n/LanguageContext'
-import SecurityWrapper from '@/components/SecurityWrapper'
+import { ThemeProvider } from '@/lib/ThemeContext'
 import './globals.css'
 
 /* ─── Google Fonts ─────────────────────────────────────────────────────────── */
@@ -17,53 +17,78 @@ const jetbrains = JetBrains_Mono({
   display: 'swap',
 })
 
+const tajawal = Tajawal({
+  subsets: ['arabic'],
+  weight: ['400', '500', '700', '800'],
+  variable: '--font-tajawal',
+  display: 'swap',
+})
+
+/* ─── Site URL ─────────────────────────────────────────────────────────────── */
+const SITE_URL = 'https://salahkhaled.dev'
+
 /* ─── SEO Metadata ─────────────────────────────────────────────────────────── */
 export const metadata: Metadata = {
-  title: 'Salah | Front-End Developer & Entrepreneur',
+  metadataBase: new URL(SITE_URL),
+  title: 'Salah Khaled | Front-End Developer & Entrepreneur',
   description:
-    'Portfolio of Salah — a Gemini-certified Front-End Developer and entrepreneur behind INFINITY BRIGHT. Specialising in React, Next.js, and modern web experiences.',
-  keywords: ['Front-End Developer', 'React', 'Next.js', 'TypeScript', 'Portfolio', 'Salah'],
-  authors: [{ name: 'Salah' }],
+    'Portfolio of Salah Khaled — a Google-certified Front-End Developer and entrepreneur behind INFINITY BRIGHT. Specialising in React, Next.js, and modern web experiences.',
+  keywords: [
+    'Front-End Developer', 'React', 'Next.js', 'TypeScript',
+    'Portfolio', 'Salah Khaled', 'Saudi Arabia', 'Web Developer Riyadh',
+    'UI UX Developer', 'Gemini AI', 'Google Certified',
+  ],
+  authors: [{ name: 'Salah Khaled', url: SITE_URL }],
+  creator: 'Salah Khaled',
+  robots: { index: true, follow: true },
   openGraph: {
-    title: 'Salah | Front-End Developer & Entrepreneur',
-    description: 'Crafting premium digital experiences with React, Next.js, and TypeScript.',
+    title: 'Salah Khaled | Front-End Developer & Entrepreneur',
+    description: 'Google-certified Front-End Developer crafting premium digital experiences.',
+    url: SITE_URL,
+    siteName: 'Salah Khaled Portfolio',
     type: 'website',
+    locale: 'en_US',
+    images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: 'Salah Khaled' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Salah Khaled | Front-End Developer & Entrepreneur',
+    description: 'Google-certified developer crafting premium digital experiences.',
+    images: [`${SITE_URL}/og-image.png`],
   },
 }
 
+/* ─── JSON-LD Schema ────────────────────────────────────────────────────────── */
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Salah Khaled',
+  url: SITE_URL,
+  jobTitle: 'Front-End Developer & Entrepreneur',
+  sameAs: ['https://github.com/EngSalahKhaled'],
+  knowsAbout: ['React', 'Next.js', 'TypeScript', 'Generative AI', 'Google Gemini API'],
+  address: { '@type': 'PostalAddress', addressLocality: 'Riyadh', addressCountry: 'SA' },
+}
+
 /* ─── Root Layout ───────────────────────────────────────────────────────────── */
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    // lang/dir are updated client-side by LanguageContext — start with en/ltr
     <html lang="en" dir="ltr" className="scroll-smooth overflow-x-hidden">
       <head>
-        {/* Tajawal — premium Arabic font */}
-        <link
-          rel="preconnect"
-          href="https://fonts.googleapis.com"
-        />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap"
-          rel="stylesheet"
+        <link rel="canonical" href={SITE_URL} />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
         />
       </head>
-      <body
-        className={`${outfit.variable} ${jetbrains.variable} font-sans bg-dark text-white antialiased overflow-x-hidden`}
-      >
-        {/* LanguageProvider wraps all; provides lang + toggleLang everywhere */}
-        <LanguageProvider>
-          <SecurityWrapper />
-          {children}
-        </LanguageProvider>
+      <body className={`${outfit.variable} ${jetbrains.variable} ${tajawal.variable} font-sans antialiased overflow-x-hidden`}>
+        <ThemeProvider>
+          <LanguageProvider>
+            {/* SecurityWrapper removed — blocks devtools, hurts portfolio credibility */}
+            {children}
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

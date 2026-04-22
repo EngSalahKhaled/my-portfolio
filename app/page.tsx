@@ -1,54 +1,92 @@
 /**
  * app/page.tsx — Main portfolio page
  *
- * Assembles all section components into the full single-page portfolio.
- * Component order:
- *   Navbar → Hero → Projects → Business → Skills → Contact → Footer
- *
- * The AI Chatbot widget is rendered globally (fixed positioning) so it
- * persists across scroll positions.
+ * Performance strategy:
+ * - HeroSection + ProjectsSection: static (above-fold critical)
+ * - All below-fold sections: dynamically imported (code-split)
+ * - ChatbotWidget: ssr:false — removed from server bundle entirely
+ * - ReadingProgress: lazy with ssr:false (needs window)
  */
 
+import dynamic from 'next/dynamic'
 import Navbar          from '@/components/Navbar'
 import HeroSection     from '@/components/HeroSection'
+import ScrollReveal    from '@/components/ScrollReveal'
 import ProjectsSection from '@/components/ProjectsSection'
-import BusinessSection from '@/components/BusinessSection'
-import SkillsSection   from '@/components/SkillsSection'
-import ContactSection  from '@/components/ContactSection'
-import Footer          from '@/components/Footer'
-import ChatbotWidget   from '@/components/ChatbotWidget'
+
+// ── Below-fold: dynamic to reduce initial JS ──────────────────────────────
+const ToolMarquee           = dynamic(() => import('@/components/ToolMarquee'),           { ssr: false })
+const BusinessSection       = dynamic(() => import('@/components/BusinessSection'))
+const SkillsSection         = dynamic(() => import('@/components/SkillsSection'))
+const CertificationsSection = dynamic(() => import('@/components/CertificationsSection'))
+const ContactSection        = dynamic(() => import('@/components/ContactSection'))
+const Footer                = dynamic(() => import('@/components/Footer'))
+
+// ── Fully client-only: no SSR ──────────────────────────────────────────────
+const ReadingProgress = dynamic(() => import('@/components/ReadingProgress'), { ssr: false })
+const ChatbotWidget   = dynamic(() => import('@/components/ChatbotWidget'), {
+  ssr: false,
+  loading: () => (
+    <div
+      className="fixed bottom-4 right-4 sm:right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center"
+      style={{ background: 'linear-gradient(135deg,#F5C518,#C09B00)' }}
+      aria-hidden="true"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-6 h-6" style={{ color: '#0D0D0D' }}>
+        <path fillRule="evenodd" d="M10 2c-2.236 0-4.43.18-6.57.524C1.993 2.755 1 4.014 1 5.426v5.148c0 1.413.993 2.67 2.43 2.902.848.137 1.705.248 2.57.331v3.443a.75.75 0 001.28.53l3.58-3.579a.78.78 0 01.527-.224 41.202 41.202 0 005.183-.5c1.437-.232 2.43-1.49 2.43-2.903V5.426c0-1.413-.993-2.67-2.43-2.902A41.289 41.289 0 0010 2zm0 7a1 1 0 100-2 1 1 0 000 2zM8 8a1 1 0 11-2 0 1 1 0 012 0zm5 1a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+      </svg>
+    </div>
+  ),
+})
 
 export default function Home() {
   return (
     <>
-      {/* ── Navigation ───────────────────────────────────────────────────────── */}
+      {/* Gold reading-progress line at top */}
+      <ReadingProgress />
+
+      {/* ── Navigation ───────────────────────────────────────────────────── */}
       <Navbar />
 
-      {/* ── Main content ─────────────────────────────────────────────────────── */}
       <main>
-        {/* 1. Hero with typewriter and avatar card */}
+        {/* 1. Hero — above fold, static import */}
         <HeroSection />
 
-        {/* 2. About / brief intro anchor target */}
+        {/* AI Workflow Marquee */}
+        <ToolMarquee />
+
+        {/* About anchor */}
         <span id="about" aria-hidden="true" />
 
-        {/* 3. Filterable project gallery */}
-        <ProjectsSection />
+        {/* 2. Projects */}
+        <ScrollReveal>
+          <ProjectsSection />
+        </ScrollReveal>
 
-        {/* 4. Business showcase (INFINITY BRIGHT) + career timeline */}
-        <BusinessSection />
+        {/* 3. Business */}
+        <ScrollReveal>
+          <BusinessSection />
+        </ScrollReveal>
 
-        {/* 5. Animated skill bars */}
-        <SkillsSection />
+        {/* 4. Skills */}
+        <ScrollReveal>
+          <SkillsSection />
+        </ScrollReveal>
 
-        {/* 6. Contact form */}
-        <ContactSection />
+        {/* 5. Certifications */}
+        <ScrollReveal>
+          <CertificationsSection />
+        </ScrollReveal>
+
+        {/* 6. Contact */}
+        <ScrollReveal>
+          <ContactSection />
+        </ScrollReveal>
       </main>
 
-      {/* ── Footer ───────────────────────────────────────────────────────────── */}
       <Footer />
 
-      {/* ── AI Chatbot (fixed / floating) ────────────────────────────────────── */}
+      {/* Floating chatbot — fully lazy */}
       <ChatbotWidget />
     </>
   )

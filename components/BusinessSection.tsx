@@ -50,13 +50,13 @@ function TimelineCard({ item, index }: TimelineCardProps) {
       {/* Card */}
       <div className="glass-card p-5 hover:border-yellow-400/30 transition-all duration-300 hover:-translate-y-0.5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-          <h4 className="text-white font-semibold leading-tight">{item.title[lang]}</h4>
+          <h4 className="text-text-main font-semibold leading-tight">{item.title[lang]}</h4>
           <span className="text-xs font-mono flex-shrink-0" style={{ color: '#F5C518' }}>{item.year}</span>
         </div>
-        <p className="text-sm font-medium mb-2" style={{ color: 'rgba(245,197,24,0.8)' }}>
+        <p className="text-sm font-medium mb-2" style={{ color: 'rgba(245, 197, 24,0.8)' }}>
           {item.company[lang]}
         </p>
-        <p className="text-gray-400 text-sm leading-relaxed">{item.desc[lang]}</p>
+        <p className="text-text-muted text-sm leading-relaxed">{item.desc[lang]}</p>
         <div className="flex flex-wrap gap-1.5 mt-3">
           {item.tags.map((tag) => (
             <span key={tag} className="skill-tag">{tag}</span>
@@ -67,25 +67,25 @@ function TimelineCard({ item, index }: TimelineCardProps) {
   )
 }
 
-/* ─── INFINITY BRIGHT Card ───────────────────────────────────────────────────*/
-function InfinityBrightCard() {
+/* ─── MASHHOUR HUB Card ───────────────────────────────────────────────────*/
+function MashhourHubCard() {
   const { lang } = useLanguage()
   // ✅ FIX: ref typed as HTMLDivElement — matches the <div> it attaches to
   const { ref, visible } = useScrollReveal<HTMLDivElement>()
-  const ib = tr.business.infinityBright
+  const mh = tr.business.mashhourHub
 
   const services = [
-    { icon: '🛡️', label: ib.services.ppf[lang] },
-    { icon: '✨', label: ib.services.ceramic[lang] },
-    { icon: '🪟', label: ib.services.tint[lang] },
-    { icon: '🚗', label: ib.services.detailing[lang] },
+    { icon: '💻', label: mh.services.ppf[lang] },
+    { icon: '📝', label: mh.services.ceramic[lang] },
+    { icon: '🔐', label: mh.services.tint[lang] },
+    { icon: '📁', label: mh.services.detailing[lang] },
   ]
 
   const stats = [
-    { value: '2022', label: ib.stats.founded[lang] },
-    { value: '200+', label: ib.stats.clients[lang] },
-    { value: '3M',   label: ib.stats.certified[lang] },
-    { value: ib.stats.riyadh[lang], label: ib.stats.location[lang] },
+    { value: 'React', label: mh.stats.founded[lang] },
+    { value: '15+', label: mh.stats.clients[lang] },
+    { value: '99.9%',   label: mh.stats.certified[lang] },
+    { value: mh.stats.riyadh[lang], label: mh.stats.location[lang] },
   ]
 
   return (
@@ -94,40 +94,40 @@ function InfinityBrightCard() {
       className={`relative overflow-hidden rounded-3xl transition-all duration-700 ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
       }`}
-      id="infinity-bright-card"
+      id="mashhour-hub-card"
     >
       {/* Background */}
       <div className="absolute inset-0"
-        style={{ background: 'linear-gradient(135deg,#0D0D0D 0%,#1a1400 40%,#2a1f00 100%)' }}
+        style={{ background: 'var(--business-card-bg)' }}
         aria-hidden="true" />
       <div className="absolute inset-0 grid-lines-bg opacity-20" aria-hidden="true" />
       <div className="absolute -top-8 -right-8 w-48 h-48 rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle,rgba(245,197,24,0.2) 0%,transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle,rgba(245, 197, 24,0.2) 0%,transparent 70%)' }}
         aria-hidden="true" />
 
       <div className="relative z-10 p-8 md:p-10">
         {/* Brand header */}
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black flex-shrink-0"
-            style={{ background: 'linear-gradient(135deg,#FFD700 0%,#F5C518 50%,#C09B00 100%)', color: '#0D0D0D' }}
-            aria-hidden="true">∞</div>
+            style={{ background: 'linear-gradient(135deg,#F5C518 0%,#F5C518 50%,#C09B00 100%)', color: '#0D0D0D' }}
+            aria-hidden="true">MH</div>
 
           <div>
-            <h3 className="text-2xl font-bold text-white tracking-wide">{ib.name[lang]}</h3>
-            <p className="text-sm font-medium mt-0.5" style={{ color: '#F5C518' }}>{ib.tagline[lang]}</p>
+            <h3 className="text-2xl font-bold text-text-main tracking-wide">{mh.name[lang]}</h3>
+            <p className="text-sm font-medium mt-0.5" style={{ color: '#F5C518' }}>{mh.tagline[lang]}</p>
           </div>
 
           <div className="sm:ml-auto">
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border"
-              style={{ borderColor: 'rgba(245,197,24,0.3)', backgroundColor: 'rgba(245,197,24,0.1)', color: '#F5C518' }}>
+              style={{ borderColor: 'rgba(245, 197, 24,0.3)', backgroundColor: 'rgba(245, 197, 24,0.1)', color: '#F5C518' }}>
               <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" aria-hidden="true" />
-              {ib.badge[lang]}
+              {mh.badge[lang]}
             </span>
           </div>
         </div>
 
         {/* Description */}
-        <p className="text-gray-300 leading-relaxed mb-6">{ib.desc[lang]}</p>
+        <p className="text-text-muted leading-relaxed mb-6">{mh.desc[lang]}</p>
 
         {/* Services */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
@@ -136,7 +136,7 @@ function InfinityBrightCard() {
               className="flex flex-col items-center gap-2 p-3 rounded-xl border text-center transition-colors hover:border-yellow-400/30"
               style={{ borderColor: '#2A2A2A', backgroundColor: 'rgba(255,255,255,0.02)' }}>
               <span className="text-2xl" aria-hidden="true">{icon}</span>
-              <span className="text-xs text-gray-400 font-medium">{label}</span>
+              <span className="text-xs text-text-muted font-medium">{label}</span>
             </div>
           ))}
         </div>
@@ -145,7 +145,7 @@ function InfinityBrightCard() {
         <div className="flex flex-wrap gap-6 pt-4 border-t border-dark-border">
           {stats.map(({ value, label }) => (
             <div key={label}>
-              <p className="text-white font-bold text-lg leading-none">{value}</p>
+              <p className="text-text-main font-bold text-lg leading-none">{value}</p>
               <p className="text-gray-500 text-xs mt-1">{label}</p>
             </div>
           ))}
@@ -179,16 +179,16 @@ export default function BusinessSection() {
             {tr.business.title[lang]}{' '}
             <span className="gradient-text">{tr.business.titleAccent[lang]}</span>
           </h2>
-          <p className="text-gray-400 max-w-xl leading-relaxed">{tr.business.subtitle[lang]}</p>
+          <p className="text-text-muted max-w-xl leading-relaxed">{tr.business.subtitle[lang]}</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {/* INFINITY BRIGHT card */}
-          <InfinityBrightCard />
+          {/* Mashhour Hub card */}
+          <MashhourHubCard />
 
           {/* Career timeline */}
           <div className="space-y-6" aria-label="Career timeline">
-            <h3 className="text-lg font-semibold text-white mb-2">
+            <h3 className="text-lg font-semibold text-text-main mb-2">
               {tr.business.timeline.title[lang]}
             </h3>
             <div className="relative">
@@ -205,3 +205,4 @@ export default function BusinessSection() {
     </section>
   )
 }
+

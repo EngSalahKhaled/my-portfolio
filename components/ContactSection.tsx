@@ -39,18 +39,22 @@ export default function ContactSection() {
 
   const c = tr.contact
   const INPUT_CLASS =
-    'w-full rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none transition-all duration-200'
-  const INPUT_STYLE = {
-    background: '#1A1A1A',
-    border: '1px solid #2A2A2A',
+    'w-full rounded-xl px-4 py-3 text-sm focus:outline-none transition-all duration-200'
+  const getInputStyle = () => ({
+    background: 'var(--input-bg)',
+    border: '1px solid var(--input-border)',
+    color: 'var(--text-main)',
+  })
+
+  const onFocusInput = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    e.target.style.borderColor = 'var(--input-border-focus)'
   }
-  const INPUT_FOCUS_STYLE = {
-    '--tw-ring-color': 'rgba(245,197,24,0.2)',
-    borderColor: 'rgba(245,197,24,0.5)',
-  } as React.CSSProperties
+  const onBlurInput = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    e.target.style.borderColor = 'var(--input-border)'
+  }
 
   const infoCards = [
-    { icon: '📧', label: c.infoCards.email[lang],      value: 'salahkeldinkhaled80@gmail.com',              href: 'mailto:salah@dev.sa' },
+    { icon: '📧', label: c.infoCards.email[lang],      value: 'salahkeldinkhaled80@gmail.com', href: 'mailto:salahkeldinkhaled80@gmail.com' },
     { icon: '📍', label: c.infoCards.location[lang],   value: c.infoCards.locationVal[lang], href: null },
     { icon: '💼', label: c.infoCards.avail[lang],      value: c.infoCards.availVal[lang],    href: null },
     { icon: '🕐', label: c.infoCards.response[lang],   value: c.infoCards.responseVal[lang], href: null },
@@ -68,7 +72,7 @@ export default function ContactSection() {
           <h2 className="section-title">
             {c.title[lang]} <span className="gradient-text">{c.titleAccent[lang]}</span>
           </h2>
-          <p className="text-gray-400 max-w-lg mx-auto">{c.subtitle[lang]}</p>
+          <p className="text-text-muted max-w-lg mx-auto">{c.subtitle[lang]}</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 max-w-5xl mx-auto">
@@ -79,11 +83,11 @@ export default function ContactSection() {
               <div key={label} className="flex items-start gap-4 glass-card p-4">
                 <span className="text-xl mt-0.5" aria-hidden="true">{icon}</span>
                 <div>
-                  <p className="text-gray-500 text-xs font-medium uppercase tracking-wide">{label}</p>
+                  <p className="text-text-muted text-xs font-medium uppercase tracking-wide">{label}</p>
                   {href ? (
-                    <a href={href} className="text-white font-medium text-sm hover:text-yellow-400 transition-colors">{value}</a>
+                    <a href={href} className="text-text-main font-medium text-sm hover:text-gold transition-colors">{value}</a>
                   ) : (
-                    <p className="text-white font-medium text-sm">{value}</p>
+                    <p className="text-text-main font-medium text-sm">{value}</p>
                   )}
                 </div>
               </div>
@@ -102,8 +106,8 @@ export default function ContactSection() {
                     style={{ background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.3)' }}>
                     ✅
                   </div>
-                  <h3 className="text-white font-bold text-xl">{c.success.title[lang]}</h3>
-                  <p className="text-gray-400 text-sm">{c.success.desc[lang]}</p>
+                  <h3 className="text-text-main font-bold text-xl">{c.success.title[lang]}</h3>
+                  <p className="text-text-muted text-sm">{c.success.desc[lang]}</p>
                   <button onClick={() => setSubmitted(false)} className="btn-outline text-sm" id="contact-send-another-btn">
                     {c.success.again[lang]}
                   </button>
@@ -112,46 +116,46 @@ export default function ContactSection() {
                 <form onSubmit={handleSubmit} className="space-y-5" aria-label="Contact form">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label htmlFor="contact-name" className="text-gray-400 text-xs font-medium uppercase tracking-wide">
+                      <label htmlFor="contact-name" className="text-text-muted text-xs font-medium uppercase tracking-wide">
                         {c.form.nameLabel[lang]}
                       </label>
                       <input
                         id="contact-name" name="name" type="text" required
                         placeholder={c.form.namePlaceholder[lang]}
                         value={formState.name} onChange={handleChange}
-                        className={INPUT_CLASS} style={INPUT_STYLE}
+                        className={INPUT_CLASS} style={getInputStyle()}
                         autoComplete="name"
-                        onFocus={(e) => (e.target.style.borderColor = 'rgba(245,197,24,0.5)')}
-                        onBlur={(e) => (e.target.style.borderColor = '#2A2A2A')}
+                        onFocus={onFocusInput}
+                        onBlur={onBlurInput}
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label htmlFor="contact-email" className="text-gray-400 text-xs font-medium uppercase tracking-wide">
+                      <label htmlFor="contact-email" className="text-text-muted text-xs font-medium uppercase tracking-wide">
                         {c.form.emailLabel[lang]}
                       </label>
                       <input
                         id="contact-email" name="email" type="email" required
                         placeholder={c.form.emailPlaceholder[lang]}
                         value={formState.email} onChange={handleChange}
-                        className={INPUT_CLASS} style={INPUT_STYLE}
+                        className={INPUT_CLASS} style={getInputStyle()}
                         autoComplete="email"
-                        onFocus={(e) => (e.target.style.borderColor = 'rgba(245,197,24,0.5)')}
-                        onBlur={(e) => (e.target.style.borderColor = '#2A2A2A')}
+                        onFocus={onFocusInput}
+                        onBlur={onBlurInput}
                       />
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
-                    <label htmlFor="contact-message" className="text-gray-400 text-xs font-medium uppercase tracking-wide">
+                    <label htmlFor="contact-message" className="text-text-muted text-xs font-medium uppercase tracking-wide">
                       {c.form.messageLabel[lang]}
                     </label>
                     <textarea
                       id="contact-message" name="message" required rows={5}
                       placeholder={c.form.messagePlaceholder[lang]}
                       value={formState.message} onChange={handleChange}
-                      className={`${INPUT_CLASS} resize-none`} style={INPUT_STYLE}
-                      onFocus={(e) => (e.target.style.borderColor = 'rgba(245,197,24,0.5)')}
-                      onBlur={(e) => (e.target.style.borderColor = '#2A2A2A')}
+                      className={`${INPUT_CLASS} resize-none`} style={getInputStyle()}
+                      onFocus={onFocusInput}
+                      onBlur={onBlurInput}
                     />
                   </div>
 

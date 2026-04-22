@@ -1,9 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
+import Image from "next/image";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { translations as tr } from "@/lib/i18n/translations";
 import profileImg from "@/images/profile.jpg";
+import FloatingIcons from "./FloatingIcons";
+import { useInView, useCountUp } from "@/lib/hooks/useInView";
 
 /* ─── Typewriter hook ────────────────────────────────────────────────────────*/
 function useTypewriter(phrases: readonly string[], speed = 80, pause = 2000) {
@@ -45,23 +48,27 @@ function useTypewriter(phrases: readonly string[], speed = 80, pause = 2000) {
   return displayed;
 }
 
-/* ─── Scroll-reveal hook ─────────────────────────────────────────────────────*/
-function useScrollReveal(threshold = 0.15) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setVisible(true);
-      },
-      { threshold },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [threshold]);
-  return { ref, visible };
+/* ─── Stat Card with count-up animation ─────────────────────────────────────*/
+function StatCard({ value, suffix, label, active, delay }: {
+  value: number; suffix: string; label: string; active: boolean; delay: number
+}) {
+  const count = useCountUp(value, 900, active);
+  return (
+    <div
+      className="text-center"
+      style={{
+        opacity: active ? 1 : 0,
+        transform: active ? 'translateY(0)' : 'translateY(12px)',
+        transition: 'opacity 0.4s ease, transform 0.4s ease',
+        transitionDelay: `${delay}ms`,
+      }}
+    >
+      <p className="text-3xl sm:text-4xl font-bold gradient-text">
+        {count}{suffix}
+      </p>
+      <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>{label}</p>
+    </div>
+  );
 }
 
 /* ─── Hero Section ───────────────────────────────────────────────────────────*/
@@ -72,7 +79,7 @@ export default function HeroSection() {
   // fires every render → infinite loop.
   const phrases = useMemo(() => tr.hero.typewriterPhrases[lang], [lang]);
   const typed = useTypewriter(phrases);
-  const { ref: statsRef, visible: statsVisible } = useScrollReveal();
+  const { ref: statsRef, inView: statsVisible } = useInView(0.15);
 
   const stats = [
     { value: 3, suffix: "+", label: tr.hero.stats.yearsExp[lang] },
@@ -92,7 +99,7 @@ export default function HeroSection() {
         className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(245,197,24,0.06) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(245, 197, 24,0.06) 0%, transparent 70%)",
         }}
         aria-hidden="true"
       />
@@ -100,10 +107,12 @@ export default function HeroSection() {
         className="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(245,197,24,0.04) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(245, 197, 24,0.04) 0%, transparent 70%)",
         }}
         aria-hidden="true"
       />
+
+      <FloatingIcons />
 
       <div className="section-wrapper w-full py-20 md:py-28">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -118,8 +127,8 @@ export default function HeroSection() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium animate-pulse-gold transition-all duration-200 hover:brightness-125 hover:scale-105"
               style={{
-                borderColor: "rgba(245,197,24,0.3)",
-                background: "rgba(245,197,24,0.05)",
+                borderColor: "rgba(245, 197, 24,0.3)",
+                background: "rgba(245, 197, 24,0.05)",
                 color: "#F5C518",
               }}
               id="gemini-badge"
@@ -153,7 +162,7 @@ export default function HeroSection() {
 
             {/* Name */}
             <div>
-              <p className="text-gray-400 text-lg font-medium mb-2">
+              <p className="text-text-muted text-lg font-medium mb-2">
                 {tr.hero.greeting[lang]}
               </p>
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-none">
@@ -164,7 +173,7 @@ export default function HeroSection() {
             {/* Typewriter */}
             <div className="h-12 flex items-center" aria-live="polite">
               <p
-                className={`text-xl sm:text-2xl text-gray-300 ${isAr ? "font-sans" : "font-mono"}`}
+                className={`text-xl sm:text-2xl text-text-muted ${isAr ? "font-sans" : "font-mono"}`}
               >
                 {typed}
                 <span className="typewriter-cursor" aria-hidden="true" />
@@ -172,7 +181,7 @@ export default function HeroSection() {
             </div>
 
             {/* Bio */}
-            <p className="text-gray-400 text-lg leading-relaxed max-w-lg">
+            <p className="text-text-muted text-lg leading-relaxed max-w-lg">
               {isAr ? (
                 <>
                   أبني تجارب ويب{" "}
@@ -233,6 +242,7 @@ export default function HeroSection() {
                 {
                   href: "https://github.com",
                   label: "GitHub",
+                  color: "var(--text-main)",
                   icon: (
                     <svg
                       viewBox="0 0 24 24"
@@ -246,6 +256,7 @@ export default function HeroSection() {
                 {
                   href: "https://linkedin.com",
                   label: "LinkedIn",
+                  color: "#0A66C2",
                   icon: (
                     <svg
                       viewBox="0 0 24 24"
@@ -259,6 +270,7 @@ export default function HeroSection() {
                 {
                   href: "https://wa.me/+966500438424",
                   label: "WhatsApp",
+                  color: "#25D366",
                   icon: (
                     <svg
                       viewBox="0 0 24 24"
@@ -272,6 +284,7 @@ export default function HeroSection() {
                 {
                   href: "https://facebook.com/",
                   label: "Facebook",
+                  color: "#1877F2",
                   icon: (
                     <svg
                       viewBox="0 0 24 24"
@@ -282,15 +295,28 @@ export default function HeroSection() {
                     </svg>
                   ),
                 },
-              ].map(({ href, label, icon }) => (
+              ].map(({ href, label, icon, color }) => (
                 <a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-10 h-10 rounded-xl border flex items-center justify-center text-gray-500 hover:text-yellow-400 hover:bg-yellow-400/5 transition-all duration-200"
-                  style={{ borderColor: "#2A2A2A" }}
+                  className="w-10 h-10 rounded-xl border flex items-center justify-center transition-all duration-300 hover:-translate-y-1"
+                  style={{
+                    borderColor: "var(--social-border)",
+                    color: color,
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = color;
+                    e.currentTarget.style.backgroundColor = `${color}15`;
+                    e.currentTarget.style.boxShadow = `0 4px 12px ${color}30`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = "var(--social-border)";
+                    e.currentTarget.style.backgroundColor = "transparent";
+                    e.currentTarget.style.boxShadow = "none";
+                  }}
                 >
                   {icon}
                 </a>
@@ -305,32 +331,32 @@ export default function HeroSection() {
             <div className="relative animate-float">
               <div
                 className="absolute inset-0 rounded-3xl blur-2xl scale-105 animate-pulse"
-                style={{ background: "rgba(245,197,24,0.15)" }}
+                style={{ background: "rgba(245, 197, 24,0.15)" }}
                 aria-hidden="true"
               />
               <div className="relative w-72 h-72 sm:w-80 sm:h-80 rounded-3xl overflow-hidden gold-border-animated">
                 <div
                   className="w-full h-full flex flex-col items-center justify-center gap-3 pt-2"
                   style={{
-                    background:
-                      "linear-gradient(145deg,#1A1A1A 0%,#0D0D0D 100%)",
+                    background: "var(--hero-card-bg)",
                   }}
                 >
                   <div
                     className="w-36 h-36 sm:w-40 sm:h-40 rounded-full p-1 shadow-[0_0_25px_rgba(245,197,24,0.4)] transition-transform duration-500 hover:scale-105"
                     style={{
-                      background: "linear-gradient(135deg,#FFD700 0%,#F5C518 50%,#C09B00 100%)",
+                      background: "linear-gradient(135deg,#F5C518 0%,#F5C518 50%,#C09B00 100%)",
                     }}
                   >
-                    <img
-                      src={profileImg.src}
+                    <Image
+                      src={profileImg}
                       alt="Salah Khaled"
                       className="w-full h-full object-cover rounded-full border-[3px]"
-                      style={{ borderColor: "#0D0D0D" }}
+                      style={{ borderColor: "var(--dark-bg)" }}
+                      priority
                     />
                   </div>
                   <div className="text-center mt-2">
-                    <p className="text-white font-bold text-2xl tracking-wide">
+                    <p className="text-text-main font-bold text-2xl tracking-wide">
                       Salah
                     </p>
                     <p
@@ -346,7 +372,7 @@ export default function HeroSection() {
                 className="absolute -top-6 -right-2 sm:-top-4 sm:-right-4 glass-card px-3 py-2 animate-bounce-subtle shadow-xl"
                 aria-hidden="true"
               >
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-text-muted">
                   {tr.hero.availableFor[lang]}
                 </p>
                 <p className="text-sm font-bold" style={{ color: "#F5C518" }}>
@@ -357,8 +383,8 @@ export default function HeroSection() {
                 className="absolute -bottom-8 -left-2 sm:-bottom-4 sm:-left-4 glass-card px-3 py-2 shadow-xl"
                 aria-hidden="true"
               >
-                <p className="text-xs text-gray-400">{tr.hero.basedIn[lang]}</p>
-                <p className="text-white text-sm font-bold">
+                <p className="text-xs text-text-muted">{tr.hero.basedIn[lang]}</p>
+                <p className="text-text-main text-sm font-bold">
                   {tr.hero.location[lang]}
                 </p>
               </div>
@@ -366,23 +392,13 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Stats */}
+        {/* Stats — animated count-up */}
         <div
-          ref={statsRef}
+          ref={statsRef as React.RefObject<HTMLDivElement>}
           className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-20 pt-10 border-t border-dark-border"
         >
           {stats.map(({ value, suffix, label }, i) => (
-            <div
-              key={label}
-              className={`text-center transition-all duration-700 ${statsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-              style={{ transitionDelay: `${i * 100}ms` }}
-            >
-              <p className="text-3xl sm:text-4xl font-bold gradient-text">
-                {value}
-                {suffix}
-              </p>
-              <p className="text-gray-500 text-sm mt-1">{label}</p>
-            </div>
+            <StatCard key={label} value={value} suffix={suffix} label={label} active={statsVisible} delay={i * 120} />
           ))}
         </div>
       </div>
@@ -400,3 +416,4 @@ export default function HeroSection() {
     </section>
   );
 }
+

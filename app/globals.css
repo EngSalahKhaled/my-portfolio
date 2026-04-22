@@ -4,92 +4,144 @@
 
 /* ─── CSS Custom Properties ──────────────────────────────────────────────────
    Single source of truth for brand tokens used throughout components   */
-:root {
-  --gold: #F5C518;
-  --gold-light: #FFD700;
-  --gold-dark: #C09B00;
+:root, [data-mode="dark"] {
+  --theme-primary: #F5C518;
+  --theme-light: #FFD700;
+  --theme-dark: #C09B00;
+  --theme-rgb: 245, 197, 24;
+
   --dark-bg: #0D0D0D;
   --dark-card: #141414;
   --dark-surface: #1A1A1A;
   --dark-border: #2A2A2A;
+  --dark-muted: #A3A3A3;
+  --text-main: #E5E5E5;
+  --text-muted: #9CA3AF;
+  
+  --dark-card-rgba: rgba(20, 20, 20, 0.75);
+
+  /* ── Component-specific semantic tokens ── */
+  --input-bg: #1A1A1A;
+  --input-border: #2A2A2A;
+  --input-border-focus: rgba(245, 197, 24, 0.5);
+  --social-border: #2A2A2A;
+  --skill-track: #3A3A3A;
+  --hero-card-bg: linear-gradient(145deg, #1A1A1A 0%, #0D0D0D 100%);
+  --business-card-bg: linear-gradient(135deg, #0D0D0D 0%, #1a1400 40%, #2a1f00 100%);
+  --project-category-bg: rgba(0, 0, 0, 0.5);
+  --project-category-border: rgba(255, 255, 255, 0.1);
+  
   --radius: 12px;
   --radius-lg: 20px;
 }
 
-/* ─── Base Reset & Defaults ────────────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
+[data-mode="light"] {
+  --dark-bg: #FAFAF9;
+  --dark-card: #FFFFFF;
+  --dark-surface: #F5F5F4;
+  --dark-border: #E7E5E4;
+  --dark-muted: #D6D3D1; 
+  --text-main: #1C1917;
+  --text-muted: #57534E;
+  
+  --dark-card-rgba: rgba(255, 255, 255, 0.85);
+
+  /* ── Component-specific semantic tokens (light overrides) ── */
+  --input-bg: #FFFFFF;
+  --input-border: #D6D3D1;
+  --input-border-focus: rgba(245, 197, 24, 0.6);
+  --social-border: #D6D3D1;
+  --skill-track: #E7E5E4;
+  --hero-card-bg: linear-gradient(145deg, #FFFBEB 0%, #FEF3C7 100%);
+  --business-card-bg: linear-gradient(135deg, #FFFBEB 0%, #FEF9C3 50%, #FFF7CD 100%);
+  --project-category-bg: rgba(255, 255, 255, 0.8);
+  --project-category-border: rgba(0, 0, 0, 0.08);
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   ZERO-LAG THEME SWITCH
+   Applied for 2 frames during mode toggle to suppress all transitions.
+   ThemeContext adds/removes this class around data-mode setAttribute.
+   ──────────────────────────────────────────────────────────────────────────── */
+.no-transition,
+.no-transition * {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* ─── Base Reset ─────────────────────────────────────────────────────────────*/
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeSpeed;
 }
 
 body {
   background-color: var(--dark-bg);
-  color: #E5E5E5;
+  color: var(--text-main);
   overflow-x: hidden;
+  /* ⚠️ NO transition on body — causes mass repaint of every child element */
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--dark-card); }
 ::-webkit-scrollbar-thumb {
-  background: var(--gold-dark);
+  background: var(--theme-dark);
   border-radius: 3px;
 }
-::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+::-webkit-scrollbar-thumb:hover { background: var(--theme-primary); }
 
-/* ─── Utility Layer ───────────────────────────────────────────────────────────
-   NOTE: @apply only works with standard Tailwind utilities.
-   Custom color tokens using DEFAULT suffix (e.g. text-dark-DEFAULT) are
-   NOT supported in @apply — use direct CSS or inline styles instead.    */
+/* ─── Utility Layer ─────────────────────────────────────────────────────────── */
 @layer components {
 
   /* Gold accent text */
-  .text-gold { color: var(--gold); }
+  .text-gold { color: var(--theme-primary); }
 
-  /* Glassmorphism card */
+  /* Glassmorphism card
+     ⚠️ backdrop-filter is THE most expensive CSS property.
+     Only apply it on the card, never on parent containers. */
   .glass-card {
-    background: rgba(20, 20, 20, 0.7);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: var(--dark-card-rgba);
     border: 1px solid var(--dark-border);
     border-radius: var(--radius-lg);
+    /* backdrop-filter only when GPU compositing is worth it (medium+ screens) */
+    @apply supports-[backdrop-filter]:backdrop-blur-sm;
+    contain: layout paint; /* skip layout of siblings during repaint */
   }
 
-  /* Primary CTA button — FIX: replaced text-dark-DEFAULT with text-[#0D0D0D] */
+  /* Primary CTA button */
   .btn-primary {
     @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm
-           transition-all duration-300
-           hover:shadow-[0_0_30px_rgba(245,197,24,0.4)]
+           transition-[box-shadow,transform] duration-200
+           hover:shadow-[0_0_25px_rgba(var(--theme-rgb),0.35)]
            hover:-translate-y-0.5 active:scale-95;
-    background: linear-gradient(135deg, #FFD700 0%, #F5C518 50%, #C09B00 100%);
+    background: linear-gradient(135deg, var(--theme-light) 0%, var(--theme-primary) 50%, var(--theme-dark) 100%);
     color: #0D0D0D;
   }
 
   .btn-primary:hover {
-    background: linear-gradient(135deg, #FFD700 0%, #FFD700 100%);
+    background: linear-gradient(135deg, var(--theme-light) 0%, var(--theme-light) 100%);
   }
 
   /* Outline / ghost button */
   .btn-outline {
     @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm
-           border transition-all duration-300
+           border transition-[border-color,background-color,transform] duration-200
            hover:-translate-y-0.5 active:scale-95;
-    border-color: #8B6914;
-    color: var(--gold);
+    border-color: var(--theme-dark);
+    color: var(--theme-primary);
   }
 
   .btn-outline:hover {
-    border-color: var(--gold);
-    background-color: rgba(245, 197, 24, 0.1);
+    border-color: var(--theme-primary);
+    background-color: rgba(var(--theme-rgb), 0.1);
   }
 
   /* Section wrapper */
   .section-wrapper {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
   /* Section heading */
@@ -99,7 +151,7 @@ body {
 
   /* Gold gradient text */
   .gradient-text {
-    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+    background: linear-gradient(135deg, var(--theme-light) 0%, var(--theme-primary) 50%, var(--theme-dark) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -107,69 +159,90 @@ body {
 
   /* Glow underline for nav links */
   .nav-link {
-    @apply relative text-gray-400 hover:text-yellow-400 transition-colors duration-200 text-sm font-medium;
+    @apply relative text-text-muted transition-colors duration-200 text-sm font-medium;
   }
+
+  .nav-link:hover { color: var(--theme-primary); }
 
   .nav-link::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -2px;
     left: 0;
     width: 0;
     height: 1px;
-    background-color: var(--gold);
-    transition: width 0.3s ease;
+    background-color: var(--theme-primary);
+    transition: width 0.25s ease;
   }
 
-  .nav-link:hover::after { width: 100%; }
+  .nav-link:hover::after,
+  .nav-link.active::after { width: 100%; }
+  .nav-link.active { color: var(--theme-primary); }
 
   /* Project filter pill */
   .filter-pill {
-    @apply px-4 py-1.5 rounded-full text-sm font-medium border transition-all duration-200
-           text-gray-400 hover:text-yellow-400
+    @apply px-4 py-1.5 rounded-full text-sm font-medium border
+           transition-[border-color,background-color,color] duration-200
+           text-text-muted hover:text-gold
            cursor-pointer select-none;
-    border-color: #2A2A2A;
+    border-color: var(--dark-border);
   }
 
   .filter-pill:hover {
-    border-color: var(--gold);
-    background-color: rgba(245, 197, 24, 0.05);
+    border-color: var(--theme-primary);
+    background-color: rgba(var(--theme-rgb), 0.05);
   }
 
   .filter-pill.active {
-    background-color: var(--gold);
+    background-color: var(--theme-primary);
     color: #0D0D0D;
-    border-color: var(--gold);
-    box-shadow: 0 0 15px rgba(245, 197, 24, 0.3);
+    border-color: var(--theme-primary);
+    box-shadow: 0 0 12px rgba(var(--theme-rgb), 0.3);
     font-weight: 600;
   }
 
   /* Skill tag */
   .skill-tag {
-    @apply px-3 py-1 rounded-full text-xs font-semibold;
-    background-color: rgba(245, 197, 24, 0.1);
-    color: var(--gold);
-    border: 1px solid rgba(245, 197, 24, 0.2);
+    @apply px-3 py-1 rounded-full text-xs font-semibold
+           transition-[background-color,transform,box-shadow] duration-200
+           cursor-default;
+    background-color: rgba(var(--theme-rgb), 0.1);
+    color: var(--theme-primary);
+    border: 1px solid rgba(var(--theme-rgb), 0.2);
+  }
+
+  .skill-tag:hover {
+    background-color: rgba(var(--theme-rgb), 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(var(--theme-rgb), 0.2);
   }
 
   /* Timeline dot */
   .timeline-dot {
     @apply w-3 h-3 rounded-full flex-shrink-0 mt-1.5;
-    background-color: var(--gold);
-    border: 2px solid #0D0D0D;
-    box-shadow: 0 0 10px rgba(245, 197, 24, 0.6);
+    background-color: var(--theme-primary);
+    border: 2px solid var(--dark-bg);
+    box-shadow: 0 0 8px rgba(var(--theme-rgb), 0.5);
   }
 }
 
-/* ─── Gradient mesh background for hero ──────────────────────────────────────*/
+/* ─── Content visibility — biggest scroll perf win ───────────────────────────
+   Tells browser to skip layout+paint of off-screen sections entirely.
+   contain-intrinsic-size prevents layout shift when sections enter view.   */
+section:not(#hero) {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 700px;
+}
+
+/* ─── Gradient mesh background for hero ─────────────────────────────────────*/
 .hero-mesh {
   background-color: var(--dark-bg);
   background-image:
-    radial-gradient(ellipse 80% 60% at 50% -20%, rgba(245,197,24,0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(245,197,24,0.04) 0%, transparent 50%);
+    radial-gradient(ellipse 80% 60% at 50% -20%, rgba(var(--theme-rgb),0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(var(--theme-rgb),0.03) 0%, transparent 50%);
 }
 
-/* ─── Animated gradient border ───────────────────────────────────────────────*/
+/* ─── Animated gradient border ──────────────────────────────────────────────*/
 .gold-border-animated {
   border: 1px solid transparent;
   background-clip: padding-box;
@@ -182,7 +255,7 @@ body {
   inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, var(--gold), transparent 50%, var(--gold));
+  background: linear-gradient(135deg, var(--theme-primary), transparent 50%, var(--theme-primary));
   background-size: 200% 200%;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -195,12 +268,19 @@ body {
   100% { background-position: 200% 50%; }
 }
 
-/* ─── Typewriter cursor blink ────────────────────────────────────────────────*/
+/* ─── Float animation (FloatingIcons) ───────────────────────────────────────*/
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+.animate-float { animation: float 6s ease-in-out infinite; }
+
+/* ─── Typewriter cursor blink ───────────────────────────────────────────────*/
 .typewriter-cursor {
   display: inline-block;
   width: 3px;
   height: 1em;
-  background-color: var(--gold);
+  background-color: var(--theme-primary);
   margin-left: 2px;
   vertical-align: text-bottom;
   animation: blink 0.8s step-end infinite;
@@ -211,22 +291,37 @@ body {
   50% { opacity: 0; }
 }
 
-/* ─── Chat widget scroll ─────────────────────────────────────────────────────*/
-.chat-scroll {
-  scroll-behavior: smooth;
+/* ─── FadeSlideUp — for staggered card reveals ──────────────────────────────*/
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ─── Chat widget scroll ─────────────────────────────────────────────────────*/
+.chat-scroll { scroll-behavior: smooth; }
 .chat-scroll::-webkit-scrollbar { width: 4px; }
 .chat-scroll::-webkit-scrollbar-thumb {
   background: var(--dark-border);
   border-radius: 2px;
 }
 
-/* ─── Grid lines decorative background ───────────────────────────────────────*/
+/* ─── Grid lines decorative background ──────────────────────────────────────*/
 .grid-lines-bg {
   background-image:
     linear-gradient(var(--dark-border) 1px, transparent 1px),
     linear-gradient(90deg, var(--dark-border) 1px, transparent 1px);
   background-size: 60px 60px;
   background-position: center center;
+}
+
+/* ─── Light mode overrides ───────────────────────────────────────────────────*/
+[data-mode="light"] .text-gray-500 { color: #78716C; }
+[data-mode="light"] .text-gray-600 { color: #57534E; }
+[data-mode="light"] .shadow-lg     { box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+
+/* Navbar in light mode when scrolled */
+[data-mode="light"] nav[id="navbar"].scrolled-nav {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(16px) !important;
+  border-color: rgba(0,0,0,0.08) !important;
 }
