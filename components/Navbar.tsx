@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { translations as tr } from "@/lib/i18n/translations";
@@ -21,13 +21,17 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActive] = useState("hero");
+  const menuRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
 
+  /* ── Scroll detection ── */
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  /* ── Active section observer ── */
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
 
@@ -38,7 +42,7 @@ export default function Navbar() {
         ([entry]) => {
           if (entry.isIntersecting) setActive(id);
         },
-        { threshold: 0.35 }
+        { threshold: 0.35 },
       );
       obs.observe(el);
       observers.push(obs);
@@ -46,6 +50,43 @@ export default function Navbar() {
 
     return () => observers.forEach((obs) => obs.disconnect());
   }, []);
+
+  /* ── Click-outside-to-close ──
+     If the menu is open and user clicks anywhere outside the
+     drawer panel AND outside the hamburger button, close it. */
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as Node;
+      // Don't close if clicking inside the menu or on the hamburger
+      if (menuRef.current?.contains(target)) return;
+      if (hamburgerRef.current?.contains(target)) return;
+      setMenuOpen(false);
+    };
+
+    // Use a slight delay so the opening click doesn't immediately close
+    const timer = setTimeout(() => {
+      document.addEventListener("click", handleClickOutside);
+    }, 10);
+
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [menuOpen]);
+
+  /* ── Lock body scroll when menu is open ── */
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
@@ -65,30 +106,48 @@ export default function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
         className={`pointer-events-auto w-full md:max-w-5xl transition-colors duration-300 relative ${
-          scrolled || menuOpen
-            ? "bg-dark-card/90 backdrop-blur-md shadow-lg border-b border-dark-border md:border md:rounded-full"
-            : "bg-transparent md:bg-dark-surface/50 md:backdrop-blur-md border-b border-transparent md:border-dark-border/50 md:rounded-full"
+          scrolled
+            ? "shadow-lg border-b md:border md:rounded-full"
+            : "border-b border-transparent md:border md:rounded-full"
         }`}
+        /* ── ZERO TRANSPARENCY: 100% solid backgrounds via CSS vars ── */
+        style={{
+          backgroundColor: scrolled ? "var(--dark-card)" : "var(--dark-bg)",
+          borderColor: scrolled ? "var(--dark-border)" : "transparent",
+        }}
         id="navbar"
         aria-label="Main navigation"
       >
         {/* ── Nav Header ── */}
         <div className="flex items-center justify-between h-14 md:h-16 px-4 md:px-6">
           {/* Logo */}
-          <a href="#hero" onClick={closeMenu} className="flex items-center gap-2.5 group relative z-10" aria-label="Salah Portfolio - Home">
+          <a
+            href="#hero"
+            onClick={closeMenu}
+            className="flex items-center gap-2.5 group relative z-10"
+            aria-label="Salah Portfolio - Home"
+          >
             <div
               className="w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center shadow-inner transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12"
               style={{ background: "linear-gradient(135deg,#F5C518,#C09B00)" }}
             >
-              <span className="font-bold text-xs md:text-sm text-[#0D0D0D]">S</span>
+              <span className="font-bold text-xs md:text-sm text-[#0D0D0D]">
+                S
+              </span>
             </div>
-            <span className="font-bold text-base md:text-lg tracking-tight" style={{ color: "var(--text-main)" }}>
+            <span
+              className="font-bold text-base md:text-lg tracking-tight"
+              style={{ color: "var(--text-main)" }}
+            >
               Salah<span style={{ color: "#F5C518" }}>.</span>dev
             </span>
           </a>
 
           {/* Desktop Links */}
-          <ul className="hidden lg:flex items-center justify-center gap-2 absolute left-1/2 -translate-x-1/2 w-full" role="list">
+          <ul
+            className="hidden lg:flex items-center justify-center gap-2 absolute left-1/2 -translate-x-1/2 w-full"
+            role="list"
+          >
             {navLinks.map((link) => (
               <li key={link.href} className="relative">
                 <a
@@ -103,8 +162,13 @@ export default function Navbar() {
                   {activeSection === link.id && (
                     <motion.div
                       layoutId="active-nav-pill"
-                      className="absolute inset-0 bg-dark-border rounded-full -z-10"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      className="absolute inset-0 rounded-full -z-10"
+                      style={{ backgroundColor: "var(--dark-border)" }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30,
+                      }}
                     />
                   )}
                 </a>
@@ -118,45 +182,122 @@ export default function Navbar() {
             <button
               onClick={toggleLang}
               className="flex items-center justify-center w-9 h-9 rounded-full border transition-transform duration-300 hover:scale-105"
-              style={{ borderColor: "rgba(245,197,24,0.3)", color: "#F5C518", background: "rgba(245,197,24,0.05)" }}
+              style={{
+                borderColor: "var(--dark-border)",
+                color: "#F5C518",
+                backgroundColor: "var(--dark-surface)",
+              }}
               aria-label={isAr ? "Switch to English" : "التبديل إلى العربية"}
             >
               <span className="text-xs font-bold">{isAr ? "EN" : "ع"}</span>
             </button>
-            <a href="#contact" className="btn-primary text-sm px-5 py-2 rounded-full">
+            <a
+              href="#contact"
+              className="btn-primary text-sm px-5 py-2 rounded-full"
+            >
               {tr.nav.hireMe[lang]}
             </a>
           </div>
 
-          {/* Mobile Hamburger & Theme */}
+          {/* ── Mobile Hamburger → X Morphing Button ──
+               3 spans that smoothly rotate/translate into an X shape.
+               Min touch target: 44×44px for mobile accessibility. */}
           <div className="flex items-center gap-2 lg:hidden relative z-10">
             <ThemeSwitcher />
             <button
-              className="flex flex-col items-center justify-center w-10 h-10 gap-1.5 rounded-full"
+              ref={hamburgerRef}
+              className="flex flex-col items-center justify-center gap-[5px] rounded-lg transition-colors duration-200"
+              style={{ width: 44, height: 44 }}
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
             >
-              <span className={`w-5 h-0.5 bg-text-main transition-transform duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
-              <span className={`w-5 h-0.5 bg-text-main transition-opacity duration-300 ${menuOpen ? "opacity-0" : ""}`} />
-              <span className={`w-5 h-0.5 bg-text-main transition-transform duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+              {/* Top bar: rotates +45° and slides down to form X */}
+              <span
+                className="block rounded-full transition-all duration-300 ease-in-out"
+                style={{
+                  width: 22,
+                  height: 2,
+                  backgroundColor: "var(--text-main)",
+                  transform: menuOpen
+                    ? "rotate(45deg) translateY(5px)"
+                    : "rotate(0) translateY(0)",
+                }}
+              />
+              {/* Middle bar: fades out */}
+              <span
+                className="block rounded-full transition-all duration-300 ease-in-out"
+                style={{
+                  width: 22,
+                  height: 2,
+                  backgroundColor: "var(--text-main)",
+                  opacity: menuOpen ? 0 : 1,
+                  transform: menuOpen ? "scaleX(0)" : "scaleX(1)",
+                }}
+              />
+              {/* Bottom bar: rotates -45° and slides up to form X */}
+              <span
+                className="block rounded-full transition-all duration-300 ease-in-out"
+                style={{
+                  width: 22,
+                  height: 2,
+                  backgroundColor: "var(--text-main)",
+                  transform: menuOpen
+                    ? "rotate(-45deg) translateY(-5px)"
+                    : "rotate(0) translateY(0)",
+                }}
+              />
             </button>
           </div>
         </div>
 
-        {/* ── Mobile Edge-to-Edge Menu ── */}
+        {/* ── Mobile Side Drawer ──
+             CONSTRAINTS MET:
+             1. ZERO transparency — bg uses solid var(--dark-card)
+             2. 75% width — w-[75vw] max-w-xs keeps page visible
+             3. Click-outside-to-close — overlay div below handles it
+             4. 44px min touch targets — min-h-[44px] on all links/buttons
+             5. Smooth slide-in from right with fade overlay */}
+
+        {/* Scrim overlay — allows click-outside and dims the background */}
         <AnimatePresence>
           {menuOpen && (
             <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "100vh", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }} /* Custom spring-like easing */
-              className="absolute top-full left-0 w-full bg-[var(--dark-bg)] lg:hidden overflow-hidden flex flex-col"
+              key="mobile-scrim"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 top-14 z-40 lg:hidden"
+              style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+              onClick={closeMenu}
+              aria-hidden="true"
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Drawer panel */}
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              ref={menuRef}
+              key="mobile-drawer"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
+              className="fixed top-14 right-0 z-50 w-[75vw] max-w-xs lg:hidden overflow-hidden flex flex-col border-l"
+              style={{
+                height: "calc(100vh - 3.5rem)",
+                /* ZERO TRANSPARENCY: 100% solid color background */
+                backgroundColor: "var(--dark-card)",
+                borderColor: "var(--dark-border)",
+              }}
             >
-              <div className="flex-1 overflow-y-auto px-6 py-10 pb-24 flex flex-col">
-                <motion.ul 
-                  className="flex flex-col gap-6" 
+              <div className="flex-1 overflow-y-auto px-5 py-8 pb-28 flex flex-col">
+                {/* Navigation Links */}
+                <motion.ul
+                  className="flex flex-col gap-1"
                   role="list"
                   initial="hidden"
                   animate="show"
@@ -165,32 +306,56 @@ export default function Navbar() {
                     hidden: { opacity: 0 },
                     show: {
                       opacity: 1,
-                      transition: { staggerChildren: 0.08, delayChildren: 0.1 }
-                    }
+                      transition: { staggerChildren: 0.06, delayChildren: 0.1 },
+                    },
                   }}
                 >
                   {navLinks.map((link) => (
-                    <motion.li 
+                    <motion.li
                       key={link.href}
                       variants={{
-                        hidden: { opacity: 0, x: -20 },
-                        show: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+                        hidden: { opacity: 0, x: 24 },
+                        show: {
+                          opacity: 1,
+                          x: 0,
+                          transition: {
+                            type: "spring",
+                            stiffness: 350,
+                            damping: 28,
+                          },
+                        },
                       }}
                     >
+                      {/* ── 44px min touch target on every link ── */}
                       <a
                         href={link.href}
-                        className={`text-3xl font-bold transition-all duration-300 flex items-center gap-4 ${
-                          activeSection === link.id
-                            ? "text-gold translate-x-2"
-                            : "text-text-muted hover:text-text-main hover:translate-x-1"
-                        }`}
+                        className="flex items-center gap-3 rounded-xl px-3 transition-all duration-200"
+                        style={{
+                          minHeight: 44,
+                          color:
+                            activeSection === link.id
+                              ? "#F5C518"
+                              : "var(--text-muted)",
+                          backgroundColor:
+                            activeSection === link.id
+                              ? "var(--dark-surface)"
+                              : "transparent",
+                          fontWeight: activeSection === link.id ? 700 : 600,
+                          fontSize: "1.05rem",
+                        }}
                         onClick={closeMenu}
                       >
+                        {/* Active indicator dot */}
                         {activeSection === link.id && (
-                          <motion.div 
-                            layoutId="mobile-active-dot"
-                            className="w-2 h-2 rounded-full bg-gold"
-                            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                          <motion.div
+                            layoutId="mobile-active-indicator"
+                            className="w-2 h-2 rounded-full flex-shrink-0"
+                            style={{ backgroundColor: "#F5C518" }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 400,
+                              damping: 30,
+                            }}
                           />
                         )}
                         {link.label}
@@ -198,23 +363,36 @@ export default function Navbar() {
                     </motion.li>
                   ))}
                 </motion.ul>
-                
-                <motion.div 
-                  className="flex flex-col gap-4 mt-auto pt-10"
-                  initial={{ opacity: 0, y: 20 }}
+
+                {/* Bottom Actions */}
+                <motion.div
+                  className="flex flex-col gap-3 mt-auto pt-8"
+                  initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.4 }}
+                  transition={{ delay: 0.35, duration: 0.35 }}
                 >
+                  {/* Language toggle — 44px min touch target */}
                   <button
-                    onClick={() => { toggleLang(); closeMenu(); }}
-                    className="flex items-center justify-center gap-2 py-4 rounded-xl border font-bold transition-colors hover:bg-dark-surface text-base w-full"
-                    style={{ borderColor: "rgba(245,197,24,0.3)", color: "#F5C518", background: "rgba(245,197,24,0.05)" }}
+                    onClick={() => {
+                      toggleLang();
+                      closeMenu();
+                    }}
+                    className="flex items-center justify-center gap-2 rounded-xl border font-bold transition-colors text-sm w-full"
+                    style={{
+                      minHeight: 44,
+                      borderColor: "var(--dark-border)",
+                      color: "#F5C518",
+                      backgroundColor: "var(--dark-surface)",
+                    }}
                   >
                     {isAr ? "Switch to English" : "التبديل إلى العربية"}
                   </button>
+
+                  {/* CTA button — 44px min touch target */}
                   <a
                     href="#contact"
-                    className="btn-primary w-full justify-center py-4 rounded-xl text-base"
+                    className="btn-primary w-full justify-center rounded-xl text-sm font-semibold"
+                    style={{ minHeight: 44, display: "flex", alignItems: "center" }}
                     onClick={closeMenu}
                   >
                     {tr.nav.hireMe[lang]}

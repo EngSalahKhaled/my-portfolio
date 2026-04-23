@@ -31,10 +31,25 @@ export default function ContactSection() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    await new Promise((r) => setTimeout(r, 1500))
-    setLoading(false)
-    setSubmitted(true)
-    setFormState({ name: '', email: '', message: '' })
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formState),
+      })
+      
+      if (!res.ok) {
+        throw new Error('Failed to send')
+      }
+      
+      setSubmitted(true)
+      setFormState({ name: '', email: '', message: '' })
+    } catch (err) {
+      console.error(err)
+      alert(lang === 'ar' ? 'فشل إرسال الرسالة، يرجى المحاولة مرة أخرى لاحقاً.' : 'Failed to send message. Please try again later.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   const c = tr.contact
