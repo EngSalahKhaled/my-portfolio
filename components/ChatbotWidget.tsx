@@ -19,10 +19,10 @@ function getReply(msg: string, isAr: boolean): string {
 
   const matches = (keywords: string[]) => keywords.some((kw) => m.includes(kw))
 
-  if (matches(['hello', 'hi', 'hey', 'مرحب', 'السلام', 'أهل', 'هلا', 'هاي']))
+  if (matches(['hello', 'hi', 'hey', 'مرحب', 'السلام', 'أهل', 'هلا', 'هاي', 'واتساب', 'whatsapp', 'رقم']))
     return isAr
-      ? 'أهلاً وسهلاً! 👋 أنا المساعد الذكي لصلاح خالد. اسألني عن مشاريعه أو مهاراته أو طريقة التواصل معه!'
-      : "Hey! 👋 I'm Salah's AI assistant. Ask me about his projects, skills, or how to get in touch!"
+      ? 'أهلاً بك! 👋 أنا المساعد الذكي. يمكنك سؤالي هنا، أو محادثة صلاح مباشرة عبر [واتساب من هنا](https://wa.me/966500438424)!'
+      : "Hey! 👋 I'm the AI assistant. Ask me anything here, or chat with Salah directly on [WhatsApp here](https://wa.me/966500438424)!"
 
   if (matches(['darak', 'داراك', 'عقار', 'real estate', 'property', 'عقارات']))
     return isAr
@@ -41,8 +41,8 @@ function getReply(msg: string, isAr: boolean): string {
 
   if (matches(['hire', 'وظف', 'contact', 'تواصل', 'work together', 'collaborate', 'تعاون', 'project', 'مشروع']))
     return isAr
-      ? 'مستعد للتعاون! 🤝 انتقل لقسم "تواصل معي" في أسفل الصفحة. صلاح متاح للمشاريع الحرة والوظائف والشراكات!'
-      : 'Ready to collaborate! 🤝 Scroll to the Contact section below. Salah is open to freelance projects, full-time roles, and partnerships!'
+      ? 'مستعد للتعاون! 🤝 تواصل عبر [واتساب](https://wa.me/966500438424) أو انزل لقسم "تواصل معي". صلاح متاح للمشاريع الحرة والشراكات!'
+      : 'Ready to collaborate! 🤝 Hit the [WhatsApp](https://wa.me/966500438424) button or scroll to Contact. Salah is open to freelance projects and partnerships!'
 
   if (matches(['gemini', 'google', 'certif', 'شهادة', 'certified']))
     return isAr
@@ -66,13 +66,13 @@ function getReply(msg: string, isAr: boolean): string {
 
   if (matches(['thanks', 'شكر', 'شكراً', 'thank', 'appreciate', 'ممتاز', 'رائع', 'great']))
     return isAr
-      ? 'العفو! 😊 هل تحتاج أي معلومات أخرى عن صلاح أو مشاريعه؟'
-      : "You're very welcome! 😊 Need anything else about Salah or his work?"
+      ? 'العفو! 😊 هل تحتاج أي معلومات أخرى أو تود الحديث عبر [واتساب](https://wa.me/966500438424)؟'
+      : "You're very welcome! 😊 Need anything else, or want to chat on [WhatsApp](https://wa.me/966500438424)?"
 
   // Default
   return isAr
-    ? 'سؤال مثير للاهتمام! 🤔 يمكنك استكشاف أقسام الصفحة أو التواصل مباشرة عبر نموذج التواصل — صلاح يرد خلال 24 ساعة.'
-    : "Great question! 🤔 Feel free to explore the page sections or reach out via the Contact form — Salah usually replies within 24 hours."
+    ? 'سؤال مثير للاهتمام! 🤔 يمكنك استكشاف الموقع أو التواصل السريع معي عبر زر واتساب في الأعلى.'
+    : "Great question! 🤔 Feel free to explore the site or hit the WhatsApp button above to chat with me directly."
 }
 
 /* ─── Typing indicator ───────────────────────────────────────────────────────*/
@@ -193,14 +193,28 @@ export default function ChatbotWidget() {
               ? { background: '#1A1A1A', border: '1px solid #2A2A2A', color: '#E5E5E5' }
               : { background: 'linear-gradient(135deg,#F5C518,#F5C518)', color: '#0D0D0D' }
             }
-            /* Render **bold** markdown snippets */
             lang={isBot ? lang : undefined}
           >
-            {msg.text.split(/(\*\*[^*]+\*\*)/).map((part, i) =>
-              part.startsWith('**') && part.endsWith('**')
-                ? <strong key={i} style={isBot ? { color: '#F5C518' } : {}}>{part.slice(2, -2)}</strong>
-                : part
-            )}
+            {/* Render **bold** and [links](url) markdown snippets */}
+            {msg.text.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/).map((part, i) => {
+              if (part.startsWith('**') && part.endsWith('**')) {
+                return <strong key={i} style={isBot ? { color: '#F5C518' } : {}}>{part.slice(2, -2)}</strong>
+              }
+              if (part.startsWith('[') && part.includes('](') && part.endsWith(')')) {
+                const linkText = part.slice(1, part.indexOf(']'))
+                const linkUrl = part.slice(part.indexOf('](') + 2, -1)
+                return (
+                  <a
+                    key={i} href={linkUrl} target="_blank" rel="noopener noreferrer"
+                    className="underline hover:text-white transition-colors"
+                    style={{ color: '#F5C518' }}
+                  >
+                    {linkText}
+                  </a>
+                )
+              }
+              return part
+            })}
           </div>
           <span className="text-[10px] px-1" style={{ color: '#555' }}>{msg.timestamp}</span>
         </div>
@@ -246,13 +260,13 @@ export default function ChatbotWidget() {
         >
           {/* Header */}
           <div
-            className="flex items-center justify-between px-4 py-3 border-b"
+            className="flex items-center justify-between px-3 sm:px-4 py-3 border-b"
             style={{ background: 'linear-gradient(135deg,#0D0D0D 0%,#1a1400 100%)', borderColor: '#2A2A2A' }}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <div className="relative">
                 <div
-                  className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-sm font-bold"
                   style={{ background: 'linear-gradient(135deg,#F5C518,#C09B00)', color: '#0D0D0D' }}
                   aria-hidden="true"
                 >S</div>
@@ -262,20 +276,36 @@ export default function ChatbotWidget() {
                   aria-hidden="true"
                 />
               </div>
-              <div>
-                <p className="text-text-main text-sm font-semibold leading-none">{cb.title[lang]}</p>
-                <p className="text-emerald-400 text-xs mt-0.5">{cb.online[lang]}</p>
+              <div className="flex flex-col">
+                <p className="text-text-main text-xs sm:text-sm font-semibold leading-none">{cb.title[lang]}</p>
+                <p className="text-emerald-400 text-[10px] sm:text-xs mt-0.5">{cb.online[lang]}</p>
               </div>
             </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="w-7 h-7 rounded-full flex items-center justify-center text-gray-500 hover:text-text-main hover:bg-dark-surface transition-colors"
-              aria-label={cb.close[lang]}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-                <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-              </svg>
-            </button>
+            
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              {/* WhatsApp Call/Chat Button */}
+              <a
+                href="https://wa.me/966500438424"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-[#25D366] text-white hover:bg-[#128C7E] transition-all text-xs font-semibold shadow-md active:scale-95"
+                title={isAr ? "تواصل عبر واتساب" : "Chat on WhatsApp"}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor" className="w-3.5 h-3.5 sm:w-4 sm:h-4">
+                  <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zM223.9 434.8h-.1c-33.6 0-66.4-9-95.3-26.1l-6.8-4-70.8 18.6 18.9-69-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.3 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+                </svg>
+                <span className="hidden sm:inline">{isAr ? 'واتساب' : 'WhatsApp'}</span>
+              </a>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+                aria-label={cb.close[lang]}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+                  <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                </svg>
+              </button>
+            </div>
           </div>
 
           {/* Messages area */}
