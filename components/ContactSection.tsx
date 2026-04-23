@@ -1,14 +1,40 @@
 'use client'
 
-import { useState, useRef, useEffect, FormEvent } from 'react'
+import { useState, useRef, useEffect, useCallback, FormEvent } from 'react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { translations as tr } from '@/lib/i18n/translations'
+
+/* ── Turnstile type declaration ─────────────────────────────────────────────
+   The Cloudflare Turnstile script loaded in layout.tsx exposes a global
+   `turnstile` object. We declare its type here for TypeScript support. */
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (container: string | HTMLElement, options: {
+        sitekey: string;
+        callback: (token: string) => void;
+        'expired-callback'?: () => void;
+        'error-callback'?: () => void;
+        theme?: 'light' | 'dark' | 'auto';
+        size?: 'normal' | 'compact';
+      }) => string;
+      reset: (widgetId: string) => void;
+      remove: (widgetId: string) => void;
+    };
+  }
+}
 
 export default function ContactSection() {
   const { lang } = useLanguage()
   const [formState, setFormState] = useState({ name: '', email: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
+
+  /* ── Turnstile CAPTCHA state ── */
+  const [turnstileToken, setTurnstileToken] = useState('')
+  const turnstileRef = useRef<HTMLDivElement>(null)
+  const widgetIdRef = useRef<string | null>(null)
 
   const sectionRef = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
@@ -24,29 +50,114 @@ export default function ContactSection() {
     return () => observer.disconnect()
   }, [])
 
+  /* ── Initialize Turnstile widget ──────────────────────────────────────────
+     We wait for the turnstile script to load, then render the widget
+     inside the turnstileRef container. The callback fires when the
+     user passes the invisible challenge, giving us a verification token. */
+  useEffect(() => {
+    const container = turnstileRef.current
+    if (!container) return
+
+    const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+    if (!siteKey) {
+      console.warn('Turnstile: NEXT_PUBLIC_TURNSTILE_SITE_KEY not set, skipping CAPTCHA')
+      return
+    }
+
+    // Poll until turnstile script is loaded (it loads async)
+    const interval = setInterval(() => {
+      if (window.turnstile && container) {
+        clearInterval(interval)
+
+        // Clean up any previous widget
+        if (widgetIdRef.current) {
+          window.turnstile.remove(widgetIdRef.current)
+        }
+
+        widgetIdRef.current = window.turnstile.render(container, {
+          sitekey: siteKey,
+          callback: (token: string) => {
+            setTurnstileToken(token)
+          },
+          'expired-callback': () => {
+            setTurnstileToken('')
+          },
+          'error-callback': () => {
+            setTurnstileToken('')
+          },
+          theme: 'auto',
+          size: 'normal',
+        })
+      }
+    }, 300)
+
+    return () => {
+      clearInterval(interval)
+      // Cleanup widget on unmount
+      if (widgetIdRef.current && window.turnstile) {
+        window.turnstile.remove(widgetIdRef.current)
+        widgetIdRef.current = null
+      }
+    }
+  }, [submitted]) // Re-initialize when user clicks "Send Another"
+
+  /* ── Reset Turnstile after submission ── */
+  const resetTurnstile = useCallback(() => {
+    setTurnstileToken('')
+    if (widgetIdRef.current && window.turnstile) {
+      window.turnstile.reset(widgetIdRef.current)
+    }
+  }, [])
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
+    setErrorMsg('')
+
+    /* ── Validate Turnstile token before submission ──
+       If no site key is configured, skip validation (dev mode).
+       In production, the token MUST be present. */
+    const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+    if (siteKey && !turnstileToken) {
+      setErrorMsg(
+        lang === 'ar'
+          ? 'يرجى إكمال التحقق الأمني أولاً.'
+          : 'Please complete the security verification first.'
+      )
+      return
+    }
+
     setLoading(true)
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formState),
+        body: JSON.stringify({
+          ...formState,
+          turnstileToken, // Send token to backend for server-side verification
+        }),
       })
-      
+
+      const data = await res.json()
+
       if (!res.ok) {
-        throw new Error('Failed to send')
+        throw new Error(data.error || 'Failed to send')
       }
-      
+
       setSubmitted(true)
       setFormState({ name: '', email: '', message: '' })
-    } catch (err) {
+      setTurnstileToken('')
+    } catch (err: any) {
       console.error(err)
-      alert(lang === 'ar' ? 'فشل إرسال الرسالة، يرجى المحاولة مرة أخرى لاحقاً.' : 'Failed to send message. Please try again later.')
+      resetTurnstile()
+      setErrorMsg(
+        lang === 'ar'
+          ? 'فشل إرسال الرسالة، يرجى المحاولة مرة أخرى لاحقاً.'
+          : err.message || 'Failed to send message. Please try again later.'
+      )
     } finally {
       setLoading(false)
     }
@@ -193,6 +304,23 @@ export default function ContactSection() {
                       onBlur={onBlurInput}
                     />
                   </div>
+
+                  {/* ── Cloudflare Turnstile CAPTCHA Widget ──
+                       This renders an invisible/managed challenge.
+                       The site key is a NEXT_PUBLIC_ env var (safe for client).
+                       The secret key is ONLY used server-side in route.ts. */}
+                  <div
+                    ref={turnstileRef}
+                    id="turnstile-widget"
+                    className="flex justify-center"
+                  />
+
+                  {/* Error message */}
+                  {errorMsg && (
+                    <p className="text-red-400 text-sm text-center" role="alert">
+                      {errorMsg}
+                    </p>
+                  )}
 
                   <button
                     type="submit" disabled={loading}

@@ -91,6 +91,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
         />
+        {/* Cloudflare Turnstile — invisible CAPTCHA for bot protection */}
+        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer />
       </head>
       <body className={`${outfit.variable} ${jetbrains.variable} ${tajawal.variable} font-sans antialiased overflow-x-hidden`}>
         <ThemeProvider>
