@@ -170,8 +170,8 @@ export default function HeroSection() {
                   className="text-sm sm:text-base font-semibold tracking-[0.24em] uppercase mb-3"
                   style={{ color: "#F5C518" }}
                 >
-                  "React & UI/UX Specialist: Crafting Modern, Responsive Digital
-                  Experiences for GCC Markets."
+                  React &amp; UI/UX Specialist: Crafting Modern, Responsive Digital
+                  Experiences for GCC Markets.
                 </p>
               )}
               <p className="text-text-muted text-lg font-medium mb-2">
