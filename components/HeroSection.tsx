@@ -259,7 +259,7 @@ export default function HeroSection() {
                 {tr.hero.getInTouch[lang]}
               </a>
               <a
-                href="https://drive.google.com/uc?export=download&id=16lr0po6JjvOqMMxM8V8VTOl92eCtSTpA"
+                href="https://drive.google.com/file/d/16lr0po6JjvOqMMxM8V8VTOl92eCtSTpA/view"
                 target="_blank"
                 rel="noopener noreferrer"
                 id="hero-download-cv-btn"

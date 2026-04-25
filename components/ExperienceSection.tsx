@@ -4,9 +4,8 @@ import { useRef, useState, useEffect } from "react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { translations as tr } from "@/lib/i18n/translations";
 
-// Google Drive direct download URL for the CV
-const CV_URL =
-  "https://drive.google.com/uc?export=download&id=16lr0po6JjvOqMMxM8V8VTOl92eCtSTpA";
+// Google Drive CV link
+const CV_URL = "https://drive.google.com/file/d/16lr0po6JjvOqMMxM8V8VTOl92eCtSTpA/view";
 
 export default function ExperienceSection() {
   const { lang, isAr } = useLanguage();
