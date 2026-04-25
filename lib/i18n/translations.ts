@@ -504,6 +504,18 @@ export const translations = {
     downloadCv: { en: "Download CV", ar: "تحميل السيرة الذاتية" },
     items: [
       {
+        year: { en: "Jan 2026 – Present", ar: "يناير 2026 – الآن" },
+        title: { en: "Front-End Developer", ar: "مطوّر واجهات أمامية" },
+        company: { en: "Mashhour Hub · Remote", ar: "مشهور هب · عن بُعد" },
+        type: { en: "Development", ar: "تطوير" },
+        desc: {
+          en: "Building and maintaining the front-end of Mashhour Hub — a comprehensive admin dashboard and CMS platform. Delivering responsive, high-performance React interfaces with role-based access, Firebase integration, and advanced media management.",
+          ar: "بناء وصيانة الواجهة الأمامية لمنصة مشهور هب — نظام شامل لإدارة المحتوى ولوحة التحكم. تقديم واجهات React متجاوبة وعالية الأداء مع إدارة الصلاحيات وتكامل Firebase وإدارة الوسائط المتقدمة.",
+        },
+        tags: ["React", "Next.js", "TypeScript", "Firebase", "Tailwind"],
+        icon: "🖥️",
+      },
+      {
         year: { en: "2025 – Present", ar: "2025 – الآن" },
         title: { en: "Owner & General Manager", ar: "المالك والمدير العام" },
         company: { en: "INFINITY BRIGHT — Car Protection · Riyadh", ar: "إنفينيتي برايت — حماية السيارات · الرياض" },
