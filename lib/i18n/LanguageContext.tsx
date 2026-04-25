@@ -29,17 +29,30 @@ const LanguageContext = createContext<LanguageContextValue>({
   isAr: false,
 })
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  // Default to 'en' on server — hydrate from localStorage on client
-  const [lang, setLang] = useState<Lang>('en')
+interface LanguageProviderProps {
+  children: ReactNode
+  initialLang?: Lang
+  locked?: boolean
+}
+
+export function LanguageProvider({
+  children,
+  initialLang = 'en',
+  locked = false,
+}: LanguageProviderProps) {
+  const [lang, setLang] = useState<Lang>(initialLang)
   const [mounted, setMounted] = useState(false)
 
   // On first client render, read persisted preference
   useEffect(() => {
+    if (locked) {
+      setMounted(true)
+      return
+    }
     const stored = localStorage.getItem('lang') as Lang | null
     if (stored === 'ar' || stored === 'en') setLang(stored)
     setMounted(true)
-  }, [])
+  }, [locked])
 
   // Apply dir + lang attribute whenever language changes
   useEffect(() => {
@@ -55,8 +68,15 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, [lang, mounted])
 
   const toggleLang = useCallback(() => {
+    if (locked && typeof window !== 'undefined') {
+      const nextLang: Lang = lang === 'en' ? 'ar' : 'en'
+      localStorage.setItem('lang', nextLang)
+      const hash = window.location.hash
+      window.location.href = `${nextLang === 'ar' ? '/ar' : '/en'}${hash}`
+      return
+    }
     setLang((prev) => (prev === 'en' ? 'ar' : 'en'))
-  }, [])
+  }, [lang, locked])
 
   return (
     <LanguageContext.Provider value={{ lang, toggleLang, isAr: lang === 'ar' }}>

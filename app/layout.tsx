@@ -31,12 +31,12 @@ const SITE_URL = 'https://salahkhaled.com'
 /* ─── SEO Metadata ─────────────────────────────────────────────────────────── */
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'Salah.dev - Front End Developer',
+  title: 'Salah Khaled | Front End Developer in Riyadh',
   description:
     "Hire Salah Khaled, a Front End Developer building fast, modern, high-converting websites with Google-certified expertise. View projects and get in touch.",
   keywords: [
-    'Front End Developer', 'Front-End Developer', 'React Developer', 'Next.js Developer', 'TypeScript',
-    'Portfolio', 'Salah Khaled', 'Saudi Arabia', 'Web Developer Riyadh',
+    'Front End Developer', 'Frontend Developer', 'Front-End Developer', 'Front End Developer Riyadh', 'React Developer', 'Next.js Developer', 'TypeScript',
+    'Portfolio', 'Salah Khaled', 'Saudi Arabia', 'Web Developer Riyadh', 'Frontend Developer Saudi Arabia',
     'UI UX Developer', 'Gemini AI', 'Google Certified',
   ],
   authors: [{ name: 'Salah Khaled', url: SITE_URL }],
@@ -44,9 +44,13 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   alternates: {
     canonical: '/',
+    languages: {
+      en: '/en',
+      ar: '/ar',
+    },
   },
   openGraph: {
-    title: 'Salah.dev - Front End Developer',
+    title: 'Salah Khaled | Front End Developer in Riyadh',
     description: 'Hire Salah Khaled, a Front End Developer building fast, modern, high-converting websites with Google-certified expertise.',
     url: SITE_URL,
     siteName: 'Salah.dev Portfolio',
@@ -63,7 +67,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Salah.dev - Front End Developer',
+    title: 'Salah Khaled | Front End Developer in Riyadh',
     description: 'Hire Salah Khaled, a Front End Developer building fast, modern, high-converting websites with Google-certified expertise.',
     images: [`${SITE_URL}/og-image.jpg`], // Use absolute URL for Twitter as well
   },
@@ -76,7 +80,10 @@ const personSchema = {
   name: 'Salah Khaled',
   url: SITE_URL,
   jobTitle: 'Front-End Developer & Entrepreneur',
-  sameAs: ['https://github.com/EngSalahKhaled'],
+  sameAs: [
+    'https://github.com/EngSalahKhaled',
+    'https://www.linkedin.com/in/salahkhaled-dev/',
+  ],
   knowsAbout: ['React', 'Next.js', 'TypeScript', 'Generative AI', 'Google Gemini API'],
   address: { '@type': 'PostalAddress', addressLocality: 'Riyadh', addressCountry: 'SA' },
 }
@@ -86,7 +93,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" dir="ltr" className="scroll-smooth overflow-x-hidden">
       <head>
-        <link rel="canonical" href={SITE_URL} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}

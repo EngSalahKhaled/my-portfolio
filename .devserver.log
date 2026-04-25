@@ -7,11 +7,8 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 5.9s
+ ✓ Ready in 6.8s
  ○ Compiling / ...
- ✓ Compiled / in 16.2s (1426 modules)
- GET / 200 in 17656ms
- ✓ Compiled in 1403ms (699 modules)
- ○ Compiling /icon.svg ...
- ✓ Compiled /icon.svg in 687ms (757 modules)
- GET /icon.svg?0e09681514f3d30f 200 in 845ms
+ ✓ Compiled / in 17.7s (1430 modules)
+ ✓ Compiled in 1828ms (700 modules)
+ GET / 200 in 389ms

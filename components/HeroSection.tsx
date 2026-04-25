@@ -162,11 +162,33 @@ export default function HeroSection() {
 
             {/* Name */}
             <div>
+              {!isAr && (
+                <p
+                  className="text-sm sm:text-base font-semibold tracking-[0.24em] uppercase mb-3"
+                  style={{ color: "#F5C518" }}
+                >
+                  Front End Developer in Riyadh, Saudi Arabia
+                </p>
+              )}
               <p className="text-text-muted text-lg font-medium mb-2">
                 {tr.hero.greeting[lang]}
               </p>
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-none">
-                <span className="gradient-text">Salah Khaled</span>
+                {isAr ? (
+                  <>
+                    <span className="gradient-text">صلاح خالد</span>
+                    <span className="block text-2xl sm:text-3xl lg:text-4xl text-text-main mt-4">
+                      مطور واجهات أمامية في الرياض
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="gradient-text">Salah Khaled</span>
+                    <span className="block text-2xl sm:text-3xl lg:text-4xl text-text-main mt-4">
+                      Front End Developer in Riyadh
+                    </span>
+                  </>
+                )}
               </h1>
             </div>
 
@@ -193,13 +215,13 @@ export default function HeroSection() {
                 </>
               ) : (
                 <>
-                  I craft{" "}
+                  Front End Developer specializing in{" "}
                   <span style={{ color: "#F5C518" }} className="font-medium">
-                    high-performance
+                    React, Next.js, and high-performance
                   </span>{" "}
-                  web experiences and build businesses that solve real-world
-                  problems. From code to company — I thrive at the intersection
-                  of tech and entrepreneurship.
+                  websites for brands, startups, and businesses that need
+                  modern user experiences and real results. Based in Riyadh, I
+                  build conversion-focused interfaces that support growth.
                 </>
               )}
             </p>
@@ -240,7 +262,7 @@ export default function HeroSection() {
             >
               {[
                 {
-                  href: "https://github.com",
+                  href: "https://github.com/EngSalahKhaled",
                   label: "GitHub",
                   color: "var(--text-main)",
                   icon: (
@@ -278,20 +300,6 @@ export default function HeroSection() {
                       className="w-5 h-5"
                     >
                       <path d="M12.031 2.25c-5.385 0-9.756 4.37-9.756 9.754 0 1.716.446 3.385 1.295 4.862L2.25 21.75l4.981-1.305a9.71 9.71 0 004.8.125c5.385 0 9.754-4.37 9.754-9.754S17.416 2.25 12.031 2.25zm.006 17.5A8.204 8.204 0 017.9 18.577l-.3-.178-3.037.796.812-2.96-.195-.31a8.214 8.214 0 01-1.256-4.417c0-4.542 3.696-8.243 8.243-8.243s8.243 3.7 8.243 8.243-3.696 8.243-8.243 8.243zm4.52-6.173c-.247-.124-1.464-.723-1.691-.806-.228-.083-.394-.124-.56.124-.166.248-.64 .806-.784.97-.145.166-.29.186-.537.062-.247-.124-1.046-.385-1.992-1.23-.736-.657-1.232-1.468-1.377-1.716-.145-.248-.016-.382.108-.505.112-.11.247-.29.37-.435.124-.145.166-.248.248-.415.083-.166.042-.31-.02-.435-.062-.124-.56-1.346-.767-1.842-.201-.482-.405-.417-.56-.425-.145-.008-.311-.008-.477-.008-.166 0-.435.062-.662.31-.228.248-.87.848-.87 2.066s.891 2.396 1.015 2.562c.124.166 1.748 2.668 4.234 3.74.59.255 1.05.408 1.41.522.593.188 1.133.161 1.558.098.474-.07 1.464-.598 1.67-1.176.207-.578.207-1.074.145-1.176-.062-.102-.228-.164-.475-.288z" />
-                    </svg>
-                  ),
-                },
-                {
-                  href: "https://facebook.com/",
-                  label: "Facebook",
-                  color: "#1877F2",
-                  icon: (
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="w-5 h-5"
-                    >
-                      <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
                     </svg>
                   ),
                 },
