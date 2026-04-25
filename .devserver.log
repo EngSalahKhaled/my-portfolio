@@ -1,0 +1,17 @@
+
+> titan-folio@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.3
+  - Local:        http://localhost:3000
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 5.9s
+ ○ Compiling / ...
+ ✓ Compiled / in 16.2s (1426 modules)
+ GET / 200 in 17656ms
+ ✓ Compiled in 1403ms (699 modules)
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 687ms (757 modules)
+ GET /icon.svg?0e09681514f3d30f 200 in 845ms

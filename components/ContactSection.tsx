@@ -113,7 +113,16 @@ export default function ContactSection() {
             {c.sectionTag[lang]}
           </p>
           <h2 className="section-title">
-            {c.title[lang]} <span className="gradient-text">{c.titleAccent[lang]}</span>
+            {lang === 'en' ? (
+              <>
+                Get in Touch with a{' '}
+                <span className="gradient-text">Front End Developer Ready to Help</span>
+              </>
+            ) : (
+              <>
+                {c.title[lang]} <span className="gradient-text">{c.titleAccent[lang]}</span>
+              </>
+            )}
           </h2>
           <p className="text-text-muted max-w-lg mx-auto">{c.subtitle[lang]}</p>
         </div>

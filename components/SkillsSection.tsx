@@ -62,7 +62,16 @@ export default function SkillsSection() {
             {tr.skills.sectionTag[lang]}
           </p>
           <h2 className="section-title">
-            {tr.skills.title[lang]} <span className="gradient-text">{tr.skills.titleAccent[lang]}</span>
+            {lang === 'en' ? (
+              <>
+                Responsive Websites Crafted with{' '}
+                <span className="gradient-text">React, Next.js, and TypeScript</span>
+              </>
+            ) : (
+              <>
+                {tr.skills.title[lang]} <span className="gradient-text">{tr.skills.titleAccent[lang]}</span>
+              </>
+            )}
           </h2>
           <p style={{ color: 'var(--text-muted)' }} className="max-w-lg mx-auto">{tr.skills.subtitle[lang]}</p>
         </div>

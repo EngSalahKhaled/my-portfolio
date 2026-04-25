@@ -176,8 +176,17 @@ export default function BusinessSection() {
             {tr.business.sectionTag[lang]}
           </p>
           <h2 className="section-title mb-4">
-            {tr.business.title[lang]}{' '}
-            <span className="gradient-text">{tr.business.titleAccent[lang]}</span>
+            {lang === 'en' ? (
+              <>
+                How Strong Front End Development Supports{' '}
+                <span className="gradient-text">Business Growth</span>
+              </>
+            ) : (
+              <>
+                {tr.business.title[lang]}{' '}
+                <span className="gradient-text">{tr.business.titleAccent[lang]}</span>
+              </>
+            )}
           </h2>
           <p className="text-text-muted max-w-xl leading-relaxed">{tr.business.subtitle[lang]}</p>
         </div>

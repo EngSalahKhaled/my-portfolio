@@ -421,10 +421,19 @@ export default function ProjectsSection() {
             {tr.projects.sectionTag[lang]}
           </p>
           <h2 className="section-title">
-            {tr.projects.title[lang]}{" "}
-            <span className="gradient-text">
-              {tr.projects.titleAccent[lang]}
-            </span>
+            {lang === "en" ? (
+              <>
+                Front End Developer Projects Built for{" "}
+                <span className="gradient-text">Performance and Conversions</span>
+              </>
+            ) : (
+              <>
+                {tr.projects.title[lang]}{" "}
+                <span className="gradient-text">
+                  {tr.projects.titleAccent[lang]}
+                </span>
+              </>
+            )}
           </h2>
           <p className="text-text-muted max-w-xl mx-auto">
             {tr.projects.subtitle[lang]}

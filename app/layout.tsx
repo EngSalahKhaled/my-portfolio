@@ -31,11 +31,11 @@ const SITE_URL = 'https://salahkhaled.com'
 /* ─── SEO Metadata ─────────────────────────────────────────────────────────── */
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'Salah.dev - Full Stack Developer',
+  title: 'Salah.dev - Front End Developer',
   description:
-    'Portfolio of Salah Khaled — a Google-certified Full Stack Developer crafting premium digital experiences and intelligent web solutions.',
+    "Hire Salah Khaled, a Front End Developer building fast, modern, high-converting websites with Google-certified expertise. View projects and get in touch.",
   keywords: [
-    'Full Stack Developer', 'Front-End Developer', 'React', 'Next.js', 'TypeScript',
+    'Front End Developer', 'Front-End Developer', 'React Developer', 'Next.js Developer', 'TypeScript',
     'Portfolio', 'Salah Khaled', 'Saudi Arabia', 'Web Developer Riyadh',
     'UI UX Developer', 'Gemini AI', 'Google Certified',
   ],
@@ -46,8 +46,8 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'Salah.dev - Full Stack Developer',
-    description: 'Portfolio of Salah Khaled — a Google-certified Full Stack Developer crafting premium digital experiences.',
+    title: 'Salah.dev - Front End Developer',
+    description: 'Hire Salah Khaled, a Front End Developer building fast, modern, high-converting websites with Google-certified expertise.',
     url: SITE_URL,
     siteName: 'Salah.dev Portfolio',
     type: 'website',
@@ -57,14 +57,14 @@ export const metadata: Metadata = {
         url: `${SITE_URL}/og-image.jpg`, // Ensure you use .jpg and absolute URL
         width: 1200,
         height: 630,
-        alt: 'Salah Khaled - Full Stack Developer Portfolio',
+        alt: 'Salah Khaled - Front End Developer Portfolio',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Salah.dev - Full Stack Developer',
-    description: 'Portfolio of Salah Khaled — a Google-certified Full Stack Developer.',
+    title: 'Salah.dev - Front End Developer',
+    description: 'Hire Salah Khaled, a Front End Developer building fast, modern, high-converting websites with Google-certified expertise.',
     images: [`${SITE_URL}/og-image.jpg`], // Use absolute URL for Twitter as well
   },
 }
