@@ -7,8 +7,93 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 6.8s
- ○ Compiling / ...
- ✓ Compiled / in 17.7s (1430 modules)
- ✓ Compiled in 1828ms (700 modules)
- GET / 200 in 389ms
+ ✓ Ready in 4.9s
+ ✓ Compiled /middleware in 380ms
+ ✓ Compiled (73 modules)
+ ○ Compiling /en ...
+ ✓ Compiled /en in 10.9s (1527 modules)
+ GET /en 200 in 11518ms
+ ✓ Compiled in 789ms (729 modules)
+ ✓ Compiled /icon.svg in 401ms (801 modules)
+ GET /icon.svg?0e09681514f3d30f 200 in 518ms
+ GET /en 200 in 156ms
+ GET /en 200 in 73ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 862ms (1489 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1259ms
+ GET /_next/static/chunks/app/en/LayoutGroupContext.mjs.map 404 in 39ms
+ GET /en 200 in 224ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 120ms
+ GET /_next/static/chunks/app/en/LayoutGroupContext.mjs.map 404 in 32ms
+ ✓ Compiled /icon.svg in 377ms (803 modules)
+ GET /icon.svg?0e09681514f3d30f 200 in 487ms
+ GET /en 200 in 270ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 148ms
+ GET /_next/static/chunks/app/en/LayoutGroupContext.mjs.map 404 in 63ms
+ GET /icon.svg?0e09681514f3d30f 200 in 25ms
+ ✓ Compiled in 716ms (1533 modules)
+ ✓ Compiled in 556ms (1487 modules)
+ GET /en 200 in 265ms
+ ✓ Compiled /_not-found in 152ms (773 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 241ms
+ GET /_next/static/chunks/app/en/LayoutGroupContext.mjs.map 404 in 87ms
+ ✓ Compiled /icon.svg in 178ms (803 modules)
+ GET /icon.svg?0e09681514f3d30f 200 in 239ms
+ ✓ Compiled in 640ms (1533 modules)
+ ✓ Compiled in 789ms (1519 modules)
+ ✓ Compiled in 731ms (1533 modules)
+ ✓ Compiled in 437ms (1501 modules)
+ ✓ Compiled in 484ms (1501 modules)
+ ✓ Compiled in 766ms (1490 modules)
+ ✓ Compiled in 510ms (1478 modules)
+ GET /en 200 in 377ms
+ ✓ Compiled /_not-found in 306ms (765 modules)
+ GET /_next/static/chunks/main-app.js?v=1777105772379 404 in 609ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 606ms
+ GET /_next/static/chunks/app/not-found.js 404 in 590ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 46ms
+ GET /_next/static/chunks/app/en/LayoutGroupContext.mjs.map 404 in 29ms
+ ✓ Compiled /icon.svg in 404ms (795 modules)
+ GET /icon.svg?0e09681514f3d30f 200 in 472ms
+ ✓ Compiled in 525ms (1524 modules)
+ ✓ Compiled in 623ms (1524 modules)
+ GET /en 200 in 404ms
+ ✓ Compiled in 912ms (729 modules)
+ ✓ Compiled in 299ms (1478 modules)
+ ✓ Compiled in 799ms (1482 modules)
+ ✓ Compiled in 536ms (1496 modules)
+ GET /en 200 in 802ms
+ ✓ Compiled /_not-found in 374ms (767 modules)
+ GET /_next/static/chunks/app-pages-internals.js 404 in 681ms
+ GET /_next/static/chunks/main-app.js?v=1777106407765 404 in 699ms
+ GET /_next/static/chunks/app/not-found.js 404 in 650ms
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 764ms (797 modules)
+ GET /icon.svg?0e09681514f3d30f 200 in 985ms
+ ✓ Compiled in 1152ms (1528 modules)
+ ✓ Compiled in 1238ms (1528 modules)
+ ✓ Compiled in 662ms (1528 modules)
+ ✓ Compiled in 323ms (731 modules)
+ ✓ Compiled in 419ms (731 modules)
+ ✓ Compiled in 874ms (1555 modules)
+ ✓ Compiled in 1829ms (1555 modules)
+ ✓ Compiled in 2.4s (1496 modules)
+ ✓ Compiled in 1082ms (1496 modules)
+ ✓ Compiled in 991ms (1496 modules)
+ ✓ Compiled in 673ms (731 modules)
+ ✓ Compiled in 260ms (717 modules)
+ ✓ Compiled in 1420ms (1496 modules)
+ ○ Compiling /ar ...
+ ✓ Compiled /ar in 562ms (1498 modules)
+ ✓ Compiled /_not-found in 205ms (769 modules)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 1847ms (1709 modules)
+ GET /ar 404 in 2875ms
+ ✓ Compiled in 8.4s (1713 modules)
+ ✓ Compiled in 758ms (1699 modules)
+ ✓ Compiled in 805ms (1713 modules)
+ ✓ Compiled in 1157ms (1713 modules)
+ ✓ Compiled in 720ms (1713 modules)
+ ✓ Compiled in 860ms (911 modules)
+ ✓ Compiled in 1137ms (911 modules)
+ ✓ Compiled in 832ms (911 modules)

@@ -4,9 +4,13 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { translations as tr } from '@/lib/i18n/translations'
 
 export default function Footer() {
-  const { lang } = useLanguage()
+  const { lang, isAr } = useLanguage()
   const f = tr.footer
   const year = new Date().getFullYear()
+  const homeHref = isAr ? '/ar' : '/en'
+  const workHref = isAr ? '/ar/work' : '/en/work'
+  const skillsHref = `${homeHref}#skills`
+  const contactHref = `${homeHref}#contact`
 
   return (
     <footer
@@ -26,10 +30,10 @@ export default function Footer() {
         </p>
         <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-4 gap-y-2">
           {[
-            { href: '#hero',     label: lang === 'ar' ? 'الرئيسية' : 'Home' },
-            { href: '#projects', label: lang === 'ar' ? 'مشاريعي' : 'Projects' },
-            { href: '#skills',   label: lang === 'ar' ? 'المهارات' : 'Skills' },
-            { href: '#contact',  label: lang === 'ar' ? 'تواصل' : 'Contact' },
+            { href: homeHref,    label: lang === 'ar' ? 'الرئيسية' : 'Home' },
+            { href: workHref,    label: lang === 'ar' ? 'الأعمال' : 'Work' },
+            { href: skillsHref,  label: lang === 'ar' ? 'المهارات' : 'Skills' },
+            { href: contactHref, label: lang === 'ar' ? 'تواصل' : 'Contact' },
           ].map(({ href, label }) => (
             <a
               key={href}

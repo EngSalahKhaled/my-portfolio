@@ -1,19 +1,19 @@
-import dynamic from 'next/dynamic'
 import Navbar from '@/components/Navbar'
 import HeroSection from '@/components/HeroSection'
 import AboutSection from '@/components/AboutSection'
 import ScrollReveal from '@/components/ScrollReveal'
 import ProjectsSection from '@/components/ProjectsSection'
-
-const ToolMarquee = dynamic(() => import('@/components/ToolMarquee'), { ssr: false })
-const BusinessSection = dynamic(() => import('@/components/BusinessSection'))
-const SkillsSection = dynamic(() => import('@/components/SkillsSection'))
-const CertificationsSection = dynamic(() => import('@/components/CertificationsSection'))
-const ContactSection = dynamic(() => import('@/components/ContactSection'))
-const Footer = dynamic(() => import('@/components/Footer'))
-
-const ReadingProgress = dynamic(() => import('@/components/ReadingProgress'), { ssr: false })
-const WhatsAppWidget = dynamic(() => import('@/components/WhatsAppWidget'), { ssr: false })
+import ResultsSection from '@/components/ResultsSection'
+import ServicesSection from '@/components/ServicesSection'
+import TestimonialsSection from '@/components/TestimonialsSection'
+import ToolMarquee from '@/components/ToolMarquee'
+import BusinessSection from '@/components/BusinessSection'
+import SkillsSection from '@/components/SkillsSection'
+import CertificationsSection from '@/components/CertificationsSection'
+import ContactSection from '@/components/ContactSection'
+import Footer from '@/components/Footer'
+import ReadingProgress from '@/components/ReadingProgress'
+import WhatsAppWidget from '@/components/WhatsAppWidget'
 
 export default function HomePageContent() {
   return (
@@ -30,7 +30,15 @@ export default function HomePageContent() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <ProjectsSection />
+          <ResultsSection />
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <ServicesSection />
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <ProjectsSection preview />
         </ScrollReveal>
 
         <ScrollReveal>
@@ -43,6 +51,10 @@ export default function HomePageContent() {
 
         <ScrollReveal>
           <CertificationsSection />
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <TestimonialsSection />
         </ScrollReveal>
 
         <ScrollReveal>

@@ -1,5 +1,5 @@
-import HomePageContent from '@/components/HomePageContent'
+import { redirect } from 'next/navigation'
 
 export default function Home() {
-  return <HomePageContent />
+  redirect('/en')
 }

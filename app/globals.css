@@ -124,8 +124,6 @@ body {
     background: var(--dark-card-rgba);
     border: 1px solid var(--dark-border);
     border-radius: var(--radius-lg);
-    /* backdrop-filter only when GPU compositing is worth it (medium+ screens) */
-    @apply supports-[backdrop-filter]:backdrop-blur-sm;
     contain: layout paint; /* skip layout of siblings during repaint */
   }
 
@@ -264,14 +262,6 @@ body {
   }
 }
 
-/* ─── Content visibility — biggest scroll perf win ───────────────────────────
-   Tells browser to skip layout+paint of off-screen sections entirely.
-   contain-intrinsic-size prevents layout shift when sections enter view.   */
-section:not(#hero) {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 700px;
-}
-
 /* ─── Gradient mesh background for hero ─────────────────────────────────────*/
 .hero-mesh {
   background-color: var(--dark-bg);
@@ -407,6 +397,5 @@ section:not(#hero) {
 /* Navbar in light mode when scrolled */
 [data-mode="light"] nav[id="navbar"].scrolled-nav {
   background-color: rgba(255, 255, 255, 0.9) !important;
-  backdrop-filter: blur(16px) !important;
   border-color: rgba(0, 0, 0, 0.08) !important;
 }

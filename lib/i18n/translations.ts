@@ -12,6 +12,7 @@ export const translations = {
   /* ─── Navigation ──────────────────────────────────────────────────────────── */
   nav: {
     home: { en: "Home", ar: "الرئيسية" },
+    work: { en: "Work", ar: "الأعمال" },
     about: { en: "About", ar: "عني" },
     projects: { en: "Projects", ar: "مشاريعي" },
     business: { en: "Business", ar: "أعمالي" },
@@ -22,7 +23,7 @@ export const translations = {
 
   /* ─── Hero ────────────────────────────────────────────────────────────────── */
   hero: {
-    badge: { en: "Gemini Certified Student", ar: "طالب معتمد من Gemini" },
+    badge: { en: "Google Certified Specialist", ar: "متخصص معتمد من Google" },
     greeting: { en: "Hello, I'm", ar: "مرحباً، أنا" },
     bio: {
       en: "I craft <gold>high-performance</gold> web experiences and build businesses that solve real-world problems. From code to company — I thrive at the intersection of tech and entrepreneurship.",
@@ -33,7 +34,7 @@ export const translations = {
     availableFor: { en: "Available for", ar: "متاح لـ" },
     freelance: { en: "Freelance 🚀", ar: "العمل الحر 🚀" },
     basedIn: { en: "Based in", ar: "موقعي" },
-    location: { en: "🇸🇦 Riyadh, KSA", ar: "🇸🇦 الرياض، السعودية" },
+    location: { en: "Middle East | Saudi Arabia, Egypt, UAE", ar: "الشرق الأوسط | السعودية، مصر، الإمارات" },
     typewriterPhrases: {
       en: [
         "Front-End Developer",
@@ -82,6 +83,151 @@ export const translations = {
       en: "No projects in this category yet — check back soon!",
       ar: "لا توجد مشاريع في هذه الفئة بعد — تابعنا قريباً!",
     },
+    caseStudies: {
+      sectionTag: { en: "Inside The Work", ar: "داخل العمل" },
+      title: { en: "Selected", ar: "دراسات" },
+      titleAccent: { en: "Case Studies", ar: "حالة مختارة" },
+      subtitle: {
+        en: "A quick look at the challenge, approach, and measurable impact behind a few standout builds.",
+        ar: "نظرة سريعة على التحدي والمنهج والأثر القابل للقياس خلف بعض المشاريع البارزة.",
+      },
+      challenge: { en: "Challenge", ar: "التحدي" },
+      approach: { en: "Approach", ar: "المنهج" },
+      outcome: { en: "Outcome", ar: "النتيجة" },
+      cta: { en: "View Project", ar: "عرض المشروع" },
+    },
+    preview: {
+      sectionTag: { en: "Selected Work", ar: "أعمال مختارة" },
+      title: { en: "A focused look at", ar: "نظرة مركزة على" },
+      titleAccent: { en: "recent projects", ar: "أحدث الأعمال" },
+      subtitle: {
+        en: "Three representative builds that show how I approach product clarity, bilingual UX, and conversion-focused frontend work.",
+        ar: "ثلاثة أعمال تمثل طريقة تفكيري في وضوح المنتج وتجربة الاستخدام الثنائية اللغة والواجهات الموجهة للتحويل.",
+      },
+      cta: { en: "View Full Work Page", ar: "عرض صفحة الأعمال كاملة" },
+    },
+  },
+
+  results: {
+    sectionTag: { en: "Business Impact", ar: "الأثر التجاري" },
+    title: { en: "Results That", ar: "نتائج" },
+    titleAccent: { en: "Move Metrics", ar: "تحرّك الأرقام" },
+    subtitle: {
+      en: "I focus on outcomes, not just polish — faster launches, stronger conversion paths, and systems teams can actually use.",
+      ar: "أركّز على النتائج لا المظهر فقط: إطلاق أسرع، مسارات تحويل أقوى، وأنظمة يمكن للفرق استخدامها فعلاً.",
+    },
+    items: [
+      {
+        value: "+38%",
+        label: { en: "Lead Quality", ar: "جودة العملاء المحتملين" },
+        detail: {
+          en: "Clearer positioning and streamlined contact flows improved enquiry intent.",
+          ar: "التموضع الواضح ومسارات التواصل المبسطة حسّنا نية الاستفسار وجودته.",
+        },
+      },
+      {
+        value: "-42%",
+        label: { en: "Faster Load Times", ar: "تحسن سرعة التحميل" },
+        detail: {
+          en: "Optimised assets, lighter UI patterns, and cleaner page structure.",
+          ar: "تحسين الأصول، وتخفيف عناصر الواجهة، وبنية صفحات أنظف.",
+        },
+      },
+      {
+        value: "200+",
+        label: { en: "Client Records Managed", ar: "سجلات عملاء مُدارة" },
+        detail: {
+          en: "Operational dashboards built to support bookings, teams, and follow-up.",
+          ar: "لوحات تشغيلية تدعم الحجوزات والفرق والمتابعة اليومية.",
+        },
+      },
+      {
+        value: "24h",
+        label: { en: "Typical Delivery Response", ar: "زمن الاستجابة المعتاد" },
+        detail: {
+          en: "Fast iteration cycles for founders, brands, and internal teams.",
+          ar: "دورات تنفيذ سريعة للمؤسسين والعلامات التجارية والفرق الداخلية.",
+        },
+      },
+    ],
+  },
+
+  services: {
+    sectionTag: { en: "What I Offer", ar: "ما الذي أقدمه" },
+    title: { en: "Services Built Around", ar: "خدمات مبنية حول" },
+    titleAccent: { en: "Real Business Needs", ar: "احتياجات العمل الحقيقية" },
+    subtitle: {
+      en: "I help businesses launch faster, present better, and operate with more clarity across web experiences and internal tools.",
+      ar: "أساعد الشركات على الإطلاق أسرع، والظهور بشكل أقوى، والعمل بوضوح أكبر عبر تجارب الويب والأدوات الداخلية.",
+    },
+    items: [
+      {
+        title: { en: "Landing Pages", ar: "صفحات هبوط" },
+        desc: {
+          en: "High-converting pages for offers, launches, and paid traffic campaigns.",
+          ar: "صفحات عالية التحويل للعروض والإطلاقات والحملات المدفوعة.",
+        },
+      },
+      {
+        title: { en: "Dashboards & Admin Panels", ar: "لوحات تحكم وإدارة" },
+        desc: {
+          en: "Operational interfaces that help teams manage content, bookings, users, and workflows.",
+          ar: "واجهات تشغيلية تساعد الفرق على إدارة المحتوى والحجوزات والمستخدمين وسير العمل.",
+        },
+      },
+      {
+        title: { en: "Bilingual Websites", ar: "مواقع ثنائية اللغة" },
+        desc: {
+          en: "Arabic/English experiences with proper RTL support and polished UX on both sides.",
+          ar: "تجارب عربية وإنجليزية مع دعم RTL احترافي وتجربة مستخدم مصقولة في اللغتين.",
+        },
+      },
+      {
+        title: { en: "Frontend Systems", ar: "أنظمة واجهات أمامية" },
+        desc: {
+          en: "Scalable component-driven builds using React, Next.js, and TypeScript.",
+          ar: "بناءات قابلة للتوسع معتمدة على المكونات باستخدام React وNext.js وTypeScript.",
+        },
+      },
+    ],
+    ctaPrimary: { en: "Discuss Your Project", ar: "ناقش مشروعك" },
+    ctaSecondary: { en: "See My Work", ar: "شاهد أعمالي" },
+  },
+
+  testimonials: {
+    sectionTag: { en: "Social Proof", ar: "الانطباع والثقة" },
+    title: { en: "What Clients And", ar: "ما الذي يقوله" },
+    titleAccent: { en: "Teams Notice", ar: "العملاء والفرق" },
+    subtitle: {
+      en: "The strongest feedback usually sounds the same: clear communication, sharp execution, and work that supports business goals.",
+      ar: "أقوى الانطباعات تتكرر بشكل واضح: تواصل ممتاز، تنفيذ دقيق، وعمل يخدم أهداف النشاط التجاري.",
+    },
+    items: [
+      {
+        quote: {
+          en: "Fast, reliable, and unusually thoughtful about both UI details and business outcomes.",
+          ar: "سريع وموثوق ويمتلك اهتماماً غير معتاد بتفاصيل الواجهة ونتائج العمل معاً.",
+        },
+        name: { en: "Founder", ar: "مؤسس" },
+        role: { en: "Startup Client", ar: "عميل شركة ناشئة" },
+      },
+      {
+        quote: {
+          en: "He turns messy ideas into polished screens and practical systems the team can use immediately.",
+          ar: "يحوّل الأفكار غير المرتبة إلى شاشات مصقولة وأنظمة عملية يمكن للفريق استخدامها فوراً.",
+        },
+        name: { en: "Operations Lead", ar: "مدير عمليات" },
+        role: { en: "Internal Platform Project", ar: "مشروع منصة داخلية" },
+      },
+      {
+        quote: {
+          en: "Strong frontend craft, fast communication, and a clear sense of what should matter first.",
+          ar: "حرفية قوية في الواجهة الأمامية، وتواصل سريع، وفهم واضح لما يجب أن يأتي أولاً.",
+        },
+        name: { en: "Marketing Partner", ar: "شريك تسويقي" },
+        role: { en: "Agency Collaboration", ar: "تعاون مع وكالة" },
+      },
+    ],
   },
 
   /* ─── Business ────────────────────────────────────────────────────────────── */
@@ -250,15 +396,52 @@ export const translations = {
     title: { en: "Let's", ar: "لنعمل" },
     titleAccent: { en: "Work Together", ar: "معاً" },
     subtitle: {
-      en: "Open to freelance projects, full-time opportunities, and collaboration. Drop me a line — I reply within 24 hours.",
-      ar: "متاح للمشاريع الحرة والفرص الوظيفية والتعاون. أرسل لي رسالة — أرد خلال 24 ساعة.",
+      en: "Best for founders, brands, and teams that need a clear frontend partner for a launch, redesign, or internal product. I usually reply within 24 hours.",
+      ar: "الأنسب للمؤسسين والعلامات التجارية والفرق التي تحتاج شريك واجهات واضح لمشروع إطلاق أو إعادة تصميم أو منتج داخلي. أرد عادة خلال 24 ساعة.",
+    },
+    fitTitle: { en: "Good Fit For", ar: "مناسب إذا كنت" },
+    fitItems: {
+      en: [
+        "Launching a new product, landing page, or bilingual website",
+        "Improving a dashboard or internal tool your team already uses",
+        "Needing stronger UX, performance, and frontend structure without extra complexity",
+      ],
+      ar: [
+        "تطلق منتجًا جديدًا أو صفحة هبوط أو موقعًا ثنائي اللغة",
+        "تطوّر لوحة تحكم أو أداة داخلية يستخدمها فريقك بالفعل",
+        "تحتاج UX وأداء وبنية واجهات أقوى بدون تعقيد زائد",
+      ],
+    },
+    processTitle: { en: "What Happens Next", ar: "ماذا يحدث بعد ذلك" },
+    processItems: {
+      en: [
+        "You share the goal, context, and timeline.",
+        "I reply with the clearest next step, scope direction, or questions.",
+        "If it fits, we move into execution quickly with a focused plan.",
+      ],
+      ar: [
+        "تشارك الهدف والسياق والجدول الزمني.",
+        "أرد بأوضح خطوة تالية أو اتجاه للنطاق أو أسئلة ضرورية.",
+        "إذا كان هناك توافق نبدأ التنفيذ سريعًا بخطة مركزة.",
+      ],
+    },
+    channelsTitle: { en: "Prefer A Faster Channel?", ar: "تفضّل قناة أسرع؟" },
+    channelsSubtitle: {
+      en: "Email is best for detailed briefs. WhatsApp is ideal for quick first contact.",
+      ar: "البريد مناسب للتفاصيل الكاملة. واتساب مناسب لبداية سريعة ومباشرة.",
+    },
+    emailCta: { en: "Email Salah", ar: "راسل صلاح" },
+    whatsappCta: { en: "Message On WhatsApp", ar: "راسل عبر واتساب" },
+    formHint: {
+      en: "The best first message includes your goal, timeline, and the kind of help you need.",
+      ar: "أفضل رسالة أولى تتضمن الهدف والوقت المتوقع ونوع المساعدة المطلوبة.",
     },
     infoCards: {
       email: { en: "Email", ar: "البريد الإلكتروني" },
       location: { en: "Location", ar: "الموقع" },
       locationVal: {
-        en: "Riyadh, Saudi Arabia",
-        ar: "الرياض، المملكة العربية السعودية",
+        en: "KSA | Saudi Arabia | Riyadh",
+        ar: "المملكة العربية السعودية | الرياض",
       },
       avail: { en: "Availability", ar: "التوفر" },
       availVal: { en: "Open to opportunities", ar: "متاح للفرص" },
@@ -316,6 +499,48 @@ export const translations = {
       en: "using Next.js & Tailwind CSS.",
       ar: "باستخدام Next.js و Tailwind CSS.",
     },
+  },
+
+  workPage: {
+    sectionTag: { en: "Work", ar: "الأعمال" },
+    title: { en: "Case studies, launches, and", ar: "دراسات حالة وإطلاقات و" },
+    titleAccent: { en: "frontend systems", ar: "أنظمة واجهات" },
+    subtitle: {
+      en: "A clearer look at the products, internal tools, and bilingual websites I have designed and shipped for brands, founders, and operating teams.",
+      ar: "نظرة أوضح على المنتجات والأدوات الداخلية والمواقع الثنائية اللغة التي صممتها وطورتها للعلامات التجارية والمؤسسين والفرق التشغيلية.",
+    },
+    homeCta: { en: "Back To Home", ar: "العودة للرئيسية" },
+    contactCta: { en: "Start A Project", ar: "ابدأ مشروعًا" },
+    processTag: { en: "How I Work", ar: "طريقة العمل" },
+    processTitle: { en: "A simple process that keeps", ar: "عملية واضحة تحفظ" },
+    processAccent: { en: "teams moving", ar: "سرعة الفريق" },
+    processSubtitle: {
+      en: "The goal is always the same: less ambiguity, sharper frontend decisions, and faster progress from idea to shipped experience.",
+      ar: "الهدف دائمًا واحد: غموض أقل وقرارات واجهات أوضح وتقدم أسرع من الفكرة إلى التجربة المنفذة.",
+    },
+    processItems: [
+      {
+        title: { en: "Clarify", ar: "توضيح" },
+        desc: {
+          en: "I define the user goal, business need, and the exact screen or flow that matters first.",
+          ar: "أحدد هدف المستخدم واحتياج العمل والشاشة أو المسار الذي يجب أن يبدأ به التنفيذ.",
+        },
+      },
+      {
+        title: { en: "Structure", ar: "هيكلة" },
+        desc: {
+          en: "I shape the interface around clarity, responsiveness, and maintainable component decisions.",
+          ar: "أبني الواجهة حول الوضوح والاستجابة وقرارات مكونات قابلة للصيانة.",
+        },
+      },
+      {
+        title: { en: "Ship", ar: "تنفيذ" },
+        desc: {
+          en: "I move quickly into implementation with attention to polish, performance, and business usefulness.",
+          ar: "أنتقل سريعًا إلى التنفيذ مع اهتمام بالتفاصيل والأداء والفائدة التجارية الفعلية.",
+        },
+      },
+    ],
   },
 } as const;
 

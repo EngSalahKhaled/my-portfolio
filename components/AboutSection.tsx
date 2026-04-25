@@ -6,14 +6,14 @@ const englishHighlights = [
   "Front End Developer",
   "React Developer",
   "Next.js Developer",
-  "Riyadh, Saudi Arabia",
+  "Middle East | Saudi Arabia, Egypt, UAE",
 ];
 
 const arabicHighlights = [
   "مطور واجهات أمامية",
   "React",
   "Next.js",
-  "الرياض، السعودية",
+  "الشرق الأوسط | السعودية، مصر، الإمارات",
 ];
 
 export default function AboutSection() {
@@ -53,8 +53,8 @@ export default function AboutSection() {
             style={{ color: "var(--text-muted)" }}
           >
             {isAr
-              ? "أنا صلاح خالد، مطور واجهات أمامية من الرياض، السعودية، أعمل على بناء واجهات سريعة وحديثة باستخدام React وNext.js وTypeScript. أركز على الأداء وتجربة المستخدم والتحويلات، وأصمم صفحات ومواقع تساعد الشركات ورواد الأعمال على النمو بشكل فعلي."
-              : "I'm Salah Khaled, a Front End Developer in Riyadh, Saudi Arabia, building fast, modern websites with React, Next.js, and TypeScript. I focus on performance, user experience, and conversion-driven interfaces that help brands, startups, and growing businesses turn traffic into real results."}
+              ? "أنا صلاح خالد، مطور واجهات أمامية أخدم عملاء الشرق الأوسط في السعودية ومصر والإمارات، وأبني واجهات سريعة وحديثة باستخدام React وNext.js وTypeScript. أركز على الأداء وتجربة المستخدم والتحويلات، وأصمم صفحات ومواقع تساعد الشركات ورواد الأعمال على النمو بشكل فعلي."
+              : "I'm Salah Khaled, a Front End Developer serving the Middle East across Saudi Arabia, Egypt, and the UAE, building fast, modern websites with React, Next.js, and TypeScript. I focus on performance, user experience, and conversion-driven interfaces that help brands, startups, and growing businesses turn traffic into real results."}
           </p>
 
           <div className={`flex flex-wrap gap-3 mt-8 ${isAr ? "justify-end" : ""}`}>

@@ -1,32 +1,48 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 export default function ReadingProgress() {
-  const [progress, setProgress] = useState(0)
+  const barRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    let ticking = false
+
     const update = () => {
+      ticking = false
       const { scrollY, innerHeight } = window
       const totalHeight = document.body.scrollHeight - innerHeight
-      setProgress(totalHeight > 0 ? (scrollY / totalHeight) * 100 : 0)
+      const progress = totalHeight > 0 ? scrollY / totalHeight : 0
+      if (barRef.current) {
+        barRef.current.style.transform = `scaleX(${Math.min(Math.max(progress, 0), 1)})`
+      }
     }
-    window.addEventListener('scroll', update, { passive: true })
-    return () => window.removeEventListener('scroll', update)
+
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(update)
+    }
+
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
   }, [])
 
   return (
     <div
+      ref={barRef}
       className="fixed top-0 left-0 z-[100] h-[2px] pointer-events-none"
       style={{
-        width: `${progress}%`,
+        width: '100%',
         background: 'linear-gradient(90deg, var(--theme-dark), var(--theme-primary), var(--theme-light))',
-        transition: 'width 80ms linear',
+        transform: 'scaleX(0)',
+        transformOrigin: '0 50%',
       }}
-      role="progressbar"
-      aria-valuenow={Math.round(progress)}
-      aria-valuemin={0}
-      aria-valuemax={100}
-      aria-label="Page reading progress"
+      aria-hidden="true"
     />
   )
 }

@@ -74,6 +74,7 @@ function StatCard({ value, suffix, label, active, delay }: {
 /* ─── Hero Section ───────────────────────────────────────────────────────────*/
 export default function HeroSection() {
   const { lang, isAr } = useLanguage();
+  const workHref = isAr ? "/ar/work" : "/en/work";
   // ✅ Memoize so the array reference stays stable between renders.
   // Without this, a new array is created every render → useTypewriter effect
   // fires every render → infinite loop.
@@ -85,7 +86,7 @@ export default function HeroSection() {
     { value: 3, suffix: "+", label: tr.hero.stats.yearsExp[lang] },
     { value: 20, suffix: "+", label: tr.hero.stats.projects[lang] },
     { value: 2, suffix: "", label: tr.hero.stats.businesses[lang] },
-    { value: 1, suffix: "", label: tr.hero.stats.certs[lang] },
+    { value: 3, suffix: "", label: tr.hero.stats.certs[lang] },
   ];
 
   return (
@@ -122,7 +123,7 @@ export default function HeroSection() {
           >
             {/* Gemini badge — clickable link to certificate */}
             <a
-              href="https://edu.google.accredible.com/eab1a54a-90a1-47be-a423-71ada4edd135#acc.VM4XbQKl"
+              href="#certifications"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium animate-pulse-gold transition-all duration-200 hover:brightness-125 hover:scale-105"
@@ -132,7 +133,7 @@ export default function HeroSection() {
                 color: "#F5C518",
               }}
               id="gemini-badge"
-              aria-label={isAr ? "عرض شهادة Gemini" : "View Gemini Certificate"}
+              aria-label={isAr ? "عرض شهادات Google" : "View Google Certifications"}
             >
               <svg
                 width="18"
@@ -167,7 +168,7 @@ export default function HeroSection() {
                   className="text-sm sm:text-base font-semibold tracking-[0.24em] uppercase mb-3"
                   style={{ color: "#F5C518" }}
                 >
-                  Front End Developer in Riyadh, Saudi Arabia
+                  Front End Developer in the Middle East
                 </p>
               )}
               <p className="text-text-muted text-lg font-medium mb-2">
@@ -178,14 +179,14 @@ export default function HeroSection() {
                   <>
                     <span className="gradient-text">صلاح خالد</span>
                     <span className="block text-2xl sm:text-3xl lg:text-4xl text-text-main mt-4">
-                      مطور واجهات أمامية في الرياض
+                      مطور واجهات أمامية في الشرق الأوسط
                     </span>
                   </>
                 ) : (
                   <>
                     <span className="gradient-text">Salah Khaled</span>
                     <span className="block text-2xl sm:text-3xl lg:text-4xl text-text-main mt-4">
-                      Front End Developer in Riyadh
+                      Front End Developer in the Middle East
                     </span>
                   </>
                 )}
@@ -220,8 +221,9 @@ export default function HeroSection() {
                     React, Next.js, and high-performance
                   </span>{" "}
                   websites for brands, startups, and businesses that need
-                  modern user experiences and real results. Based in Riyadh, I
-                  build conversion-focused interfaces that support growth.
+                  modern user experiences and real results across Saudi Arabia,
+                  Egypt, and the UAE. I build conversion-focused interfaces that
+                  support growth across the Middle East.
                 </>
               )}
             </p>
@@ -230,11 +232,7 @@ export default function HeroSection() {
             <div
               className={`flex flex-wrap gap-4 pt-2 ${isAr ? "justify-end" : ""}`}
             >
-              <a
-                href="#projects"
-                className="btn-primary"
-                id="hero-view-work-btn"
-              >
+              <a href={workHref} className="btn-primary" id="hero-view-work-btn">
                 {tr.hero.viewWork[lang]}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -290,7 +288,7 @@ export default function HeroSection() {
                   ),
                 },
                 {
-                  href: "https://wa.me/+966500438424",
+                  href: "https://wa.me/966500438424",
                   label: "WhatsApp",
                   color: "#25D366",
                   icon: (
@@ -413,7 +411,7 @@ export default function HeroSection() {
 
       {/* Scroll indicator */}
       <a
-        href="#projects"
+        href="#about"
         className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 sm:gap-3 group z-20"
         aria-label="Scroll down"
       >

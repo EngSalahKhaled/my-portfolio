@@ -102,6 +102,10 @@ export default function ContactSection() {
       href: null,
     },
   ];
+  const fitItems = c.fitItems[lang]
+  const processItems = c.processItems[lang]
+  const whatsappHref = "https://wa.me/966500438424"
+  const emailHref = "mailto:info@salahkhaled.com"
 
   return (
     <section id="contact" className="py-24 bg-dark-card" aria-label="Contact section" ref={sectionRef}>
@@ -127,10 +131,24 @@ export default function ContactSection() {
           <p className="text-text-muted max-w-lg mx-auto">{c.subtitle[lang]}</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 max-w-6xl mx-auto">
 
           {/* Contact info */}
           <div className={`lg:col-span-2 space-y-6 transition-all duration-700 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
+            <div className="glass-card p-5">
+              <p className="text-sm font-semibold tracking-widest uppercase mb-4" style={{ color: '#F5C518' }}>
+                {c.fitTitle[lang]}
+              </p>
+              <div className="space-y-3">
+                {fitItems.map((item) => (
+                  <div key={item} className="flex items-start gap-3">
+                    <span className="mt-1 w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: '#F5C518' }} />
+                    <p className="text-sm text-text-muted leading-relaxed">{item}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {infoCards.map(({ icon, label, value, href }) => (
               <div key={label} className="flex items-start gap-4 glass-card p-4">
                 <span className="text-xl mt-0.5" aria-hidden="true">{icon}</span>
@@ -144,6 +162,21 @@ export default function ContactSection() {
                 </div>
               </div>
             ))}
+
+            <div className="glass-card p-5">
+              <p className="text-sm font-semibold tracking-widest uppercase mb-3" style={{ color: '#F5C518' }}>
+                {c.channelsTitle[lang]}
+              </p>
+              <p className="text-sm text-text-muted leading-relaxed mb-4">{c.channelsSubtitle[lang]}</p>
+              <div className="flex flex-col gap-3">
+                <a href={emailHref} className="btn-outline justify-center">
+                  {c.emailCta[lang]}
+                </a>
+                <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="btn-primary justify-center">
+                  {c.whatsappCta[lang]}
+                </a>
+              </div>
+            </div>
           </div>
 
           {/* Form */}
@@ -166,6 +199,10 @@ export default function ContactSection() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5" aria-label="Contact form">
+                  <div className="rounded-2xl border px-4 py-3" style={{ borderColor: 'var(--dark-border)', background: 'rgba(245, 197, 24,0.04)' }}>
+                    <p className="text-sm text-text-muted leading-relaxed">{c.formHint[lang]}</p>
+                  </div>
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label htmlFor="contact-name" className="text-text-muted text-xs font-medium uppercase tracking-wide">
@@ -242,6 +279,17 @@ export default function ContactSection() {
                   </button>
                 </form>
               )}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
+              {processItems.map((item, index) => (
+                <div key={item} className="glass-card p-4">
+                  <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: '#F5C518' }}>
+                    {lang === 'ar' ? `الخطوة ${index + 1}` : `Step ${index + 1}`}
+                  </p>
+                  <p className="text-sm text-text-muted leading-relaxed">{item}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

@@ -22,6 +22,14 @@ const nextConfig = {
     optimizePackageImports: ['next/font'],
   },
 
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.cache = false
+    }
+
+    return config
+  },
+
   // ── Headers for caching static assets ────────────────────────────────────
   async headers() {
     return [

@@ -15,6 +15,7 @@ import {
   useCallback,
   ReactNode,
 } from 'react'
+import { useRouter } from 'next/navigation'
 import { type Lang } from './translations'
 
 interface LanguageContextValue {
@@ -40,6 +41,7 @@ export function LanguageProvider({
   initialLang = 'en',
   locked = false,
 }: LanguageProviderProps) {
+  const router = useRouter()
   const [lang, setLang] = useState<Lang>(initialLang)
   const [mounted, setMounted] = useState(false)
 
@@ -60,10 +62,6 @@ export function LanguageProvider({
     const html = document.documentElement
     html.setAttribute('lang', lang)
     html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr')
-    // Keep font-mono RTL-friendly
-    document.body.style.fontFamily = lang === 'ar'
-      ? "var(--font-outfit), 'Tajawal', system-ui, sans-serif"
-      : "var(--font-outfit), system-ui, sans-serif"
     localStorage.setItem('lang', lang)
   }, [lang, mounted])
 
@@ -72,11 +70,11 @@ export function LanguageProvider({
       const nextLang: Lang = lang === 'en' ? 'ar' : 'en'
       localStorage.setItem('lang', nextLang)
       const hash = window.location.hash
-      window.location.href = `${nextLang === 'ar' ? '/ar' : '/en'}${hash}`
+      router.replace(`${nextLang === 'ar' ? '/ar' : '/en'}${hash}`, { scroll: false })
       return
     }
     setLang((prev) => (prev === 'en' ? 'ar' : 'en'))
-  }, [lang, locked])
+  }, [lang, locked, router])
 
   return (
     <LanguageContext.Provider value={{ lang, toggleLang, isAr: lang === 'ar' }}>

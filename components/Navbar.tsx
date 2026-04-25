@@ -26,7 +26,21 @@ export default function Navbar() {
 
   /* ── Scroll detection ── */
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    let ticking = false;
+
+    const updateScrollState = () => {
+      ticking = false;
+      const nextScrolled = window.scrollY > 20;
+      setScrolled((prev) => (prev === nextScrolled ? prev : nextScrolled));
+    };
+
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateScrollState);
+    };
+
+    updateScrollState();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -102,9 +116,7 @@ export default function Navbar() {
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex justify-center md:p-6 pointer-events-none">
       <motion.nav
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
+        initial={false}
         className={`pointer-events-auto w-full md:max-w-5xl transition-colors duration-300 relative ${
           scrolled
             ? "shadow-lg border-b md:border md:rounded-full"
