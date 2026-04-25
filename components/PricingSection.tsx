@@ -119,7 +119,7 @@ export default function PricingSection() {
 
               {/* Features */}
               <ul className="space-y-3 flex-1 mb-8" role="list">
-                {(plan.features[lang] as string[]).map((feature) => (
+                {(plan.features[lang] as readonly string[]).map((feature) => (
                   <li key={feature} className={`flex items-start gap-2.5 ${isAr ? "flex-row-reverse" : ""}`}>
                     <svg
                       className="w-4 h-4 flex-shrink-0 mt-0.5"
