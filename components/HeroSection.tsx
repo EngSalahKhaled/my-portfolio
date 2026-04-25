@@ -259,8 +259,9 @@ export default function HeroSection() {
                 {tr.hero.getInTouch[lang]}
               </a>
               <a
-                href="/cv/salah-khaled-cv.pdf"
-                download
+                href="https://drive.google.com/uc?export=download&id=16lr0po6JjvOqMMxM8V8VTOl92eCtSTpA"
+                target="_blank"
+                rel="noopener noreferrer"
                 id="hero-download-cv-btn"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm border transition-all duration-200 hover:-translate-y-0.5"
                 style={{
