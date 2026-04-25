@@ -9,10 +9,13 @@ import ThemeSwitcher from "./ThemeSwitcher";
 const SECTION_IDS = [
   "hero",
   "about",
+  "experience",
   "projects",
+  "pricing",
   "business",
   "skills",
   "certifications",
+  "faq",
   "contact",
 ];
 
@@ -130,9 +133,9 @@ export default function Navbar() {
         id="navbar"
         aria-label="Main navigation"
       >
-        {/* ── Nav Header ── */}
-        <div className="flex items-center justify-between h-14 md:h-16 px-4 md:px-6">
-          {/* Logo */}
+        {/* ── Nav Header — 3-column grid to prevent any overlap ── */}
+        <div className="grid grid-cols-[auto_1fr_auto] items-center h-14 md:h-16 px-4 md:px-6 gap-4">
+          {/* Col 1 — Logo */}
           <a
             href="#hero"
             onClick={closeMenu}
@@ -155,16 +158,16 @@ export default function Navbar() {
             </span>
           </a>
 
-          {/* Desktop Links */}
+          {/* Col 2 — Desktop nav links (centred inside its own column) */}
           <ul
-            className="hidden lg:flex items-center justify-center gap-2 absolute left-1/2 -translate-x-1/2 w-full"
+            className="hidden lg:flex items-center justify-center gap-1"
             role="list"
           >
             {navLinks.map((link) => (
               <li key={link.href} className="relative">
                 <a
                   href={link.href}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300 relative z-10 block ${
+                  className={`px-3 py-2 rounded-full text-sm font-medium transition-colors duration-300 relative z-10 block ${
                     activeSection === link.id
                       ? "text-text-main"
                       : "text-text-muted hover:text-text-main"
@@ -188,8 +191,30 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* Desktop Controls */}
-          <div className="hidden lg:flex items-center gap-3 relative z-10">
+          {/* Col 3 — Desktop right-side controls */}
+          <div className="hidden lg:flex items-center gap-2 relative z-10">
+            {/* Open to Work badge */}
+            <a
+              href="#contact"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 hover:scale-105 whitespace-nowrap"
+              style={{
+                borderColor: "rgba(52,211,153,0.35)",
+                background: "rgba(52,211,153,0.08)",
+                color: "#34D399",
+              }}
+              aria-label={isAr ? "متاح للعمل — اضغط للتواصل" : "Open to Work — click to contact"}
+            >
+              <span
+                className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                style={{
+                  backgroundColor: "#34D399",
+                  boxShadow: "0 0 6px rgba(52,211,153,0.8)",
+                  animation: "pulse 2s ease-in-out infinite",
+                }}
+                aria-hidden="true"
+              />
+              {isAr ? "متاح للعمل" : "Open to Work"}
+            </a>
             <ThemeSwitcher />
             <button
               onClick={toggleLang}
@@ -383,6 +408,29 @@ export default function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.35, duration: 0.35 }}
                 >
+                  {/* Open to Work badge — mobile */}
+                  <div
+                    className="flex items-center justify-center gap-2 rounded-xl border text-xs font-semibold"
+                    style={{
+                      minHeight: 36,
+                      borderColor: "rgba(52,211,153,0.35)",
+                      background: "rgba(52,211,153,0.06)",
+                      color: "#34D399",
+                    }}
+                    aria-label={isAr ? "متاح للعمل" : "Open to Work"}
+                  >
+                    <span
+                      className="w-2 h-2 rounded-full flex-shrink-0"
+                      style={{
+                        backgroundColor: "#34D399",
+                        boxShadow: "0 0 6px rgba(52,211,153,0.8)",
+                        animation: "pulse 2s ease-in-out infinite",
+                      }}
+                      aria-hidden="true"
+                    />
+                    {isAr ? "متاح للعمل الحر" : "Open to Work"}
+                  </div>
+
                   {/* Language toggle — 44px min touch target */}
                   <button
                     onClick={() => {

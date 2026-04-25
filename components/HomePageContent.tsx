@@ -14,6 +14,9 @@ import ContactSection from '@/components/ContactSection'
 import Footer from '@/components/Footer'
 import ReadingProgress from '@/components/ReadingProgress'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
+import ExperienceSection from '@/components/ExperienceSection'
+import PricingSection from '@/components/PricingSection'
+import FAQSection from '@/components/FAQSection'
 
 export default function HomePageContent() {
   return (
@@ -30,11 +33,19 @@ export default function HomePageContent() {
         </ScrollReveal>
 
         <ScrollReveal>
+          <ExperienceSection />
+        </ScrollReveal>
+
+        <ScrollReveal>
           <ResultsSection />
         </ScrollReveal>
 
         <ScrollReveal>
           <ServicesSection />
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <PricingSection />
         </ScrollReveal>
 
         <ScrollReveal>
@@ -55,6 +66,10 @@ export default function HomePageContent() {
 
         <ScrollReveal>
           <TestimonialsSection />
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <FAQSection />
         </ScrollReveal>
 
         <ScrollReveal>

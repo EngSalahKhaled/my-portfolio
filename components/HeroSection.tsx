@@ -133,7 +133,9 @@ export default function HeroSection() {
                 color: "#F5C518",
               }}
               id="gemini-badge"
-              aria-label={isAr ? "عرض شهادات Google" : "View Google Certifications"}
+              aria-label={
+                isAr ? "عرض شهادات Google" : "View Google Certifications"
+              }
             >
               <svg
                 width="18"
@@ -168,7 +170,8 @@ export default function HeroSection() {
                   className="text-sm sm:text-base font-semibold tracking-[0.24em] uppercase mb-3"
                   style={{ color: "#F5C518" }}
                 >
-                  Front End Developer in the Middle East
+                  "React & UI/UX Specialist: Crafting Modern, Responsive Digital
+                  Experiences for GCC Markets."
                 </p>
               )}
               <p className="text-text-muted text-lg font-medium mb-2">
@@ -179,14 +182,14 @@ export default function HeroSection() {
                   <>
                     <span className="gradient-text">صلاح خالد</span>
                     <span className="block text-2xl sm:text-3xl lg:text-4xl text-text-main mt-4">
-                      مطور واجهات أمامية في الشرق الأوسط
+                      مطور واجهات أمامية
                     </span>
                   </>
                 ) : (
                   <>
                     <span className="gradient-text">Salah Khaled</span>
                     <span className="block text-2xl sm:text-3xl lg:text-4xl text-text-main mt-4">
-                      Front End Developer in the Middle East
+                      Front End Developer
                     </span>
                   </>
                 )}
@@ -220,9 +223,9 @@ export default function HeroSection() {
                   <span style={{ color: "#F5C518" }} className="font-medium">
                     React, Next.js, and high-performance
                   </span>{" "}
-                  websites for brands, startups, and businesses that need
-                  modern user experiences and real results across Saudi Arabia,
-                  Egypt, and the UAE. I build conversion-focused interfaces that
+                  websites for brands, startups, and businesses that need modern
+                  user experiences and real results across Saudi Arabia, Egypt,
+                  and the UAE. I build conversion-focused interfaces that
                   support growth across the Middle East.
                 </>
               )}
@@ -232,7 +235,11 @@ export default function HeroSection() {
             <div
               className={`flex flex-wrap gap-4 pt-2 ${isAr ? "justify-end" : ""}`}
             >
-              <a href={workHref} className="btn-primary" id="hero-view-work-btn">
+              <a
+                href={workHref}
+                className="btn-primary"
+                id="hero-view-work-btn"
+              >
                 {tr.hero.viewWork[lang]}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -250,6 +257,33 @@ export default function HeroSection() {
               </a>
               <a href="#contact" className="btn-outline" id="hero-contact-btn">
                 {tr.hero.getInTouch[lang]}
+              </a>
+              <a
+                href="/cv/salah-khaled-cv.pdf"
+                download
+                id="hero-download-cv-btn"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm border transition-all duration-200 hover:-translate-y-0.5"
+                style={{
+                  borderColor: "var(--dark-border)",
+                  color: "var(--text-muted)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = "rgba(245,197,24,0.4)";
+                  e.currentTarget.style.color = "#F5C518";
+                  e.currentTarget.style.background = "rgba(245,197,24,0.05)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "var(--dark-border)";
+                  e.currentTarget.style.color = "var(--text-muted)";
+                  e.currentTarget.style.background = "transparent";
+                }}
+                aria-label={isAr ? "تحميل السيرة الذاتية لصلاح خالد" : "Download Salah Khaled's CV"}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4" aria-hidden="true">
+                  <path d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
+                  <path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
+                </svg>
+                {tr.experience.downloadCv[lang]}
               </a>
             </div>
 
@@ -350,7 +384,8 @@ export default function HeroSection() {
                   <div
                     className="w-36 h-36 sm:w-40 sm:h-40 rounded-full p-1 shadow-[0_0_25px_rgba(245,197,24,0.4)] transition-transform duration-500 hover:scale-105"
                     style={{
-                      background: "linear-gradient(135deg,#F5C518 0%,#F5C518 50%,#C09B00 100%)",
+                      background:
+                        "linear-gradient(135deg,#F5C518 0%,#F5C518 50%,#C09B00 100%)",
                     }}
                   >
                     <Image
@@ -389,7 +424,9 @@ export default function HeroSection() {
                 className="absolute -bottom-8 -left-2 sm:-bottom-4 sm:-left-4 glass-card px-3 py-2 shadow-xl"
                 aria-hidden="true"
               >
-                <p className="text-xs text-text-muted">{tr.hero.basedIn[lang]}</p>
+                <p className="text-xs text-text-muted">
+                  {tr.hero.basedIn[lang]}
+                </p>
                 <p className="text-text-main text-sm font-bold">
                   {tr.hero.location[lang]}
                 </p>
@@ -404,7 +441,14 @@ export default function HeroSection() {
           className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-20 pt-10 border-t border-dark-border"
         >
           {stats.map(({ value, suffix, label }, i) => (
-            <StatCard key={label} value={value} suffix={suffix} label={label} active={statsVisible} delay={i * 120} />
+            <StatCard
+              key={label}
+              value={value}
+              suffix={suffix}
+              label={label}
+              active={statsVisible}
+              delay={i * 120}
+            />
           ))}
         </div>
       </div>
@@ -418,13 +462,16 @@ export default function HeroSection() {
         <p className="text-text-muted text-[10px] sm:text-xs font-semibold tracking-[0.25em] uppercase transition-colors duration-300 group-hover:text-gold opacity-70 group-hover:opacity-100">
           {tr.hero.scroll[lang]}
         </p>
-        <div 
-          className="w-5 h-8 sm:w-6 sm:h-10 rounded-full border-2 flex justify-center pt-1.5 sm:pt-2 transition-all duration-300 group-hover:border-yellow-400/50" 
-          style={{ borderColor: 'var(--dark-border)', backgroundColor: 'rgba(0,0,0,0.2)' }}
+        <div
+          className="w-5 h-8 sm:w-6 sm:h-10 rounded-full border-2 flex justify-center pt-1.5 sm:pt-2 transition-all duration-300 group-hover:border-yellow-400/50"
+          style={{
+            borderColor: "var(--dark-border)",
+            backgroundColor: "rgba(0,0,0,0.2)",
+          }}
         >
-          <div 
-            className="w-1 h-1.5 sm:w-1.5 sm:h-2 rounded-full animate-bounce-subtle" 
-            style={{ backgroundColor: '#F5C518' }} 
+          <div
+            className="w-1 h-1.5 sm:w-1.5 sm:h-2 rounded-full animate-bounce-subtle"
+            style={{ backgroundColor: "#F5C518" }}
           />
         </div>
       </a>

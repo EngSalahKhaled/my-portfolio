@@ -34,7 +34,7 @@ export const translations = {
     availableFor: { en: "Available for", ar: "متاح لـ" },
     freelance: { en: "Freelance 🚀", ar: "العمل الحر 🚀" },
     basedIn: { en: "Based in", ar: "موقعي" },
-    location: { en: "Middle East | Saudi Arabia, Egypt, UAE", ar: "الشرق الأوسط | السعودية، مصر، الإمارات" },
+    location: { en: " Saudi Arabia  | Riyadh ", ar: " | السعودية | الرياض " },
     typewriterPhrases: {
       en: [
         "Front-End Developer",
@@ -490,6 +490,205 @@ export const translations = {
     },
     open: { en: "Open AI chat", ar: "افتح المحادثة" },
     close: { en: "Close AI chat", ar: "أغلق المحادثة" },
+  },
+
+  /* ─── Experience ──────────────────────────────────────────────────────────── */
+  experience: {
+    sectionTag: { en: "My Journey", ar: "مسيرتي" },
+    title: { en: "Experience &", ar: "الخبرة" },
+    titleAccent: { en: "Timeline", ar: "والمسيرة" },
+    subtitle: {
+      en: "From my first lines of code to founding a business — a timeline of growth, skill, and real-world impact.",
+      ar: "من أولى سطور الكود إلى تأسيس شركة — مسيرة من النمو والمهارة والأثر الحقيقي.",
+    },
+    downloadCv: { en: "Download CV", ar: "تحميل السيرة الذاتية" },
+    items: [
+      {
+        year: { en: "2025 – Present", ar: "2025 – الآن" },
+        title: { en: "Owner & General Manager", ar: "المالك والمدير العام" },
+        company: { en: "INFINITY BRIGHT — Car Protection · Riyadh", ar: "إنفينيتي برايت — حماية السيارات · الرياض" },
+        type: { en: "Entrepreneurship", ar: "ريادة أعمال" },
+        desc: {
+          en: "Founded and managing INFINITY BRIGHT, a 3M-authorised car protection centre. Overseeing full operations: team management, marketing strategy, client relations, and brand development.",
+          ar: "تأسيس وإدارة مركز إنفينيتي برايت لحماية السيارات المعتمد من 3M. إشراف كامل على العمليات: إدارة الفريق، الاستراتيجية التسويقية، علاقات العملاء، وتطوير العلامة التجارية.",
+        },
+        tags: ["Entrepreneurship", "Operations", "Branding", "3M Certified"],
+        icon: "🏢",
+      },
+      {
+        year: { en: "2023 – Present", ar: "2023 – الآن" },
+        title: { en: "Front-End Engineer & Freelancer", ar: "مهندس واجهات أمامية مستقل" },
+        company: { en: "Freelance / Self-employed · KSA & International", ar: "عمل حر / مستقل · السعودية وعالمياً" },
+        type: { en: "Development", ar: "تطوير" },
+        desc: {
+          en: "Designing and developing premium web products — landing pages, bilingual websites, admin dashboards, and SaaS platforms for clients across Saudi Arabia, Egypt, the UAE, and beyond.",
+          ar: "تصميم وتطوير منتجات ويب متميزة — صفحات هبوط، مواقع ثنائية اللغة، لوحات تحكم، ومنصات SaaS لعملاء في السعودية ومصر والإمارات وخارجها.",
+        },
+        tags: ["React", "Next.js", "TypeScript", "Tailwind"],
+        icon: "💻",
+      },
+      {
+        year: { en: "2021 – 2022", ar: "2021 – 2022" },
+        title: { en: "Junior Front-End Developer", ar: "مطوّر واجهات مبتدئ" },
+        company: { en: "Tech Internship · KSA", ar: "تدريب تقني · المملكة العربية السعودية" },
+        type: { en: "Development", ar: "تطوير" },
+        desc: {
+          en: "Built responsive UI components, maintained legacy codebases, and collaborated with design teams to deliver pixel-perfect implementations under real production deadlines.",
+          ar: "بناء مكونات UI متجاوبة والحفاظ على قواعد كود قديمة والتعاون مع فرق التصميم لتسليم تطبيقات دقيقة ضمن مواعيد الإنتاج الحقيقية.",
+        },
+        tags: ["HTML", "CSS", "JavaScript", "Git"],
+        icon: "🚀",
+      },
+    ],
+  },
+
+  /* ─── Pricing ─────────────────────────────────────────────────────────────── */
+  pricing: {
+    sectionTag: { en: "Transparent Pricing", ar: "أسعار شفافة" },
+    title: { en: "Simple, Clear", ar: "أسعار واضحة" },
+    titleAccent: { en: "Pricing", ar: "وبسيطة" },
+    subtitle: {
+      en: "Every project is unique, but here's a starting point. Final pricing depends on scope, timeline, and complexity.",
+      ar: "كل مشروع فريد، لكن هذه نقطة بداية. التسعير النهائي يعتمد على النطاق والوقت والتعقيد.",
+    },
+    popular: { en: "Most Popular", ar: "الأكثر طلباً" },
+    contactForCustom: { en: "Discuss Your Project", ar: "ناقش مشروعك" },
+    startingFrom: { en: "Starting from", ar: "يبدأ من" },
+    plans: [
+      {
+        name: { en: "Landing Page", ar: "صفحة هبوط" },
+        price: { en: "1,500 SAR", ar: "1,500 ريال" },
+        desc: {
+          en: "A high-converting single page for your offer, launch, or campaign.",
+          ar: "صفحة واحدة عالية التحويل لعرضك أو إطلاقك أو حملتك.",
+        },
+        features: {
+          en: [
+            "Custom design & development",
+            "Mobile responsive",
+            "SEO optimised",
+            "Fast delivery (3–5 days)",
+            "Contact form integration",
+          ],
+          ar: [
+            "تصميم وتطوير مخصص",
+            "متجاوب مع الجوال",
+            "محسّن لمحركات البحث",
+            "تسليم سريع (3–5 أيام)",
+            "تكامل نموذج التواصل",
+          ],
+        },
+        highlight: false,
+        icon: "⚡",
+      },
+      {
+        name: { en: "Full Website", ar: "موقع كامل" },
+        price: { en: "4,500 SAR", ar: "4,500 ريال" },
+        desc: {
+          en: "A professional multi-page website for brands, startups, or services.",
+          ar: "موقع متعدد الصفحات احترافي للعلامات التجارية أو الشركات الناشئة أو الخدمات.",
+        },
+        features: {
+          en: [
+            "Up to 6 pages",
+            "Arabic / English (bilingual)",
+            "Advanced animations",
+            "Performance optimised",
+            "30-day post-launch support",
+          ],
+          ar: [
+            "حتى 6 صفحات",
+            "عربي / إنجليزي (ثنائي اللغة)",
+            "رسوم متحركة متقدمة",
+            "محسّن للأداء",
+            "دعم 30 يوماً بعد الإطلاق",
+          ],
+        },
+        highlight: true,
+        icon: "🌐",
+      },
+      {
+        name: { en: "Dashboard / App", ar: "لوحة تحكم / تطبيق" },
+        price: { en: "8,000 SAR", ar: "8,000 ريال" },
+        desc: {
+          en: "Complex internal tools, admin panels, or SaaS products with full logic.",
+          ar: "أدوات داخلية متقدمة، لوحات إدارة، أو منتجات SaaS مع منطق كامل.",
+        },
+        features: {
+          en: [
+            "Auth & role management",
+            "API integrations",
+            "Database design",
+            "Admin panel included",
+            "Ongoing support available",
+          ],
+          ar: [
+            "المصادقة وإدارة الأدوار",
+            "تكاملات API",
+            "تصميم قاعدة البيانات",
+            "لوحة الإدارة مدرجة",
+            "دعم مستمر متاح",
+          ],
+        },
+        highlight: false,
+        icon: "🛠️",
+      },
+    ],
+  },
+
+  /* ─── FAQ ─────────────────────────────────────────────────────────────────── */
+  faq: {
+    sectionTag: { en: "Common Questions", ar: "أسئلة شائعة" },
+    title: { en: "Frequently Asked", ar: "أسئلة" },
+    titleAccent: { en: "Questions", ar: "متكررة" },
+    subtitle: {
+      en: "Quick answers to the most common questions before getting in touch.",
+      ar: "إجابات سريعة على أكثر الأسئلة شيوعاً قبل التواصل.",
+    },
+    items: [
+      {
+        q: { en: "How long does a project typically take?", ar: "كم يستغرق المشروع عادةً؟" },
+        a: {
+          en: "A landing page takes 3–5 business days. A full website takes 2–3 weeks. Dashboards and complex apps vary from 4–8 weeks depending on scope.",
+          ar: "صفحة الهبوط تستغرق 3-5 أيام عمل. الموقع الكامل 2-3 أسابيع. لوحات التحكم والتطبيقات المعقدة تتراوح بين 4-8 أسابيع حسب النطاق.",
+        },
+      },
+      {
+        q: { en: "Do you work with clients outside Saudi Arabia?", ar: "هل تعمل مع عملاء خارج السعودية؟" },
+        a: {
+          en: "Yes — I work remotely with clients across Egypt, UAE, and internationally. Communication is async-friendly and I'm comfortable with all time zones.",
+          ar: "نعم — أعمل عن بُعد مع عملاء في مصر والإمارات وعلمياً. التواصل مرن ومريح مع جميع المناطق الزمنية.",
+        },
+      },
+      {
+        q: { en: "What do you need from me to get started?", ar: "ما الذي أحتاجه منك للبدء؟" },
+        a: {
+          en: "A brief that includes: your goal, target audience, rough timeline, and any references or content you already have. The clearer the brief, the faster we move.",
+          ar: "موجز يتضمن: هدفك، جمهورك المستهدف، الجدول الزمني التقريبي، وأي مراجع أو محتوى لديك. كلما كان الموجز أوضح، كلما تحركنا أسرع.",
+        },
+      },
+      {
+        q: { en: "Do you offer ongoing maintenance after launch?", ar: "هل تقدم صيانة مستمرة بعد الإطلاق؟" },
+        a: {
+          en: "Yes — all projects include a 30-day post-launch support window. Extended maintenance retainers are available for ongoing updates, feature additions, and performance monitoring.",
+          ar: "نعم — جميع المشاريع تشمل نافذة دعم 30 يوماً بعد الإطلاق. يتوفر اتفاقية صيانة ممتدة للتحديثات المستمرة وإضافة الميزات ومراقبة الأداء.",
+        },
+      },
+      {
+        q: { en: "Can you work with an existing design (Figma, etc.)?", ar: "هل يمكنك العمل على تصميم موجود (Figma وغيره)؟" },
+        a: {
+          en: "Absolutely. I can implement pixel-perfect designs from Figma, Adobe XD, or any other design tool. I can also suggest improvements to the design before development starts.",
+          ar: "بالتأكيد. أستطيع تطبيق تصاميم دقيقة من Figma أو Adobe XD أو أي أداة تصميم أخرى. يمكنني أيضاً اقتراح تحسينات على التصميم قبل بدء التطوير.",
+        },
+      },
+      {
+        q: { en: "What payment methods do you accept?", ar: "ما طرق الدفع التي تقبلها؟" },
+        a: {
+          en: "Bank transfer (KSA local), PayPal, and Wise. Projects are typically structured as 50% upfront and 50% upon delivery.",
+          ar: "تحويل بنكي (محلي في السعودية)، PayPal، وWise. عادةً ما يُهيكل المشروع كـ 50% مقدماً و50% عند التسليم.",
+        },
+      },
+    ],
   },
 
   /* ─── Footer ──────────────────────────────────────────────────────────────── */
